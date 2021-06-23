@@ -6,9 +6,9 @@
 #include "layer/Lya_Spec.c"
 
 
-double delta_t = 1e-3;
-double T_max = 100;
-double T_mark = 95;
+double delta_t = 1e-4;
+double T_max = 10000;
+double T_mark = 9000;
 
 
 int main(int argc, char const *argv[])
@@ -48,12 +48,14 @@ int main(int argc, char const *argv[])
     
         /*Lya_Spec Calculator*/
         if (curr_t > T_mark){
-            lya_spec(dim, curr_x, delta_t, Jf, eye, spectrum, t_after);
+            t_after = lya_spec(dim, curr_x, delta_t, Jf, eye, spectrum, t_after);
         }
 
         curr_t += delta_t;
         kase ++;
-        if (curr_t > T_mark && kase % 1000 == 0)   {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\n");}
+        if (kase % 100000 == 0)                         printf("%lf / %lf:\t", curr_t, T_max);
+        if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\r");}
+        else                                            printf("\r");
     }
     for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\n");
 

@@ -3,6 +3,31 @@
 #include <math.h>
 #include <string.h>
 
+int lya_spec_init = 0;
+double *mat_Jaco;
+double *mat_result;
+double *new_spec;
+double *old_eye;
+
+double inner_beta;
+double inner_ab;
+
+
+void lya_spec_init_check(int dim){
+    if (lya_spec_init == 0){
+        old_eye = malloc(dim * dim * sizeof(double));
+        mat_Jaco = malloc(dim * dim * sizeof(double));
+        mat_result = malloc(dim * dim * sizeof(double));
+        new_spec = malloc(dim * sizeof(double));
+        
+        lya_spec_init = 1;
+        return ;
+    }
+    else
+        return ;
+}
+
+
 void mat_multi(int dim, double *mat_x, double *mat_y, double *mat_result){
     for (int i = 0; i < dim; i ++){
         for (int j = 0; j < dim; j ++){
@@ -16,15 +41,13 @@ void mat_multi(int dim, double *mat_x, double *mat_y, double *mat_result){
 
 
 void gram_schmidt(int dim, double *mat_result, double *eye, double *new_spec){
-    double *old_eye;
-    old_eye = malloc(dim * dim * sizeof(double));
     memcpy(eye, mat_result, dim * dim * sizeof(double));
 
     /*gram_schmidt*/
     for (int kase = 0; kase < dim; kase ++){
         for(int i = 0; i < kase; i ++){
-            double inner_beta = 0;
-            double inner_ab = 0;
+            inner_beta = 0;
+            inner_ab = 0;
             for (int j = 0; j < dim; j ++){
                 inner_beta += eye[i+j*dim] * eye[i+j*dim];
                 inner_ab += eye[i+j*dim] * mat_result[kase+j*dim];
@@ -52,19 +75,16 @@ double lya_spec(int dim, double *curr_x,
               double delta_t, void (*Jf)(double*, double*, double),
               double *eye, double *spectrum, double t_after)
 {
+    /*Initialization*/
+    lya_spec_init_check(dim);
+
     /*Calculate the Jacobian Matrix*/
-    double *mat_Jaco;
-    mat_Jaco = malloc(dim * dim * sizeof(double));
     Jf(mat_Jaco, curr_x, delta_t);
 
     /*Matrix multiply*/
-    double *mat_result;
-    mat_Jaco = malloc(dim * dim * sizeof(double));
     mat_multi(dim, mat_Jaco, eye, mat_result);
 
     /*Gram_Schmidt and normalization*/
-    double *new_spec;
-    new_spec = malloc(dim * sizeof(double));
     gram_schmidt(dim, mat_result, eye, new_spec);
 
     /*Change the Spectrum*/
@@ -89,11 +109,11 @@ int main(int argc, char const *argv[])
         mat_result[i] = i + 1;
         eye[i] = i + 1;
     }
-    for(int i = 0; i < dim*dim; i ++)        printf("%lf\t", eye[i]);printf("\n");
+    for(int i = 0; i < dim*dim; i ++)       printf("%lf\t", eye[i]);printf("\n");
     gram_schmidt(dim, mat_result, eye, new_spec);
 
-    for(int i = 0; i < dim*dim; i ++)        printf("%lf\t", eye[i]);printf("\n");
+    for(int i = 0; i < dim*dim; i ++)       printf("%lf\t", eye[i]);printf("\n");
+    for(int i = 0; i < dim; i ++)           printf("%lf\t", new_spec[i]);printf("\n");
     return 0;
 }
-
 */
