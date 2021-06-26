@@ -18,12 +18,16 @@
 #"delta_t":1e-3
 
 
-main: clear
-	gcc -O3 -o Lya_spec main.c -lm
+main: clean
+	gcc -o Lya_spec main.c -lm -O3 -ffast-math
 	./Lya_spec
+
+e:
+	gcc -o Lya_spec main.c -lm -O3 -ffast-math
+
 
 run:
 	./Lya_spec
 
-clear:
+clean:
 	rm -rf ./Lya_spec

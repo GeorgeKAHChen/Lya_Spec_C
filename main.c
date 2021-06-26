@@ -1,14 +1,18 @@
+//#include "model/Lorenz.c"
+//#include "model/Rossler.c"
+//#include "model/ExtRoss.c"
+#include "model/GenRoss.c"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "model/Lorenz.c"
 #include "layer/ode4.c"
 #include "layer/Lya_Spec.c"
 
 
 double delta_t = 1e-4;
-double T_max = 10000;
-double T_mark = 9000;
+double T_max = 100000;
+double T_mark = 90000;
 
 
 int main(int argc, char const *argv[])
@@ -39,6 +43,8 @@ int main(int argc, char const *argv[])
         }
     }
     
+    call_info();
+    printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
     /*Main Loop*/
     while (1){
         if (curr_t > T_max)         break;
@@ -53,12 +59,16 @@ int main(int argc, char const *argv[])
 
         curr_t += delta_t;
         kase ++;
-        if (kase % 100000 == 0)                         printf("%lf / %lf:\t", curr_t, T_max);
-        if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\r");}
-        else                                            printf("\r");
+        //if (kase % 100000 == 0)                         {printf("%lf / %lf:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\r");}
+        //if (kase % 100000 == 0)                         printf("%lf / %lf:\t", curr_t, T_max);
+        //if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\r");}
+        //else                                            printf("\r");
     }
+    printf("\n");
+    call_info();
+    printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
     for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\n");
-
+    
 
     return 0;
 }
