@@ -23,7 +23,7 @@ main: clean
 	./Lya_spec
 
 e:
-	gcc -o Lya_spec main.c -lm -O3 -ffast-math
+	gcc -o Lya_spec main.c -lm #-O3 #-ffast-math
 
 
 run:

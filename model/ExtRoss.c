@@ -8,6 +8,8 @@
 
 #include<stdio.h>
 
+int STOCHASTIC_DIFFERENTIAL_EQUATION = 0;
+
 /*General Parameter*/
 int dim = 4;
 double initial_val[4] = {-10.0, -6.0, 0.0, 10.0};

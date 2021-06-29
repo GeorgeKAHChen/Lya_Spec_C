@@ -10,10 +10,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+int STOCHASTIC_DIFFERENTIAL_EQUATION = 0;
+
 /*General Parameter*/
-int dim = 7;
+int dim = 10;
 //double initial_val[] = {0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75};
-//double initial_val[] = {0.215567494598443, 0.226334391153811, 0.043168606980304, 0.598988938364131, 0.497325927038798, 0.821878046327615, 0.46015447840316};
+//double initial_val[] = {0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5};
 //double initial_val[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 double initial_val[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 char model_name[] = "ExtRoss";

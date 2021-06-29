@@ -8,9 +8,9 @@
 
 #include "layer/ode4.c"
 #include "layer/Lya_Spec.c"
+#include "layer/maruyama.c"
 
-
-double delta_t = 1e-4;
+double delta_t = 1e-5;
 double T_max = 100000;
 double T_mark = 90000;
 
@@ -50,7 +50,8 @@ int main(int argc, char const *argv[])
         if (curr_t > T_max)         break;
     
         /*Runge-Kutta Calculator*/
-        ode4(dim, curr_t, delta_t, curr_x, f);
+        if (STOCHASTIC_DIFFERENTIAL_EQUATION == 0)      ode4(dim, curr_t, delta_t, curr_x, f);
+        else                                            maruyama(dim, curr_t, delta_t, curr_x, f);
     
         /*Lya_Spec Calculator*/
         if (curr_t > T_mark){
