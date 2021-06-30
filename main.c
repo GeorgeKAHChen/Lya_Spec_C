@@ -1,7 +1,8 @@
 //#include "model/Lorenz.c"
 //#include "model/Rossler.c"
 //#include "model/ExtRoss.c"
-#include "model/GenRoss.c"
+//#include "model/GenRoss.c"
+#include "model/Sto_Lorenz.c"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,8 +11,10 @@
 #include "layer/Lya_Spec.c"
 #include "layer/maruyama.c"
 
-double delta_t = 1e-5;
+double delta_t = 1e-4;
 double T_max = 100000;
+//double delta_t = 1e-2;
+//double T_max = 1000;
 double T_mark = 90000;
 
 
@@ -27,7 +30,7 @@ int main(int argc, char const *argv[])
     double *eye;
 
     /*Initialization Values*/
-    curr_x = malloc(dim * sizeof(double));
+    curr_x = malloc(size_state * sizeof(double));
     spectrum = malloc(dim * sizeof(double));
     eye = malloc(dim * dim * sizeof(double));
 
@@ -51,7 +54,7 @@ int main(int argc, char const *argv[])
     
         /*Runge-Kutta Calculator*/
         if (STOCHASTIC_DIFFERENTIAL_EQUATION == 0)      ode4(dim, curr_t, delta_t, curr_x, f);
-        else                                            maruyama(dim, curr_t, delta_t, curr_x, f);
+        else                                            maruyama(dim, curr_t, delta_t, curr_x, rand_para, f);
     
         /*Lya_Spec Calculator*/
         if (curr_t > T_mark){
@@ -60,6 +63,7 @@ int main(int argc, char const *argv[])
 
         curr_t += delta_t;
         kase ++;
+        //{printf("[%lf, ", curr_t); for (int i = 0; i < dim; i ++)  printf("%lf, ", curr_x[i]);printf("], ");}
         //if (kase % 100000 == 0)                         {printf("%lf / %lf:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\r");}
         //if (kase % 100000 == 0)                         printf("%lf / %lf:\t", curr_t, T_max);
         //if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\r");}

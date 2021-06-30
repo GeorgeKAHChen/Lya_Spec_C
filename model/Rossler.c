@@ -12,6 +12,8 @@ int STOCHASTIC_DIFFERENTIAL_EQUATION = 0;
 
 /*General Parameter*/
 int dim = 3;
+int size_state = 3;
+
 double initial_val[3] = {-1.0, 0.0, -1.0};
 char model_name[] = "Rossler";
 

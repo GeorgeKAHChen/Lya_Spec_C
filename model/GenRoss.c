@@ -14,6 +14,8 @@ int STOCHASTIC_DIFFERENTIAL_EQUATION = 0;
 
 /*General Parameter*/
 int dim = 10;
+int size_state = 10;
+
 //double initial_val[] = {0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75};
 //double initial_val[] = {0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5};
 //double initial_val[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};

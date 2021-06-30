@@ -22,9 +22,12 @@ main: clean
 	gcc -o Lya_spec main.c -lm -O3 -ffast-math
 	./Lya_spec
 
-e:
+e: clean
 	gcc -o Lya_spec main.c -lm #-O3 #-ffast-math
 
+rem: e
+	rm -rf nohup.out
+	nohup ./Lya_spec &
 
 run:
 	./Lya_spec
