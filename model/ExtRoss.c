@@ -14,7 +14,13 @@ int STOCHASTIC_DIFFERENTIAL_EQUATION = 0;
 int dim = 4;
 int size_state = 4;
 
-double initial_val[4] = {-10.0, -6.0, 0.0, 10.0};
+//double initial_val[4] = {-10.0, -6.0, 0.0, 14.0};
+// Origin std
+//double initial_val[4] = {-10.0, -6.0, 0.0, 10.0};
+
+// New std
+// interval: x,y,z,w \in [xyzw - 2, xyzw + 2]
+double initial_val[4] = {-10.0, -4.0, 0.0, 12.0};
 char model_name[] = "ExtRoss";
 
 /*Model Parameter*/
@@ -23,6 +29,7 @@ double para_b = 3.0;
 double para_c = 0.5;
 double para_d = 0.05;
 
+double rand_para = 0.0;
 
 
 /*Dot f function*/

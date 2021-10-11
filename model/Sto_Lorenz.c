@@ -21,7 +21,7 @@ char model_name[] = "Lorenz";
 double para_rho = 28.0;
 double para_sigma = 10.0;
 double para_beta = 8.0/3.0;
-double sto_para_sigma = 0.5;
+double sto_para_sigma = 0.1;
 double rand_para = 0.1;
 
 /*Dot f function*/

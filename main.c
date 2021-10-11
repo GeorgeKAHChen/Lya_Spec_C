@@ -1,8 +1,8 @@
 //#include "model/Lorenz.c"
 //#include "model/Rossler.c"
-//#include "model/ExtRoss.c"
+#include "model/ExtRoss.c"
 //#include "model/GenRoss.c"
-#include "model/Sto_Lorenz.c"
+//#include "model/Sto_Lorenz.c"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,8 +46,9 @@ int main(int argc, char const *argv[])
         }
     }
     
-    call_info();
-    printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
+    //call_info();
+    //printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
+    printf("x = [");
     /*Main Loop*/
     while (1){
         if (curr_t > T_max)         break;
@@ -69,10 +70,18 @@ int main(int argc, char const *argv[])
         //if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\r");}
         //else                                            printf("\r");
     }
-    printf("\n");
-    call_info();
+    //printf("]\n");
+
+    //printf("\n");
+    //call_info();
     printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
+    printf("initial_val: ");
+    for (int i = 0; i < dim; i ++)  printf("%lf ", initial_val[i]);printf("\n");
+    printf("x_t: ");
+    for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\n");
+    printf("Lya_Spec: ");
     for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\n");
+
     
 
     return 0;
