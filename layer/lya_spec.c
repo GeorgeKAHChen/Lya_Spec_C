@@ -72,14 +72,14 @@ void gram_schmidt(int dim, double *mat_result, double *eye, double *new_spec){
 
 
 double lya_spec(int dim, double *curr_x,
-              double delta_t, void (*Jf)(double*, double*, double),
-              double *eye, double *spectrum, double t_after)
+              double delta_t, void (*Jf)(double*, double*, double, double*),
+              double *eye, double *spectrum, double t_after, double * para)
 {
     /*Initialization*/
     lya_spec_init_check(dim);
 
     /*Calculate the Jacobian Matrix*/
-    Jf(mat_Jaco, curr_x, delta_t);
+    Jf(mat_Jaco, curr_x, delta_t, para);
 
     /*Matrix multiply*/
     mat_multi(dim, mat_Jaco, eye, mat_result);
@@ -95,25 +95,3 @@ double lya_spec(int dim, double *curr_x,
     return t_after;
 }
 
-/*
-int main(int argc, char const *argv[])
-{
-    int dim = 3;
-    double *mat_result;
-    double *eye;
-    double *new_spec;
-    mat_result = malloc(dim * dim * sizeof(double));
-    eye = malloc(dim * dim * sizeof(double));
-    new_spec = malloc(dim * sizeof(double));
-    for(int i = 0; i < dim*dim; i ++){
-        mat_result[i] = i + 1;
-        eye[i] = i + 1;
-    }
-    for(int i = 0; i < dim*dim; i ++)       printf("%lf\t", eye[i]);printf("\n");
-    gram_schmidt(dim, mat_result, eye, new_spec);
-
-    for(int i = 0; i < dim*dim; i ++)       printf("%lf\t", eye[i]);printf("\n");
-    for(int i = 0; i < dim; i ++)           printf("%lf\t", new_spec[i]);printf("\n");
-    return 0;
-}
-*/

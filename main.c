@@ -4,85 +4,69 @@
 //#include "model/GenRoss.c"
 //#include "model/Sto_Lorenz.c"
 
-#include <stdio.h>
 #include <stdlib.h>
-
-#include "layer/ode4.c"
-#include "layer/Lya_Spec.c"
-#include "layer/maruyama.c"
-
-double delta_t = 1e-4;
-double T_max = 100000;
-//double delta_t = 1e-2;
-//double T_max = 1000;
-double T_mark = 90000;
+#include "main_algorithm.c"
 
 
 int main(int argc, char const *argv[])
 {
-    /*Define Parameter*/
-    double curr_t = 0;
-    double t_after = 0;
-    int kase = 0;
 
-    double *curr_x;
-    double *spectrum;
-    double *eye;
+    /*Group property initialization*/
+    double *total_group;
 
-    /*Initialization Values*/
-    curr_x = malloc(size_state * sizeof(double));
-    spectrum = malloc(dim * sizeof(double));
-    eye = malloc(dim * dim * sizeof(double));
+    int sum_group = 1;
+    int para_group = 0;
+    int group_dim = dim + para_size + rand_para_size;
 
-    for (int i = 0; i < dim; i ++){
-        curr_x[i] = initial_val[i];
-        spectrum[i] = 0;
+    int *para_mark;
+    int *para_mod;
+    double *all_para_vals;
+    para_mark = malloc(group_dim * sizeof(int));
+    para_mod = malloc(group_dim * sizeof(int));
+    
+    for (int i = 0; i < group_dim; i ++){
+        sum_group *= group_size[i];
+        para_group += group_size[i];
+        para_mark[i] = 0;
+        for(int j = 0; j < i; j ++)     para_mark[i] += group_size[j];
+        if (i == 0)                     para_mod[i] = group_size[i];
+        else                            para_mod[i] = para_mod[i - 1] * group_size[i];
     }
 
-    for (int i = 0; i < dim; i ++){
-        for (int j = 0; j < dim; j ++){
-            if (i == j)             eye[i*dim + j] = 1;
-            else                    eye[i*dim + j] = 0;
+    total_group = malloc(sum_group * group_dim * sizeof(double));
+    all_para_vals = malloc(para_group * sizeof(double));
+
+    for (int i = 0; i < group_dim; i ++){
+        if (group_size[i] != 1){
+            double delta_val = (max_para[i] - min_para[i]) / (group_size[i] - 1);
+            all_para_vals[para_mark[i]] = min_para[i];
+            for(int j = 1 ; j < group_size[i] - 1; j ++){
+                all_para_vals[para_mark[i] + j] = all_para_vals[para_mark[i] + j - 1] + delta_val;
+            }
+            all_para_vals[para_mark[i] + group_size[i] - 1] = max_para[i];
+        }
+        else
+            all_para_vals[para_mark[i]] = min_para[i];
+    }
+
+    for (int i = 0; i < sum_group; i ++){
+        for (int j = 0; j < group_dim; j ++){
+            int mark_all_para_vals = para_mark[j];
+            if (j == 0)     mark_all_para_vals += i % group_size[j];
+            else            mark_all_para_vals += (int)(i / para_mod[j - 1]) % group_size[j];
+            total_group[i * group_dim + j] = all_para_vals[mark_all_para_vals];
         }
     }
-    
-    //call_info();
-    //printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
-    printf("x = [");
-    /*Main Loop*/
-    while (1){
-        if (curr_t > T_max)         break;
-    
-        /*Runge-Kutta Calculator*/
-        if (STOCHASTIC_DIFFERENTIAL_EQUATION == 0)      ode4(dim, curr_t, delta_t, curr_x, f);
-        else                                            maruyama(dim, curr_t, delta_t, curr_x, rand_para, f);
-    
-        /*Lya_Spec Calculator*/
-        if (curr_t > T_mark){
-            t_after = lya_spec(dim, curr_x, delta_t, Jf, eye, spectrum, t_after);
-        }
 
-        curr_t += delta_t;
-        kase ++;
-        //{printf("[%lf, ", curr_t); for (int i = 0; i < dim; i ++)  printf("%lf, ", curr_x[i]);printf("], ");}
-        //if (kase % 100000 == 0)                         {printf("%lf / %lf:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\r");}
-        //if (kase % 100000 == 0)                         printf("%lf / %lf:\t", curr_t, T_max);
-        //if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\r");}
-        //else                                            printf("\r");
+    /* Main computation*/
+    for (int i = 0; i < sum_group; i ++){
+        double *group_data;
+        group_data = malloc(group_dim * sizeof(double));
+        memcpy(group_data, total_group + i * group_dim, group_dim * sizeof(double));
+
+        main_algorithm(group_data, dim, para_size, rand_para_size, f, Jf);
     }
-    //printf("]\n");
-
-    //printf("\n");
-    //call_info();
-    printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
-    printf("initial_val: ");
-    for (int i = 0; i < dim; i ++)  printf("%lf ", initial_val[i]);printf("\n");
-    printf("x_t: ");
-    for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\n");
-    printf("Lya_Spec: ");
-    for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\n");
-
-    
 
     return 0;
+
 }
