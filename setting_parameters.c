@@ -1,8 +1,10 @@
+#ifndef INITIALIZATION
+#define INITIALIZATION
 //===========================================================
 /*Time parameter*/
     double delta_t = 1e-4;
-    double T_max = 100000;
-    double T_mark = 90000;
+    double T_max = 1000;
+    double T_mark = 900;
         /*
         delta_t is the step size of the code
         T_max is the final time t
@@ -64,3 +66,16 @@
         1 means the code will print every process into one file
         */
 //===========================================================
+
+
+struct PARAMETERS{
+    double *group_data;                 // [Initial value, parameter, random parameter]
+    int dim;                            // Dimension of system
+    int para_size;                      // Dimension of parameter
+    int rand_para_size;                 // Dimension of random parameter
+    void (*f)(double*, double*, double, double*);
+                                        // Function of system
+    void (*Jf)(double*, double*, double , double*);
+                                        // Jacobian matrix of the system
+};
+#endif

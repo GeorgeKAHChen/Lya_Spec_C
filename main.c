@@ -5,7 +5,10 @@
 //#include "model/Sto_Lorenz.c"
 
 #include <stdlib.h>
+#include <pthread.h>
+
 #include "main_algorithm.c"
+#include "setting_parameters.c"
 
 
 int main(int argc, char const *argv[])
@@ -59,14 +62,39 @@ int main(int argc, char const *argv[])
     }
 
     /* Main computation*/
+    /*
+    struct PARAMETERS parameters[sum_group];
+
+    pthread_t threads[sum_group];
     for (int i = 0; i < sum_group; i ++){
-        double *group_data;
-        group_data = malloc(group_dim * sizeof(double));
-        memcpy(group_data, total_group + i * group_dim, group_dim * sizeof(double));
-
-        main_algorithm(group_data, dim, para_size, rand_para_size, f, Jf);
+        parameters[i].group_data = malloc(group_dim * sizeof(double));
+        parameters[i].dim = dim;
+        parameters[i].para_size = para_size;
+        parameters[i].rand_para_size = rand_para_size;
+        parameters[i].f = f;
+        parameters[i].Jf = Jf;
+        memcpy(parameters[i].group_data, total_group + i * group_dim, group_dim * sizeof(double));
+        pthread_create(&(threads[i]), NULL, main_algorithm, &parameters[i]);
     }
+    for (int i = 0; i < sum_group; i ++)
+        pthread_join(threads[i], NULL);
+    pthread_exit(NULL);
+    */
+    
 
+    struct PARAMETERS parameters;
+    parameters.group_data = malloc(group_dim * sizeof(double));
+    parameters.dim = dim;
+    parameters.para_size = para_size;
+    parameters.rand_para_size = rand_para_size;
+    parameters.f = f;
+    parameters.Jf = Jf;
+
+    for (int i = 0; i < sum_group; i ++){
+        memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));
+        main_algorithm(&parameters);
+    }
+    
     return 0;
 
 }

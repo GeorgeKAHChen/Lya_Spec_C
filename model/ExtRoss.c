@@ -15,10 +15,10 @@ int dim = 4;
 int para_size = 4;
 int rand_para_size = 0;
 
-double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.2, 0.045};
-double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.6, 0.065};
+double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
+double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.055};
 //Sample = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
-int group_size[] = {1, 1, 1, 1, 1, 1, 1, 3};
+int group_size[] = {1, 1, 1, 1, 1, 1, 1, 6};
 
 char model_name[] = "ExtRoss";
 

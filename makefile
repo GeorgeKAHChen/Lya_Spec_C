@@ -19,11 +19,11 @@
 
 
 main: clean
-	gcc -o Lya_spec main.c -lm -O3 -ffast-math
+	gcc -o Lya_spec main.c -lm -O3 -ffast-math -lpthread #-Wall  -Wextra -Werror -pedantic
 	./Lya_spec
 
 e: clean
-	gcc -o Lya_spec main.c -lm #-O3 #-ffast-math
+	gcc -o Lya_spec main.c -lm -lpthread #-O3 #-ffast-math
 
 rem: e
 	rm -rf nohup.out
@@ -33,4 +33,5 @@ run:
 	./Lya_spec
 
 clean:
+	clear
 	rm -rf ./Lya_spec
