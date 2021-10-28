@@ -52,8 +52,8 @@ void main_algorithm(struct PARAMETERS *parameters)
 
 
     /*Main Loop*/
-    int kase = 0;                       // count the total iteration, just for tmp output
-    
+    double print_mark_t = 0;
+
     if (save_as_file == 0){
                                         printf("StartValue ");
         for (int i = 0; i < parameters->dim; i ++)  
@@ -65,7 +65,7 @@ void main_algorithm(struct PARAMETERS *parameters)
         for (int i = 0; i < parameters->rand_para_size; i ++)      
                                         printf("%lf ", rand_para[i]);
         if (print_every_values != 1 && print_every_LyaSpec != 1)
-                                        printf("MainVals\n");
+                                        printf("MainVals ");
         else                            printf("MainVals\n");
     }
 
@@ -84,10 +84,11 @@ void main_algorithm(struct PARAMETERS *parameters)
         }
 
         curr_t += delta_t;
-        kase ++;
+        print_mark_t += delta_t;
 
         /*Output and Print*/
-        if (curr_t > T_mark){
+        if (curr_t > T_mark && print_mark_t >= print_delta_t){
+            print_mark_t = 0;
             if (save_as_file == 0){
                 if (print_every_values == 1 || print_every_LyaSpec == 1){
                     printf("%lf %lf ", curr_t, T_max); 
@@ -101,7 +102,6 @@ void main_algorithm(struct PARAMETERS *parameters)
                 }
             }
         }
-
 
         //{printf("[%lf, ", curr_t); for (int i = 0; i < dim; i ++)  printf("%lf, ", curr_x[i]);printf("], ");}
         //if (kase % 100000 == 0)                         {printf("%lf / %lf:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\r");}

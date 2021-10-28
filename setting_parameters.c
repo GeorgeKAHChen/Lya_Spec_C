@@ -3,12 +3,26 @@
 //===========================================================
 /*Time parameter*/
     double delta_t = 1e-4;
-    double T_max = 1000;
-    double T_mark = 900;
+    double T_max =  100000;
+    double T_mark = 90000;
         /*
-        delta_t is the step size of the code
-        T_max is the final time t
-        after T_mark, the code will try to compute the Lyapunov Spectrum
+        `delta_t` is the step size of the code.
+        `T_max` is the final time t.
+        After `T_mark`, the code will try to compute the Lyapunov 
+        Spectrum if `print_every_LyaSpec` or `print_final_LyaSpec`
+        != 0.
+        */
+
+    double print_delta_t = 1;
+        /* 
+        If     
+            ```      
+            print_every_LyaSpec
+            print_every_values
+            ```
+        != 0, then after every `print_delta_t`, the system will print
+        the result. If `print_delta_t` <= `delta_t`, then the system
+        will print every results after `delta_t`.
         */
 //===========================================================
 
@@ -21,19 +35,19 @@
     int print_every_LyaSpec = 0;
         /*
         value: 0, 1;
-        0 means not print every Lyapunov spectrum
-        1 means print every Lyapunov spectrum after T_mark
+        0 means not print every Lyapunov spectrum;
+        1 means print every Lyapunov spectrum after T_mark.
         */
 
     int print_final_LyaSpec = 1;
         /*
         value: 0, 1;
         0 means not print the final Lyapunov spectrum;
-        1 means print final Lyapunov spectrum
+        1 means print final Lyapunov spectrum.
         */
     /*
     If both `print_every_LyaSpec` and `print_final_LyaSpec` are 0, 
-    then the code will not compute the Lyapunov Spectrum
+    then the code will not compute the Lyapunov Spectrum.
     */
 //===========================================================
 
@@ -42,11 +56,11 @@
 
 //===========================================================
 /*Main Computation parameter*/
-    int print_every_values = 0;
+    int print_every_values = 1;
         /*
         value: 0, 1;
-        0 means not print every value
-        1 means print every value after T_mark
+        0 means not print every value;
+        1 means print every value after T_mark.
         */
     /*
     If `rand_para_size` in model files is 0, 
@@ -62,8 +76,8 @@
     int save_as_file = 0;
         /*
         value:0, 1;
-        0 means the code will print every on screen
-        1 means the code will print every process into one file
+        0 means the code will print everything on screen;
+        1 means the code will print everything process into one file.
         */
 //===========================================================
 
