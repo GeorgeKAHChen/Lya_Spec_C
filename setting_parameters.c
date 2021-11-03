@@ -56,11 +56,12 @@
 
 //===========================================================
 /*Main Computation parameter*/
-    int print_every_values = 1;
+    int print_every_values = 2;
         /*
         value: 0, 1;
         0 means not print every value;
         1 means print every value after T_mark.
+        2 means print every value from the begining
         */
     /*
     If `rand_para_size` in model files is 0, 

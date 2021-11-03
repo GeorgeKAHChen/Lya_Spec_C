@@ -87,22 +87,36 @@ void main_algorithm(struct PARAMETERS *parameters)
         print_mark_t += delta_t;
 
         /*Output and Print*/
-        if (curr_t > T_mark && print_mark_t >= print_delta_t){
-            print_mark_t = 0;
-            if (save_as_file == 0){
-                if (print_every_values == 1 || print_every_LyaSpec == 1){
-                    printf("%lf %lf ", curr_t, T_max); 
-                    if (print_every_values == 1)
-                        for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%lf ", curr_x[i]);
-                    if (print_every_LyaSpec == 1)
-                        for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%lf ", spectrum[i]);
-                    printf("\n");
+        if (curr_t > T_mark){
+            if (print_mark_t >= print_delta_t){
+                print_mark_t = 0;
+                if (save_as_file == 0){
+                    if (print_every_values >= 1 || print_every_LyaSpec == 1){
+                        printf("%lf %lf ", curr_t, T_max); 
+                        if (print_every_values == 1)
+                            for (int i = 0; i < parameters->dim; i ++)  
+                                            printf("%lf ", curr_x[i]);
+                        if (print_every_LyaSpec == 1)
+                            for (int i = 0; i < parameters->dim; i ++)  
+                                            printf("%lf ", spectrum[i]);
+                        printf("\n");
+                    }
                 }
             }
         }
-
+        else{
+            if (print_mark_t >= print_delta_t){
+                print_mark_t = 0;
+                if (save_as_file == 0){
+                    if (print_every_values == 2){
+                        printf("%lf %lf ", curr_t, T_max); 
+                        for (int i = 0; i < parameters->dim; i ++)  
+                                            printf("%lf ", curr_x[i]);
+                        printf("\n");
+                    }
+                }
+            }
+        }
         //{printf("[%lf, ", curr_t); for (int i = 0; i < dim; i ++)  printf("%lf, ", curr_x[i]);printf("], ");}
         //if (kase % 100000 == 0)                         {printf("%lf / %lf:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\r");}
         //if (kase % 100000 == 0)                         printf("%lf / %lf:\t", curr_t, T_max);

@@ -8,21 +8,31 @@
 
 #include<stdio.h>
 
-int STOCHASTIC_DIFFERENTIAL_EQUATION = 0;
-
 /*General Parameter*/
 int dim = 4;
 int para_size = 4;
 int rand_para_size = 0;
 
+// X_start - 1d
 //double min_para[] = { -10.0, 5.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
 //double max_para[] = { -10.0, 20.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
 //int group_size[] =  {   1,    601,   1,    1,    1,    1,   1,   1};
 
+// X_start Space - 4d
 //double min_para[] = { -30.0, -20.0, -50.0,  0.0, 0.25, 3.0, 0.5, 0.05};
 //double max_para[] = {  30.0,  20.0,  55.0,  0.0, 0.25, 3.0, 0.5, 0.05};
 //int group_size[] =  {   11,      9,    11,      1,    1,   1,   1,   1};
+
+// Parameter - 1d
+//double min_para[] = {-10.0, -4.0, 0.0, 12.0,  0.2, 2.0, 0.2, 0.48};
+//double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.26, 9.0, 0.6, 0.66};
+//int group_size[]  = {    1,    1,   1,    1,  101, 101, 101,  101};
+
 //Sample = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
+//double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
+//double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
+//int group_size[]  = {    1,    1,   1,    1,    1,   1,   1,   1};
+
 double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
 double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
 int group_size[]  = {    1,    1,   1,    1,    1,   1,   1,   1};
