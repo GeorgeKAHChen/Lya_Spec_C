@@ -186,6 +186,7 @@ def ArrOutput(Arr, Mode = 0, Save_File = True):
     return Str
 
 
+
 def GetNextDay(Time, TimeAdd):
     Day = Time % 100
     Mouth = ((Time - Day)/100) % 100
@@ -447,11 +448,16 @@ def ImageIO(file_dir = "", img = [], io = "i", mode = "rgb", backend = ""):
             if len(file_dir) == 0:
                 raise ValueError("file_dir not be confirmed")
 
-            img = Image.fromarray(img.astype('uint8'), 'RGB')
+            
             if mode == "rgb":
+                img = Image.fromarray(img.astype('uint8'), 'RGB')
                 img.save(file_dir)
             elif mode == "grey":
-                img = img.convert("L")
+                if len(img[0]) == 3:
+                    img = Image.fromarray(img.astype('uint8'), 'RGB')
+                    img = img.convert("L")
+                else:
+                    img = Image.fromarray(img.astype('uint8'))
                 img.save(file_dir)
             else:
                 raise ValueError("mode error, the image mode must be confirmed as 'grey' for mono or 'rgp' for rgb image")
@@ -603,15 +609,32 @@ def error_warning(warning_info):
 
 
 
-def read_json(filename):
-    import json
-    file = open(filename, "r", encoding="utf-8")
+def read_json(filename = "", input_string = ""):
+    if len(filename) == 0 and len(input_string) == 0:
+        print("Json input error, the input should be a file or a string of json")
+        return ""
+
     str_json = ""
-    while 1:
-        line =file.readline()
-        if not line:
-            break 
-        str_json += line[0:-1]
+    if len(input_string) == 0:
+        import json
+        file = open(filename, "r", encoding="utf-8")
+
+        while 1:
+            line = file.readline()
+            if not line:
+                break 
+            maxx = len(line) - 1
+            for i in range(1, len(line)):
+                if line[i] == "/" and line[i-1] == "/":
+                    maxx = i-2
+            line = line[0: maxx]
+            str_json += line
+    else:
+        for i in range(0, len(input_string)):
+            if input_string[i] == "\n":
+                continue
+            else:
+                str_json += input_string[i]
 
     return json.loads(str_json)
 

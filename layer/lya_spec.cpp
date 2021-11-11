@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+#include <cstring>
 
 int lya_spec_init = 0;
 double *mat_Jaco;
@@ -15,10 +15,10 @@ double inner_ab;
 
 void lya_spec_init_check(int dim){
     if (lya_spec_init == 0){
-        old_eye = malloc(dim * dim * sizeof(double));
-        mat_Jaco = malloc(dim * dim * sizeof(double));
-        mat_result = malloc(dim * dim * sizeof(double));
-        new_spec = malloc(dim * sizeof(double));
+        old_eye = (double*)malloc(dim * dim * sizeof(double));
+        mat_Jaco = (double*)malloc(dim * dim * sizeof(double));
+        mat_result = (double*)malloc(dim * dim * sizeof(double));
+        new_spec = (double*)malloc(dim * sizeof(double));
         
         lya_spec_init = 1;
         return ;

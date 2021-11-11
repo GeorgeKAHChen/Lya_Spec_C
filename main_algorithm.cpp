@@ -1,10 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
-#include "layer/ode4.c"
-#include "layer/Lya_Spec.c"
-#include "layer/maruyama.c"
-#include "setting_parameters.c"
+#include "layer/ode4.cpp"
+#include "layer/Lya_Spec.cpp"
+#include "layer/maruyama.cpp"
+#include "setting_parameters.cpp"
 
 void main_algorithm(struct PARAMETERS *parameters)
 {
@@ -22,12 +22,12 @@ void main_algorithm(struct PARAMETERS *parameters)
 
 
     /*Memory Initialization*/
-        curr_x = malloc(parameters->dim * sizeof(double));
-        spectrum = malloc(parameters->dim * sizeof(double));
-        eye = malloc(parameters->dim * parameters->dim * sizeof(double));
+        curr_x = (double*) malloc(parameters->dim * sizeof(double));
+        spectrum = (double*) malloc(parameters->dim * sizeof(double));
+        eye = (double*) malloc(parameters->dim * parameters->dim * sizeof(double));
 
-        para = malloc(parameters->para_size * sizeof(double));
-        rand_para = malloc(parameters->rand_para_size * sizeof(double));
+        para = (double*) malloc(parameters->para_size * sizeof(double));
+        rand_para = (double*) malloc(parameters->rand_para_size * sizeof(double));
 
     
 
@@ -73,9 +73,9 @@ void main_algorithm(struct PARAMETERS *parameters)
         if (curr_t > T_max)             break;
     
         /*Runge-Kutta Calculator*/
-        if (parameters->rand_para_size == 0)
+        if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
                                         ode4(parameters->dim, curr_t, delta_t, curr_x, para, parameters->f);
-        //else                            maruyama(parameters->dim, curr_t, delta_t, curr_x, para, rand_para, f);
+        else                            maruyama(parameters->dim, parameters->rand_dim, curr_t, delta_t, curr_x, para, rand_para, parameters->f, parameters->rand_f);
     
         /*Lya_Spec Calculator*/
         if (curr_t > T_mark){

@@ -56,9 +56,9 @@
 
 //===========================================================
 /*Main Computation parameter*/
-    int print_every_values = 2;
+    int print_every_values = 0;
         /*
-        value: 0, 1;
+        value: 0, 1, 2;
         0 means not print every value;
         1 means print every value after T_mark.
         2 means print every value from the begining
@@ -86,11 +86,14 @@
 struct PARAMETERS{
     double *group_data;                 // [Initial value, parameter, random parameter]
     int dim;                            // Dimension of system
+    int rand_dim;                       // Dimension of random value
     int para_size;                      // Dimension of parameter
     int rand_para_size;                 // Dimension of random parameter
     void (*f)(double*, double*, double, double*);
                                         // Function of system
     void (*Jf)(double*, double*, double , double*);
                                         // Jacobian matrix of the system
+    void (*rand_f)(double*, double*, double, double*, double*);
+                                        // Random part of the system
 };
 #endif

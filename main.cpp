@@ -1,15 +1,15 @@
 //#include "model/Lorenz.c"
 //#include "model/Rossler.c"
 //#include "model/ExtRoss.c"
-#include "model/GER.c"
+#include "model/GER.cpp"
 //#include "model/GenRoss.c"
 //#include "model/Sto_Lorenz.c"
 
-#include <stdlib.h>
-#include <pthread.h>
+#include <cstdlib>
+//#include <cpthread>
 
-#include "main_algorithm.c"
-#include "setting_parameters.c"
+#include "main_algorithm.cpp"
+#include "setting_parameters.cpp"
 
 
 int main(int argc, char const *argv[])
@@ -25,8 +25,8 @@ int main(int argc, char const *argv[])
     int *para_mark;
     int *para_mod;
     double *all_para_vals;
-    para_mark = malloc(group_dim * sizeof(int));
-    para_mod = malloc(group_dim * sizeof(int));
+    para_mark = (int*)malloc(group_dim * sizeof(int));
+    para_mod = (int*)malloc(group_dim * sizeof(int));
     
     for (int i = 0; i < group_dim; i ++){
         sum_group *= group_size[i];
@@ -37,8 +37,8 @@ int main(int argc, char const *argv[])
         else                            para_mod[i] = para_mod[i - 1] * group_size[i];
     }
 
-    total_group = malloc(sum_group * group_dim * sizeof(double));
-    all_para_vals = malloc(para_group * sizeof(double));
+    total_group = (double*)malloc(sum_group * group_dim * sizeof(double));
+    all_para_vals = (double*)malloc(para_group * sizeof(double));
 
     for (int i = 0; i < group_dim; i ++){
         if (group_size[i] != 1){
@@ -84,12 +84,14 @@ int main(int argc, char const *argv[])
     
 
     struct PARAMETERS parameters;
-    parameters.group_data = malloc(group_dim * sizeof(double));
+    parameters.group_data = (double*)malloc(group_dim * sizeof(double));
     parameters.dim = dim;
+    parameters.rand_dim = rand_dim;
     parameters.para_size = para_size;
     parameters.rand_para_size = rand_para_size;
     parameters.f = f;
     parameters.Jf = Jf;
+    parameters.rand_f = rand_f;
 
     for (int i = 0; i < sum_group; i ++){
         memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));

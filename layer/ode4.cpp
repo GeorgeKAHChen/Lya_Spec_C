@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 int ode4_init = 0;
 double *k1;
@@ -13,11 +13,11 @@ double new_t;
 
 void ode4_init_check(int dim){
     if (ode4_init == 0){
-        k1 = malloc(dim * sizeof(double));
-        k2 = malloc(dim * sizeof(double));
-        k3 = malloc(dim * sizeof(double));
-        k4 = malloc(dim * sizeof(double));
-        new_x = malloc(dim * sizeof(double));
+        k1 = (double*)malloc(dim * sizeof(double));
+        k2 = (double*)malloc(dim * sizeof(double));
+        k3 = (double*)malloc(dim * sizeof(double));
+        k4 = (double*)malloc(dim * sizeof(double));
+        new_x = (double*)malloc(dim * sizeof(double));
 
         ode4_init = 1;
         return ;

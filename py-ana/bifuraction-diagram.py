@@ -8,30 +8,25 @@ import Init
 #interval_para = [1, 4.01]
 #distance_para = 0.01
 
-total_iteration_time = 12000
-record_time = 10000
-#total_iteration_time = 120
-#record_time = 100
-#interval_para = [3.825, 3.856]
-interval_para = [0, 1.249]
-#interval_para = [1, 4]
-#distance_para = 0.000005
-distance_para = 0.0001
-distance_y = 0.001
-memory_dimension = 0
+total_iteration_time = 1500000
+record_time = 1000000
+interval_para = [0.1, 6]
+distance_para = 1e-1
+distance_y = 1e-2
+memory_dimension = 2
+delta_t = 1e-3
+Block_min_max = False
+min_max_boundary = [-5, 40]
+x_init = [0, 0, 0]
 
-Block_min_max = True
-min_max_boundary = [-2.5, 2.5]
+para_a = 0.2
+para_c = 0.2
 
 def f(x, parameter):
-    #return 2 * x * (1 - x)
-    #return (3*x - x*x*x)/2
-    #return 3.3 * x * (1-x)
-    #return parameter * x * (1-x)
-    #a, b = 2, -0.3
-    #a, b = 1.28, -0.3
-    #a, b = 0, 0.4
-    return [parameter - x[0] * x[0] + 0.4 * x[1], x[0]]
+    #print(x[2])
+    return [x[0] - delta_t * (x[1] + x[2]), 
+            x[1] + delta_t * (x[0] + para_a * x[1]), 
+            x[2] + delta_t * (para_c + x[2] * (x[0] - parameter))]
 
 
 def main():
@@ -43,12 +38,9 @@ def main():
     fx_list = [[]]
     while 1:
         print(parameter, interval_para[1], end = "\r")
-        #x = [random.random(), random.random()]
-        x = [0.1, 0.1]
+        x = x_init
         fx = f(x, parameter)
-        #print("0 " + str(fx))
         for i in range(0, total_iteration_time):
-            #plt.plot([x, fx], [fx, fx], color[kase])
             x = fx
             fx = f(x, parameter)
             if i > record_time:
@@ -65,29 +57,24 @@ def main():
         para_list.append(parameter)
         fx_list.append([])
         list_rem += 1
-    
-    #Init.ArrOutput(fx_list, Mode = 0)
-    print()
-    #print(y_max, y_min)
-    #print(para_list, int((y_max - y_min) / distance_y) + 1)
+    print(fx_list[0])
     if Block_min_max:
         y_min = min_max_boundary[0]
         y_max = min_max_boundary[1]
     img = [[255 for n in range(len(para_list))] for n in range(int((y_max - y_min) / distance_y) + 1)]
-    print(len(para_list), len(fx_list))
+ 
     for i in range(0, len(para_list) - 2):
-        #print(i, len(para_list), end = "\r")
         for j in range(0, len(fx_list[i]) - 1):
-            #print(j, end = "\r")
             if fx_list[i][j] > y_max or fx_list[i][j] < y_min:
+                continue
+            if str(fx_list[i][j]) == "nan" or str(fx_list[i][j]) == "-nan":
                 continue
             loc_y = int((y_max - fx_list[i][j])/distance_y)
             loc_x = i
             img[loc_y][loc_x] = 0
-        #print()
+    #print(img)
     img = np.float32(img)
-    #print()
-    Init.ImageIO(file_dir = "./img.png", img = np.float32(img), io = "o", mode = "grey", backend = "opencv")
+    Init.ImageIO(file_dir = "./img.png", img = np.float32(img), io = "o", mode = "grey", backend = "")
 
 
 if __name__ == '__main__':
