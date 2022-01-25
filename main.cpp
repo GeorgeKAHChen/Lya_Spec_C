@@ -1,7 +1,8 @@
 //#include "model/Lorenz.c"
 //#include "model/Rossler.c"
 //#include "model/ExtRoss.c"
-#include "model/GER.cpp"
+//#include "model/GER.cpp"
+#include "model/Sto_ERG_w.cpp"
 //#include "model/GenRoss.c"
 //#include "model/Sto_Lorenz.c"
 

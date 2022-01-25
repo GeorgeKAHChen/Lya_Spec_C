@@ -45,9 +45,9 @@ int rand_para_size = 1;
 //int group_size[]  = {    1,    1,   1,    1,   1,   1,   1,    1,   1,   1};
 
 // ER_main
-double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 1.0, 3.0, -0.5, 0.5, 0.05, 0.1};
-double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 1.0, 3.0,    0, 0.5, 0.05, 0.1};
-int group_size[]  = {    1,    1,   1,    1,    1,   1,   1,   51,   1,    1,    1};
+double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 1.0, 3.0, -0.5, 0.5, 0.05, 0.009};
+double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 1.0, 3.0,    0, 0.5, 0.05, 0.009};
+int group_size[]  = {    1,    1,   1,    1,    1,   1,   1,   51,   1,    1,     1};
 
 char model_name[] = "ExtendedRossler(Generalized)";
 
@@ -82,7 +82,7 @@ void rand_f(double *result, double *state, double t, double *random_value, doubl
 
     double para_epsilon = rand_para[0];
     double random_val = random_value[0];
-
+    //printf("%lf, %lf\n", para_epsilon * random_val, result[2]);
     result[0] = result[0];
     result[1] = result[1];
     result[2] = result[2] + para_epsilon * random_val;

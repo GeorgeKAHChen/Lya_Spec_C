@@ -71,7 +71,7 @@ void main_algorithm(struct PARAMETERS *parameters)
 
     while (1){
         if (curr_t > T_max)             break;
-    
+        //double last_z = curr_x[2];
         /*Runge-Kutta Calculator*/
         if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
                                         ode4(parameters->dim, curr_t, delta_t, curr_x, para, parameters->f);
@@ -93,6 +93,7 @@ void main_algorithm(struct PARAMETERS *parameters)
                 if (save_as_file == 0){
                     if (print_every_values >= 1 || print_every_LyaSpec == 1){
                         printf("%lf %lf ", curr_t, T_max); 
+                        //printf("%lf ", curr_x[2] - last_z);
                         if (print_every_values == 1)
                             for (int i = 0; i < parameters->dim; i ++)  
                                             printf("%lf ", curr_x[i]);
@@ -103,6 +104,7 @@ void main_algorithm(struct PARAMETERS *parameters)
                     }
                 }
             }
+
         }
         else{
             if (print_mark_t >= print_delta_t){
