@@ -3,8 +3,14 @@
 //===========================================================
 /*Time parameter*/
     double delta_t = 1e-4;
-    double T_max =  100000;
-    double T_mark = 90000;
+    /*Full interval*/
+    //double T_max =  100000;
+    //double T_mark = 90000;
+    
+    /*Value in attractor*/
+    double T_max =  10000;
+    double T_mark = 1;
+
         /*
         `delta_t` is the step size of the code.
         `T_max` is the final time t.
@@ -13,7 +19,8 @@
         != 0.
         */
 
-    double print_delta_t = 1;
+    //double print_delta_t = 1;
+    double print_delta_t = 1e-4;
         /* 
         If     
             ```      
