@@ -5,7 +5,9 @@
 
 //#include "model/Sto_ERG.cpp"
 //#include "model/Sto_ERG_w.cpp"
-#include "model/Sto_ERG_full.cpp"
+//#include "model/Sto_ERG_full.cpp"
+//#include "model/2dSERS.cpp"
+#include "model/3dSERS.cpp"
 
 #include <cstdlib>
 //#include <cpthread>

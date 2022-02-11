@@ -17,3 +17,9 @@
 `Sto_ERG_w.cpp` Extend Rossler System with w stochastic noise 
 
 `Sto_ERG_full.cpp` Extend Rossler System with x, y, z, w 4-d stochastic noise(in same value)
+
+# SERS transform
+
+`2dSERS.cpp` A simplify of SERS with large y stochastic noise.
+
+`3dSERS.cpp` A simplify of SERS with large w stochastic noise.

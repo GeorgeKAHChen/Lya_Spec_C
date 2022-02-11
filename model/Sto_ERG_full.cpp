@@ -18,9 +18,9 @@ int rand_para_size = 4;
 
 /* 3 - 2 - 1 - (3) - 2 */
 ///*                        x_0,         y_0,          z_0        w_0    a  b  c     mu  sigma1  sigma2  sigma3  sigma4
-double min_para[] = {-13.333874,   -6.043156,    14.617957, 36.531936, 0.2, 3, 0, 0.025,      0,      0,      0, 0.0010};
-double max_para[] = {-13.333874,   -6.043156,    14.617957, 36.531936, 0.2, 3, 0, 0.025,      0,      0,      0, 0.0010};
-int  group_size[] = {         1,           1,            1,         1,   1, 1, 1,     1,      1,      1,      1,     10};
+double min_para[] = {-13.333874,   -6.043156,    14.617957, 36.531936, 0.2, 3, 0, 0.025,      0, 0.0000,      0, 0.0000};
+double max_para[] = {-13.333874,   -6.043156,    14.617957, 36.531936, 0.2, 3, 0, 0.025,      0, 0.0000,      0, 0.0000};
+int  group_size[] = {         1,           1,            1,         1,   1, 1, 1,     1,      1,      1,      1,    100};
 //*/
 
 char model_name[] = "ExtendedRossler(4-d noise)";
@@ -37,6 +37,8 @@ void f(double *result, double *state, double t, double *para){
     double para_c = para[2];
     double para_mu = para[3];
 
+    printf("%lf \n", x+para_a*y+w);
+
     result[0] = -(y+z);
     result[1] = x+para_a*y+w;
     result[2] = para_b+x*z-para_c*z;
@@ -52,7 +54,7 @@ void rand_f(double *result, double *state, double t, double *random_value, doubl
     double z = state[2];
     double w = state[3];
 
-    //printf("%lf, %lf\n", para_epsilon * random_val, result[2]);
+    //printf("%lf\n", rand_para[1] * random_value[0]);
     result[0] = result[0] + rand_para[0] * random_value[0];
     result[1] = result[1] + rand_para[1] * random_value[0];
     result[2] = result[2] + rand_para[2] * random_value[0];
