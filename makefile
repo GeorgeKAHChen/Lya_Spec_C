@@ -1,6 +1,6 @@
 
 main: clean
-	g++ -o Lya_spec main.cpp -lm -O3 -ffast-math -lpthread #-Wall  -Wextra -Werror -pedantic
+	g++ -o Lya_spec main.cpp -lm -O3 -ffast-math -lpthread -std=c++11 #-Wall  -Wextra -Werror -pedantic
 	./Lya_spec
 
 e: clean

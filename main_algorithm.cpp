@@ -2,7 +2,7 @@
 #include <cstdlib>
 
 #include "layer/ode4.cpp"
-#include "layer/Lya_Spec.cpp"
+#include "layer/lya_spec.cpp"
 #include "layer/maruyama.cpp"
 #include "setting_parameters.cpp"
 

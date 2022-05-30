@@ -1,13 +1,15 @@
-//#include "model/Lorenz.c"
+#include "model/Lorenz.cpp"
 //#include "model/Rossler.c"
 //#include "model/ExtRoss.c"
 //#include "model/GenRoss.c"
 
 //#include "model/Sto_ERG.cpp"
-//#include "model/Sto_ERG_w.cpp"
+
+//#include "model/Sto_ERG_w.cpp"        //Normally use this
+
 //#include "model/Sto_ERG_full.cpp"
 //#include "model/2dSERS.cpp"
-#include "model/3dSERS.cpp"
+//#include "model/3dSERS.cpp"
 
 #include <cstdlib>
 //#include <cpthread>
