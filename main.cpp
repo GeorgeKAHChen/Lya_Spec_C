@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
 {
 
     /*Group property initialization*/
-    double *total_group;
+    long double *total_group;
 
     int sum_group = 1;
     int para_group = 0;
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
 
     int *para_mark;
     int *para_mod;
-    double *all_para_vals;
+    long double *all_para_vals;
     para_mark = (int*)malloc(group_dim * sizeof(int));
     para_mod = (int*)malloc(group_dim * sizeof(int));
     
@@ -43,12 +43,12 @@ int main(int argc, char const *argv[])
         else                            para_mod[i] = para_mod[i - 1] * group_size[i];
     }
 
-    total_group = (double*)malloc(sum_group * group_dim * sizeof(double));
-    all_para_vals = (double*)malloc(para_group * sizeof(double));
+    total_group = (long double*)malloc(sum_group * group_dim * sizeof(long double));
+    all_para_vals = (long double*)malloc(para_group * sizeof(long double));
 
     for (int i = 0; i < group_dim; i ++){
         if (group_size[i] != 1){
-            double delta_val = (max_para[i] - min_para[i]) / (group_size[i] - 1);
+            long double delta_val = (max_para[i] - min_para[i]) / (group_size[i] - 1);
             all_para_vals[para_mark[i]] = min_para[i];
             for(int j = 1 ; j < group_size[i] - 1; j ++){
                 all_para_vals[para_mark[i] + j] = all_para_vals[para_mark[i] + j - 1] + delta_val;
@@ -90,7 +90,7 @@ int main(int argc, char const *argv[])
     
 
     struct PARAMETERS parameters;
-    parameters.group_data = (double*)malloc(group_dim * sizeof(double));
+    parameters.group_data = (long double*)malloc(group_dim * sizeof(long double));
     parameters.dim = dim;
     parameters.rand_dim = rand_dim;
     parameters.para_size = para_size;

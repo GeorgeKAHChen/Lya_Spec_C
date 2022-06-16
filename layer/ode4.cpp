@@ -2,22 +2,22 @@
 #include <cstdlib>
 
 int ode4_init = 0;
-double *k1;
-double *k2;
-double *k3;
-double *k4;
-double *new_x;
+long double *k1;
+long double *k2;
+long double *k3;
+long double *k4;
+long double *new_x;
 
-double new_t;
+long double new_t;
 
 
 void ode4_init_check(int dim){
     if (ode4_init == 0){
-        k1 = (double*)malloc(dim * sizeof(double));
-        k2 = (double*)malloc(dim * sizeof(double));
-        k3 = (double*)malloc(dim * sizeof(double));
-        k4 = (double*)malloc(dim * sizeof(double));
-        new_x = (double*)malloc(dim * sizeof(double));
+        k1 = (long double*)malloc(dim * sizeof(long double));
+        k2 = (long double*)malloc(dim * sizeof(long double));
+        k3 = (long double*)malloc(dim * sizeof(long double));
+        k4 = (long double*)malloc(dim * sizeof(long double));
+        new_x = (long double*)malloc(dim * sizeof(long double));
 
         ode4_init = 1;
         return ;
@@ -28,9 +28,9 @@ void ode4_init_check(int dim){
 
 
 
-void ode4(int dim, double curr_t, double delta_t, 
-          double *curr_x, double *para,
-          void (*f)(double*, double*, double, double*))
+void ode4(int dim, long double curr_t, long double delta_t, 
+          long double *curr_x, long double *para,
+          void (*f)(long double*, long double*, long double, long double*))
 {
     /*Initialization*/
     ode4_init_check(dim);

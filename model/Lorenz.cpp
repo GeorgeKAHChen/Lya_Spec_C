@@ -18,9 +18,9 @@ int rand_para_size = 0;
 
 /* 3 - 2 - 1 - (3) - 2 */
 ///*                 x_0,  y_0, z_0  sigma    rho   beta
-double min_para[] = {-0.1, 0.1, 0.1,  10.0,   0.0,   8/3};
-double max_para[] = { 0.1, 0.1, 0.1,  10.0,  30.0,   8/3};
-int  group_size[] = {   2,   1,   1,     1,    31,     1};
+long double min_para[] = {-0.1, 0.1, 0.1,  10.0,  28.0,   8/3};
+long double max_para[] = { 0.1, 0.1, 0.1,  10.0,  28.0,   8/3};
+int  group_size[] = {   2,   1,   1,     1,     1,     1};
 //*/
 
 char model_name[] = "Lorenz";
@@ -28,10 +28,10 @@ char model_name[] = "Lorenz";
 
 
 /*Dot f function*/
-void f(double *result, double *state, double t, double *para){
-    double x = state[0];
-    double y = state[1];
-    double z = state[2];
+void f(long double *result, long double *state, long double t, long double *para){
+    long double x = state[0];
+    long double y = state[1];
+    long double z = state[2];
     result[0] = para[0] * (y - x);
     result[1] = x * (para[1] - z) - y;
     result[2] = x * y - para[2] * z;
@@ -42,10 +42,10 @@ void f(double *result, double *state, double t, double *para){
 
 
 /*dW_t - for maruyama part of EM algorithm*/
-void rand_f(double *result, double *state, double t, double *random_value, double *rand_para){
-    double x = state[0];
-    double y = state[1];
-    double z = state[2];
+void rand_f(long double *result, long double *state, long double t, long double *random_value, long double *rand_para){
+    long double x = state[0];
+    long double y = state[1];
+    long double z = state[2];
 
     //printf("%lf, %lf\n", para_epsilon * random_val, result[2]);
     result[0] = result[0];
@@ -58,10 +58,10 @@ void rand_f(double *result, double *state, double t, double *random_value, doubl
 
 
 /*Iteration Jacobian Matrix*/
-void Jf(double *result, double *state, double delta_t, double *para){
-    double x = state[0];
-    double y = state[1];
-    double z = state[2];
+void Jf(long double *result, long double *state, long double delta_t, long double *para){
+    long double x = state[0];
+    long double y = state[1];
+    long double z = state[2];
 
     result[0] = 1.0 - delta_t * para[0];
     result[1] = delta_t * para[0];

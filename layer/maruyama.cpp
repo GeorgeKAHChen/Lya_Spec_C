@@ -3,21 +3,21 @@
 #include <random>
 
 int maruyama_init = 0;
-double *maruyama_x;
-double *random_value;
+long double *maruyama_x;
+long double *random_value;
 std::random_device rd{};
 std::mt19937 rand_gen{rd()};
 std::normal_distribution<> gauss_dis{0,1};
 
-double random_value_generator(){
+long double random_value_generator(){
     return gauss_dis(rand_gen);
 }
 
 
 void maruyama_init_check(int dim, int rand_dim){
     if (maruyama_init == 0){
-        maruyama_x = (double*)malloc(2 * dim * sizeof(double));
-        random_value = (double*)malloc(rand_dim * sizeof(double));
+        maruyama_x = (long double*)malloc(2 * dim * sizeof(long double));
+        random_value = (long double*)malloc(rand_dim * sizeof(long double));
         maruyama_init = 1;
         return ;
     }
@@ -25,10 +25,10 @@ void maruyama_init_check(int dim, int rand_dim){
         return ;
 }
 
-void maruyama(int dim, int rand_dim, double curr_t, double delta_t, 
-          double *curr_x, double *para, double *rand_para,
-          void (*f)(double*, double*, double, double*),
-          void (*rand_f)(double*, double*, double, double*, double*))
+void maruyama(int dim, int rand_dim, long double curr_t, long double delta_t, 
+          long double *curr_x, long double *para, long double *rand_para,
+          void (*f)(long double*, long double*, long double, long double*),
+          void (*rand_f)(long double*, long double*, long double, long double*, long double*))
 {
     /*Initialization*/
     maruyama_init_check(dim, rand_dim);

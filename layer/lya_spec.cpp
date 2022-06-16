@@ -4,21 +4,21 @@
 #include <cstring>
 
 int lya_spec_init = 0;
-double *mat_Jaco;
-double *mat_result;
-double *new_spec;
-double *old_eye;
+long double *mat_Jaco;
+long double *mat_result;
+long double *new_spec;
+long double *old_eye;
 
-double inner_beta;
-double inner_ab;
+long double inner_beta;
+long double inner_ab;
 
 
 void lya_spec_init_check(int dim){
     if (lya_spec_init == 0){
-        old_eye = (double*)malloc(dim * dim * sizeof(double));
-        mat_Jaco = (double*)malloc(dim * dim * sizeof(double));
-        mat_result = (double*)malloc(dim * dim * sizeof(double));
-        new_spec = (double*)malloc(dim * sizeof(double));
+        old_eye = (long double*)malloc(dim * dim * sizeof(long double));
+        mat_Jaco = (long double*)malloc(dim * dim * sizeof(long double));
+        mat_result = (long double*)malloc(dim * dim * sizeof(long double));
+        new_spec = (long double*)malloc(dim * sizeof(long double));
         
         lya_spec_init = 1;
         return ;
@@ -28,7 +28,7 @@ void lya_spec_init_check(int dim){
 }
 
 
-void mat_multi(int dim, double *mat_x, double *mat_y, double *mat_result){
+void mat_multi(int dim, long double *mat_x, long double *mat_y, long double *mat_result){
     for (int i = 0; i < dim; i ++){
         for (int j = 0; j < dim; j ++){
             mat_result[i*dim + j] = 0;
@@ -40,8 +40,8 @@ void mat_multi(int dim, double *mat_x, double *mat_y, double *mat_result){
 }
 
 
-void gram_schmidt(int dim, double *mat_result, double *eye, double *new_spec){
-    memcpy(eye, mat_result, dim * dim * sizeof(double));
+void gram_schmidt(int dim, long double *mat_result, long double *eye, long double *new_spec){
+    memcpy(eye, mat_result, dim * dim * sizeof(long double));
 
     /*gram_schmidt*/
     for (int kase = 0; kase < dim; kase ++){
@@ -59,7 +59,7 @@ void gram_schmidt(int dim, double *mat_result, double *eye, double *new_spec){
 
     /*Normalization*/
     for (int i = 0; i < dim; i ++){
-        new_spec[i] = (double)0;
+        new_spec[i] = (long double)0;
         for (int j = 0; j < dim; j ++)
             new_spec[i] += eye[i + dim*j] * eye[i + dim*j];
         new_spec[i] = sqrt(new_spec[i]);
@@ -71,9 +71,9 @@ void gram_schmidt(int dim, double *mat_result, double *eye, double *new_spec){
 }
 
 
-double lya_spec(int dim, double *curr_x,
-              double delta_t, void (*Jf)(double*, double*, double, double*),
-              double *eye, double *spectrum, double t_after, double * para)
+long double lya_spec(int dim, long double *curr_x,
+              long double delta_t, void (*Jf)(long double*, long double*, long double, long double*),
+              long double *eye, long double *spectrum, long double t_after, long double * para)
 {
     /*Initialization*/
     lya_spec_init_check(dim);

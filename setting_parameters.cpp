@@ -2,14 +2,14 @@
 #define INITIALIZATION
 //===========================================================
 /*Time parameter*/
-    double delta_t = 1e-4;
+    long double delta_t = 1e-4;
     /*Full interval*/
-    //double T_max =  100000;
-    //double T_mark = 90000;
+    long double T_max =  1000;
+    long double T_mark = 900;
     
     /*Value in attractor*/
-    double T_max =  10000;
-    double T_mark = 1;
+    //long double T_max =  10000;
+    //long double T_mark = 1;
 
         /*
         `delta_t` is the step size of the code.
@@ -19,8 +19,8 @@
         != 0.
         */
 
-    double print_delta_t = 1;
-    //double print_delta_t = 1e-4;
+    long double print_delta_t = -1;
+    //long double print_delta_t = 1e-4;
         /* 
         If     
             ```      
@@ -30,6 +30,9 @@
         != 0, then after every `print_delta_t`, the system will print
         the result. If `print_delta_t` <= `delta_t`, then the system
         will print every results after `delta_t`.
+
+
+        If print_delta_t = -1, then the system will print every result.
         */
 //===========================================================
 
@@ -39,7 +42,7 @@
 
 //===========================================================
 /*Lyapunov Spectrum parameter*/
-    int print_every_LyaSpec = 0;
+    int print_every_LyaSpec = 1;
         /*
         value: 0, 1;
         0 means not print every Lyapunov spectrum;
@@ -63,7 +66,7 @@
 
 //===========================================================
 /*Main Computation parameter*/
-    int print_every_values = 0;
+    int print_every_values = 1;
         /*
         value: 0, 1, 2;
         0 means not print every value;
@@ -79,28 +82,17 @@
 
 
 
-//===========================================================
-/*File Output Parameter*/
-    int save_as_file = 0;
-        /*
-        value:0, 1;
-        0 means the code will print everything on screen;
-        1 means the code will print everything process into one file.
-        */
-//===========================================================
-
-
 struct PARAMETERS{
-    double *group_data;                 // [Initial value, parameter, random parameter]
+    long double *group_data;                 // [Initial value, parameter, random parameter]
     int dim;                            // Dimension of system
     int rand_dim;                       // Dimension of random value
     int para_size;                      // Dimension of parameter
     int rand_para_size;                 // Dimension of random parameter
-    void (*f)(double*, double*, double, double*);
+    void (*f)(long double*, long double*, long double, long double*);
                                         // Function of system
-    void (*Jf)(double*, double*, double , double*);
+    void (*Jf)(long double*, long double*, long double , long double*);
                                         // Jacobian matrix of the system
-    void (*rand_f)(double*, double*, double, double*, double*);
+    void (*rand_f)(long double*, long double*, long double, long double*, long double*);
                                         // Random part of the system
 };
 #endif

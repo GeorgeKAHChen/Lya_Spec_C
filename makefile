@@ -4,7 +4,7 @@ main: clean
 	./Lya_spec
 
 e: clean
-	g++ -o Lya_spec main.cpp -lm -lpthread #-O3 #-ffast-math
+	g++ -o Lya_spec main.cpp -lm -lpthread -std=c++11 #-O3 #-ffast-math
 
 rem: e
 	rm -rf nohup.out

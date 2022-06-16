@@ -9,29 +9,29 @@
 void main_algorithm(struct PARAMETERS *parameters)
 {
     /*Define Parameter*/
-        double curr_t;                  // Time parameter(during the iteration)
-        double t_after;                 // Lyapunov Spectrum time average use
+        long double curr_t;                  // Time parameter(during the iteration)
+        long double t_after;                 // Lyapunov Spectrum time average use
 
-        double *curr_x;                 // current x vector
-        double *spectrum;               // current spectrum vector
-        double *eye;                    // Lyapunov Spectrum iteration matrix
+        long double *curr_x;                 // current x vector
+        long double *spectrum;               // current spectrum vector
+        long double *eye;                    // Lyapunov Spectrum iteration matrix
 
-        double *para;                   // Parameter vector
-        double *rand_para;              // Random parameter vector
+        long double *para;                   // Parameter vector
+        long double *rand_para;              // Random parameter vector
 
 
 
     /*Memory Initialization*/
-        curr_x = (double*) malloc(parameters->dim * sizeof(double));
-        spectrum = (double*) malloc(parameters->dim * sizeof(double));
-        eye = (double*) malloc(parameters->dim * parameters->dim * sizeof(double));
+        curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
+        spectrum = (long double*) malloc(parameters->dim * sizeof(long double));
+        eye = (long double*) malloc(parameters->dim * parameters->dim * sizeof(long double));
 
-        para = (double*) malloc(parameters->para_size * sizeof(double));
-        rand_para = (double*) malloc(parameters->rand_para_size * sizeof(double));
+        para = (long double*) malloc(parameters->para_size * sizeof(long double));
+        rand_para = (long double*) malloc(parameters->rand_para_size * sizeof(long double));
 
     
 
-    //printf("delta = %lf, T_max = %lf, T_mark = %lf\n", delta_t, T_max, T_mark);
+    //printf("delta = %Le, T_max = %Le, T_mark = %Le\n", delta_t, T_max, T_mark);
 
     /*Value Initialization*/
         curr_t = 0;
@@ -52,22 +52,21 @@ void main_algorithm(struct PARAMETERS *parameters)
 
 
     /*Main Loop*/
-    double print_mark_t = 0;
+    long double print_mark_t = 0;
 
-    if (save_as_file == 0){
-                                        printf("StartValue ");
-        for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%lf ", curr_x[i]);
-                                        printf("Parameter ");
-        for (int i = 0; i < parameters->para_size; i ++)      
-                                        printf("%lf ", para[i]);
-                                        printf("RandParameter ");
-        for (int i = 0; i < parameters->rand_para_size; i ++)      
-                                        printf("%lf ", rand_para[i]);
-        if (print_every_values != 1 && print_every_LyaSpec != 1)
-                                        printf("MainVals ");
-        else                            printf("MainVals\n");
-    }
+                printf("StartValue ");
+    for (int i = 0; i < parameters->dim; i ++)  
+                printf("%Le ", curr_x[i]);
+                printf("Parameter ");
+    for (int i = 0; i < parameters->para_size; i ++)      
+                printf("%Le ", para[i]);
+                printf("RandParameter ");
+    for (int i = 0; i < parameters->rand_para_size; i ++)      
+                printf("%Le ", rand_para[i]);
+    if (print_every_values != 1 && print_every_LyaSpec != 1)
+                printf("MainVals ");
+        else    printf("MainVals\n");
+
 
     while (1){
         if (curr_t > T_max)             break;
@@ -92,18 +91,16 @@ void main_algorithm(struct PARAMETERS *parameters)
         if (curr_t > T_mark){
             if (print_mark_t >= print_delta_t){
                 print_mark_t = 0;
-                if (save_as_file == 0){
-                    if (print_every_values >= 1 || print_every_LyaSpec == 1){
-                        printf("%lf %lf ", curr_t, T_max); 
-                        //printf("%lf ", curr_x[2] - last_z);
-                        if (print_every_values == 1)
-                            for (int i = 0; i < parameters->dim; i ++)  
-                                            printf("%lf ", curr_x[i]);
-                        if (print_every_LyaSpec == 1)
-                            for (int i = 0; i < parameters->dim; i ++)  
-                                            printf("%lf ", spectrum[i]);
-                        printf("\n");
-                    }
+                if (print_every_values >= 1 || print_every_LyaSpec == 1){
+                    printf("%Le %Le ", curr_t, T_max); 
+                    //printf("%Le ", curr_x[2] - last_z);
+                    if (print_every_values == 1)
+                        for (int i = 0; i < parameters->dim; i ++)  
+                                        printf("%Le ", curr_x[i]);
+                    if (print_every_LyaSpec == 1)
+                        for (int i = 0; i < parameters->dim; i ++)  
+                                        printf("%Le ", spectrum[i]);
+                    printf("\n");
                 }
             }
 
@@ -111,30 +108,26 @@ void main_algorithm(struct PARAMETERS *parameters)
         else{
             if (print_mark_t >= print_delta_t){
                 print_mark_t = 0;
-                if (save_as_file == 0){
-                    if (print_every_values == 2){
-                        printf("%lf %lf ", curr_t, T_max); 
-                        for (int i = 0; i < parameters->dim; i ++)  
-                                            printf("%lf ", curr_x[i]);
-                        printf("\n");
-                    }
+                if (print_every_values == 2){
+                    printf("%Le %Le ", curr_t, T_max); 
+                    for (int i = 0; i < parameters->dim; i ++)  
+                                        printf("%Le ", curr_x[i]);
+                    printf("\n");
                 }
             }
         }
-        //{printf("[%lf, ", curr_t); for (int i = 0; i < dim; i ++)  printf("%lf, ", curr_x[i]);printf("], ");}
-        //if (kase % 100000 == 0)                         {printf("%lf / %lf:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%lf ", curr_x[i]);printf("\r");}
-        //if (kase % 100000 == 0)                         printf("%lf / %lf:\t", curr_t, T_max);
-        //if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%lf ", spectrum[i]);printf("\r");}
+        //{printf("[%Le, ", curr_t); for (int i = 0; i < dim; i ++)  printf("%Le, ", curr_x[i]);printf("], ");}
+        //if (kase % 100000 == 0)                         {printf("%Le / %Le:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%Le ", curr_x[i]);printf("\r");}
+        //if (kase % 100000 == 0)                         printf("%Le / %Le:\t", curr_t, T_max);
+        //if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%Le ", spectrum[i]);printf("\r");}
         //else                                            printf("\r");
     }
-    if (save_as_file == 0){
-        printf("%lf %lf ", curr_t, T_max); 
-        for (int i = 0; i < parameters->dim; i ++)  printf("%lf ", curr_x[i]);
-                                        
-        if (print_every_LyaSpec == 1 || print_final_LyaSpec == 1){
-            for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%lf ", spectrum[i]);
-        }
-        printf("\n");
+    printf("%Le %Le ", curr_t, T_max); 
+    for (int i = 0; i < parameters->dim; i ++)  printf("%Le ", curr_x[i]);
+                                    
+    if (print_every_LyaSpec == 1 || print_final_LyaSpec == 1){
+        for (int i = 0; i < parameters->dim; i ++)  
+                                    printf("%Le ", spectrum[i]);
     }
+    printf("\n");
 }
