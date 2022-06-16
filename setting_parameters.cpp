@@ -92,7 +92,7 @@ struct PARAMETERS{
                                         // Function of system
     void (*Jf)(long double*, long double*, long double , long double*);
                                         // Jacobian matrix of the system
-    void (*rand_f)(long double*, long double*, long double, long double*, long double*);
+    void (*rand_f)(long double*, long double*, long double, long double*, long double*, long double);
                                         // Random part of the system
 };
 #endif

@@ -28,7 +28,7 @@ void maruyama_init_check(int dim, int rand_dim){
 void maruyama(int dim, int rand_dim, long double curr_t, long double delta_t, 
           long double *curr_x, long double *para, long double *rand_para,
           void (*f)(long double*, long double*, long double, long double*),
-          void (*rand_f)(long double*, long double*, long double, long double*, long double*))
+          void (*rand_f)(long double*, long double*, long double, long double*, long double*, long double))
 {
     /*Initialization*/
     maruyama_init_check(dim, rand_dim);
@@ -38,7 +38,7 @@ void maruyama(int dim, int rand_dim, long double curr_t, long double delta_t,
     
     for (int i = 0; i < dim; i ++)
         maruyama_x[i] = curr_x[i] + maruyama_x[i] * delta_t;
-    rand_f(maruyama_x, curr_x, curr_t, random_value, rand_para);
+    rand_f(maruyama_x, curr_x, curr_t, random_value, rand_para, delta_t);
     for (int i = 0; i < dim; i ++)
         curr_x[i] = maruyama_x[i];
     return ;
