@@ -14,6 +14,7 @@ int dim = 4;
 int rand_dim = 0;
 int para_size = 4;
 int rand_para_size = 0;
+int this_is_map = 0;
 
 long double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};
 long double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.5, 0.05};

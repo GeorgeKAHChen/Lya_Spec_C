@@ -130,4 +130,5 @@ void main_algorithm(struct PARAMETERS *parameters)
                                     printf("%Le ", spectrum[i]);
     }
     printf("\n");
+
 }

@@ -1,13 +1,15 @@
-#include "model/Lorenz.cpp"
+//#include "model/Lorenz.cpp"
 //#include "model/Rossler.cpp"
 //#include "model/ExtRoss.cpp"
 //#include "model/Sto_ERG_w.cpp"        //Normally use this
-//#include "model/Logistic.cpp"
+
+#include "model/Logistic.cpp"
 
 #include <cstdlib>
 //#include <cpthread>
 
 #include "main_algorithm.cpp"
+#include "map_algorithm.cpp"
 #include "setting_parameters.cpp"
 
 
@@ -88,15 +90,20 @@ int main(int argc, char const *argv[])
     parameters.rand_dim = rand_dim;
     parameters.para_size = para_size;
     parameters.rand_para_size = rand_para_size;
+    parameters.this_is_map = this_is_map;
     parameters.f = f;
     parameters.Jf = Jf;
     parameters.rand_f = rand_f;
-
-    for (int i = 0; i < sum_group; i ++){
-        memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));
-        main_algorithm(&parameters);
-    }
-    
+    if (this_is_map == 0)
+        for (int i = 0; i < sum_group; i ++){
+            memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));
+            main_algorithm(&parameters);
+        }
+    else
+        for (int i = 0; i < sum_group; i ++){
+            memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));
+            map_algorithm(&parameters);
+        }
     return 0;
 
 }
