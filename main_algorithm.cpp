@@ -53,7 +53,7 @@ void main_algorithm(struct PARAMETERS *parameters)
 
     /*Main Loop*/
     long double print_mark_t = 0;
-
+    if (print_title == 1){
                 printf("StartValue ");
     for (int i = 0; i < parameters->dim; i ++)  
                 printf("%Le ", curr_x[i]);
@@ -66,7 +66,7 @@ void main_algorithm(struct PARAMETERS *parameters)
     if (print_every_values != 1 && print_every_LyaSpec != 1)
                 printf("MainVals ");
         else    printf("MainVals\n");
-
+    }
 
     while (1){
         if (curr_t > T_max)             break;
@@ -93,6 +93,7 @@ void main_algorithm(struct PARAMETERS *parameters)
                 print_mark_t = 0;
                 if (print_every_values >= 1 || print_every_LyaSpec == 1){
                     printf("%Le %Le ", curr_t, T_max); 
+                    parameters->call_info(para);
                     //printf("%Le ", curr_x[2] - last_z);
                     if (print_every_values == 1)
                         for (int i = 0; i < parameters->dim; i ++)  
@@ -116,19 +117,15 @@ void main_algorithm(struct PARAMETERS *parameters)
                 }
             }
         }
-        //{printf("[%Le, ", curr_t); for (int i = 0; i < dim; i ++)  printf("%Le, ", curr_x[i]);printf("], ");}
-        //if (kase % 100000 == 0)                         {printf("%Le / %Le:\t", curr_t, T_max); for (int i = 0; i < dim; i ++)  printf("%Le ", curr_x[i]);printf("\r");}
-        //if (kase % 100000 == 0)                         printf("%Le / %Le:\t", curr_t, T_max);
-        //if (curr_t > T_mark && kase % 100000 == 0)      {for (int i = 0; i < dim; i ++)  printf("%Le ", spectrum[i]);printf("\r");}
-        //else                                            printf("\r");
     }
-    printf("%Le %Le ", curr_t, T_max); 
-    for (int i = 0; i < parameters->dim; i ++)  printf("%Le ", curr_x[i]);
-                                    
-    if (print_every_LyaSpec == 1 || print_final_LyaSpec == 1){
-        for (int i = 0; i < parameters->dim; i ++)  
-                                    printf("%Le ", spectrum[i]);
+    if (print_end == 1){
+        printf("%Le %Le ", curr_t, T_max); 
+        for (int i = 0; i < parameters->dim; i ++)  printf("%Le ", curr_x[i]);
+                                        
+        if (print_every_LyaSpec == 1 || print_final_LyaSpec == 1){
+            for (int i = 0; i < parameters->dim; i ++)  
+                                        printf("%Le ", spectrum[i]);
+        }
+        printf("\n");
     }
-    printf("\n");
-
 }

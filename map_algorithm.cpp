@@ -40,7 +40,7 @@ void map_algorithm(struct PARAMETERS *parameters)
 
     /*Main Loop*/
     long long int print_mark_t = 0;
-
+    if (print_title == 1){
                 printf("StartValue ");
     for (int i = 0; i < parameters->dim; i ++)  
                 printf("%Le ", curr_x[i]);
@@ -53,7 +53,7 @@ void map_algorithm(struct PARAMETERS *parameters)
     if (print_every_values != 1 && print_every_LyaSpec != 1)
                 printf("MainVals ");
         else    printf("MainVals\n");
-
+    }
 
     while (1){
         if (curr_t > step_max)          break;
@@ -74,8 +74,8 @@ void map_algorithm(struct PARAMETERS *parameters)
             if (print_mark_t >= print_delta_s){
                 print_mark_t = 0;
                 if (print_every_values >= 1 || print_every_LyaSpec == 1){
-                    printf("%lld %lld ", curr_t, step_max); 
-                    //printf("%Le ", curr_x[2] - last_z);
+                    printf("%lld ", curr_t); 
+                    parameters->call_info(para);
                     if (print_every_values == 1)
                         for (int i = 0; i < parameters->dim; i ++)  
                                         printf("%Le ", curr_x[i]);
@@ -100,12 +100,14 @@ void map_algorithm(struct PARAMETERS *parameters)
         }
 
     }
-    printf("%lld %lld ", curr_t, step_max); 
-    for (int i = 0; i < parameters->dim; i ++)  printf("%Le ", curr_x[i]);
-                                    
-    if (print_every_LyaSpec == 1 || print_final_LyaSpec == 1){
-        for (int i = 0; i < parameters->dim; i ++)  
-                                    printf("%Le ", spectrum[i]);
+    if (print_end == 1){
+        printf("%lld ", curr_t); 
+        for (int i = 0; i < parameters->dim; i ++)  printf("%Le ", curr_x[i]);
+                                        
+        if (print_every_LyaSpec == 1 || print_final_LyaSpec == 1){
+            for (int i = 0; i < parameters->dim; i ++)  
+                                        printf("%Le ", spectrum[i]);
+        }
+        printf("\n");
     }
-    printf("\n");
 }

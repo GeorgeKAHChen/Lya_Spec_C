@@ -48,7 +48,6 @@ void rand_f(long double *result, long double *state, long double t, long double 
 
 
 
-
 /*Iteration Jacobian Matrix*/
 void Jf(long double *result, long double *state, long double delta_t, long double *para){
     long double x = state[0];
@@ -59,3 +58,8 @@ void Jf(long double *result, long double *state, long double delta_t, long doubl
     return ;
 }
 
+
+void call_info(long double *para){
+    printf("%Le ", para[0]);
+    return ;
+}

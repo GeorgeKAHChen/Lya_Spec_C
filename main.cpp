@@ -94,6 +94,8 @@ int main(int argc, char const *argv[])
     parameters.f = f;
     parameters.Jf = Jf;
     parameters.rand_f = rand_f;
+    parameters.call_info = call_info;
+    
     if (this_is_map == 0)
         for (int i = 0; i < sum_group; i ++){
             memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));

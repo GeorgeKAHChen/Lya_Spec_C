@@ -96,3 +96,7 @@ void Jf(long double *result, long double *state, long double delta_t, long doubl
 }
 
 
+
+void call_info(long double *para){
+    return ;
+}

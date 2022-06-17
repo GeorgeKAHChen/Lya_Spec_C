@@ -73,7 +73,7 @@
         1 means print every Lyapunov spectrum after T_mark.
         */
 
-    int print_final_LyaSpec = 1;
+    int print_final_LyaSpec = 0;
         /*
         value: 0, 1;
         0 means not print the final Lyapunov spectrum;
@@ -102,6 +102,19 @@
     then the code will use Runge-Kutta 4 method (ode4), 
     else, the code will use the Euler-Maruyama method.
     */
+
+    int print_title = 0;
+        /*
+        value: 0, 1
+        0 means the system will not print the parameter information
+        1 means the system will print the parameter information
+        */
+    int print_end = 0;
+        /*
+        value: 0, 1
+        0 means the system will not print the parameter information
+        1 means the system will print the parameter information
+        */
 //===========================================================
 
 
@@ -119,5 +132,7 @@ struct PARAMETERS{
                                         // Jacobian matrix of the system
     void (*rand_f)(long double*, long double*, long double, long double*, long double*, long double);
                                         // Random part of the system
+    void (*call_info)(long double*);
+                                        // Print data information
 };
 #endif
