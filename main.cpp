@@ -1,9 +1,9 @@
 //#include "model/Lorenz.cpp"
 //#include "model/Rossler.cpp"
-//#include "model/ExtRoss.cpp"
+#include "model/ExtRoss.cpp"
 //#include "model/Sto_ERG_w.cpp"        //Normally use this
 
-#include "model/Logistic.cpp"
+//#include "model/Logistic.cpp"
 
 #include <cstdlib>
 //#include <cpthread>

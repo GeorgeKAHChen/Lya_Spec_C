@@ -4,8 +4,8 @@
 /*Time parameter*/
 
     long double delta_t         = 1e-4;
-    long double T_max           = 100000;
-    long double T_mark          = 98000;
+    long double T_max           = 20000;
+    long double T_mark          = 19000;
     long double print_delta_t   = -1;
         
         /*
@@ -73,7 +73,7 @@
         1 means print every Lyapunov spectrum after T_mark.
         */
 
-    int print_final_LyaSpec = 0;
+    int print_final_LyaSpec = 1;
         /*
         value: 0, 1;
         0 means not print the final Lyapunov spectrum;
@@ -90,7 +90,7 @@
 
 //===========================================================
 /*Main Computation parameter*/
-    int print_every_values = 1;
+    int print_every_values = 0;
         /*
         value: 0, 1, 2;
         0 means not print every value;
@@ -103,13 +103,13 @@
     else, the code will use the Euler-Maruyama method.
     */
 
-    int print_title = 0;
+    int print_title = 1;
         /*
         value: 0, 1
         0 means the system will not print the parameter information
         1 means the system will print the parameter information
         */
-    int print_end = 0;
+    int print_end = 1;
         /*
         value: 0, 1
         0 means the system will not print the parameter information
