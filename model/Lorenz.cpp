@@ -20,9 +20,9 @@ int this_is_map = 0;
 
 /* 3 - 2 - 1 - (3) - 2 */
 ///*                       x_0,  y_0, z_0  sigma    rho   beta
-long double min_para[] = { 0.1, 0.1, 0.1,  10.0,  28.0,   8.0/3.0};
-long double max_para[] = { 0.1, 0.1, 0.1,  10.0,  280.0,   8.0/3.0};
-int  group_size[] = {   1,   1,   1,     1,     1,     1};
+long double min_para[] = { 0.1, 0.1, 0.1,  10.0,  1.0,   8.0/3.0};
+long double max_para[] = { 0.1, 0.1, 0.1,  10.0,  30.0,   8.0/3.0};
+int  group_size[] = {   1,   1,   1,     1,     30,     1};
 //*/
 
 char model_name[] = "Lorenz";
