@@ -16,8 +16,8 @@ int para_size = 4;
 int rand_para_size = 0;
 int this_is_map = 0;
 
-long double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.0, 0.00};
-long double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.25, 3.0, 0.0, 0.05};
+long double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.20, 3.0, 0.0, 0.00};
+long double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.20, 3.0, 0.0, 0.05};
 int group_size[]  = {         1,    1,   1,    1,    1,   1,   1, 1000};
 
 char model_name[] = "ExtRoss";
@@ -36,8 +36,8 @@ void f(long double *result, long double *state, long double t, long double *para
 
     result[0] = -y-z;
     result[1] = x+para_a*y+w;
-    result[2] = para_b+x*z;
-    result[3] = -para_c*z+para_d*w;
+    result[2] = para_b+x*z-para_c*z;
+    result[3] = -para_d*(10*z-w);
     return ;
 }
 
@@ -89,7 +89,7 @@ void Jf(long double *result, long double *state, long double delta_t, long doubl
 
     result[12] = 0.0;
     result[13] = 0.0;
-    result[14] = -para_c*delta_t;
+    result[14] = -10*para_d*delta_t;
     result[15] = 1+para_d*delta_t;
 
     return ;

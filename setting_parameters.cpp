@@ -4,8 +4,8 @@
 /*Time parameter*/
 
     long double delta_t         = 1e-4;
-    long double T_max           = 20000;
-    long double T_mark          = 19000;
+    long double T_max           = 100000;
+    long double T_mark          = 90000;
     long double print_delta_t   = -1;
         
         /*
