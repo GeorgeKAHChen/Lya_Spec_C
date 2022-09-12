@@ -16,10 +16,25 @@ int para_size = 4;
 int rand_para_size = 0;
 int this_is_map = 0;
 
-long double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.20, 3.0, 0.0, 0.00};
+long double min_para[] = {-10.0, -4.0, 0.0, 12.0, 0.20, 3.0, 0.0, 0.01};
 long double max_para[] = {-10.0, -4.0, 0.0, 12.0, 0.20, 3.0, 0.0, 0.05};
-int group_size[]  = {         1,    1,   1,    1,    1,   1,   1, 1000};
+int group_size[]  = {         1,    1,   1,    1,    1,   1,   1,    101};
+/*
+022761
+022764
 
+022512
+022515
+
+0225
+0228
+*/
+
+/*
+long double min_para[] = {-4.612952e+01, -2.630973e+01, 6.426973e-02, 3.563405e+01, 0.20, 3.0, 0.0, 0.0227};
+long double max_para[] = {-4.612952e+01, -2.630973e+01, 6.426973e-02, 3.563405e+01, 0.20, 3.0, 0.0, 0.0227};
+int group_size[]  = {                 1,             1,            1,            1,    1,   1,   1,       1};
+*/
 char model_name[] = "ExtRoss";
 
 /*Dot f function*/

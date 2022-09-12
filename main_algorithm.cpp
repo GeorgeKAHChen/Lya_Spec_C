@@ -6,6 +6,13 @@
 #include "layer/maruyama.cpp"
 #include "setting_parameters.cpp"
 
+int poincare = 0;
+// -1 means not calculate poincare, print every value based on paraemeter_setting
+// 0-n means the dimension of dot x_i = 0, local max
+
+int poin_mod = 0;
+// 0 means dot x = 0
+// 1 means x = 0
 void main_algorithm(struct PARAMETERS *parameters)
 {
     /*Define Parameter*/
@@ -19,7 +26,9 @@ void main_algorithm(struct PARAMETERS *parameters)
         long double *para;                   // Parameter vector
         long double *rand_para;              // Random parameter vector
 
-
+        //Parameter for poincare section
+        long double *lastlast;
+        long double *last;
 
     /*Memory Initialization*/
         curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
@@ -29,7 +38,8 @@ void main_algorithm(struct PARAMETERS *parameters)
         para = (long double*) malloc(parameters->para_size * sizeof(long double));
         rand_para = (long double*) malloc(parameters->rand_para_size * sizeof(long double));
 
-    
+        lastlast = (long double*) malloc(parameters->dim * sizeof(long double));
+        last = (long double*) malloc(parameters->dim * sizeof(long double));
 
     //printf("delta = %Le, T_max = %Le, T_mark = %Le\n", delta_t, T_max, T_mark);
 
@@ -92,16 +102,46 @@ void main_algorithm(struct PARAMETERS *parameters)
             if (print_mark_t >= print_delta_t){
                 print_mark_t = 0;
                 if (print_every_values >= 1 || print_every_LyaSpec == 1){
-                    printf("%Le %Le ", curr_t, T_max); 
+                    
                     parameters->call_info(para);
                     //printf("%Le ", curr_x[2] - last_z);
-                    if (print_every_values == 1)
-                        for (int i = 0; i < parameters->dim; i ++)  
+                    if (print_every_values == 1){
+                        if (poincare >= 0){
+                            if (poin_mod == 0){
+                                if (last[poincare] > lastlast[poincare] && last[poincare] > curr_x[poincare]){
+                                    printf("%Le %Le ", curr_t, T_max); 
+                                    for (int i = 0; i < parameters->dim; i ++)  
+                                            printf("%Le ", last[i]);
+                                    printf("\n");
+                                }
+                            }
+                            else if(poin_mod == 1){
+                                if (last[poincare] > 0 && curr_x[poincare] < 0){
+                                    printf("%Le %Le ", curr_t, T_max); 
+                                    for (int i = 0; i < parameters->dim; i ++)  
+                                            printf("%Le ", (last[i] + curr_x[i])/2);
+                                    printf("\n");
+                                }
+                            }
+                            for (int i = 0; i < parameters->dim; i ++){
+                                lastlast[i] = last[i];
+                                last[i] = curr_x[i];
+                            }
+                        }
+                        else{
+                            printf("%Le %Le ", curr_t, T_max); 
+                            for (int i = 0; i < parameters->dim; i ++)  
                                         printf("%Le ", curr_x[i]);
-                    if (print_every_LyaSpec == 1)
+                            printf("\n");
+                        }
+                    }
+                    if (print_every_LyaSpec == 1){
+                        printf("%Le %Le ", curr_t, T_max); 
                         for (int i = 0; i < parameters->dim; i ++)  
                                         printf("%Le ", spectrum[i]);
-                    printf("\n");
+                        printf("\n");
+                    }
+                    
                 }
             }
 

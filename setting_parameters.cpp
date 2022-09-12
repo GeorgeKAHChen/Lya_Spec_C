@@ -4,10 +4,37 @@
 /*Time parameter*/
 
     long double delta_t         = 1e-4;
+    
+    /*ps
     long double T_max           = 100000;
     long double T_mark          = 90000;
+    long double print_delta_t   = 1e-4;
+    */
+    /*ob
+    long double T_max           = 100000;
+    long double T_mark          = 99950;
+    long double print_delta_t   = 1e-3;
+    */
+    /*rand-ps
+    long double T_max           = 10000;
+    long double T_mark          = 1;
     long double print_delta_t   = -1;
-        
+    */ 
+    /*long ps*/
+    long double T_max           = 1100000;
+    long double T_mark          =  100000;
+    long double print_delta_t   = -1;
+    
+    /*long ob
+    long double T_max           = 100000;
+    long double T_mark          = 90000;
+    long double print_delta_t   = 1e-3;
+    */ 
+    /*long le-ps-new
+    long double T_max           = 300000;
+    long double T_mark          = 100000;
+    long double print_delta_t   = -1;
+    */ 
         /*
             * Only can be used when the system is ODE
 
@@ -90,7 +117,7 @@
 
 //===========================================================
 /*Main Computation parameter*/
-    int print_every_values = 0;
+    int print_every_values = 1;
         /*
         value: 0, 1, 2;
         0 means not print every value;

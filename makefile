@@ -16,3 +16,11 @@ run:
 clean:
 	@ clear
 	@ rm -rf ./Lya_spec
+
+out: clean
+	@ rm -rf output
+	@ g++ -o Lya_spec main.cpp -lm -O3 -ffast-math -lpthread -std=c++11 #-Wall  -Wextra -Werror -pedantic
+	@ nohup ./Lya_spec > output &
+
+ps: out
+	@ python poincare_section.py
