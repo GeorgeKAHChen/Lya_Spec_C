@@ -3,144 +3,62 @@
 //===========================================================
 /*Time parameter*/
 
-    long double delta_t         = 1e-4;
-    
-    /*ps
-    long double T_max           = 100000;
-    long double T_mark          = 90000;
-    long double print_delta_t   = 1e-4;
-    */
-    /*ob
-    long double T_max           = 100000;
-    long double T_mark          = 99950;
-    long double print_delta_t   = 1e-3;
-    */
-    /*rand-ps
-    long double T_max           = 10000;
-    long double T_mark          = 1;
-    long double print_delta_t   = -1;
-    */ 
-    /*long ps*/
-    long double T_max           = 1100000;
-    long double T_mark          =  100000;
-    long double print_delta_t   = -1;
-    
-    /*long ob
-    long double T_max           = 100000;
-    long double T_mark          = 90000;
-    long double print_delta_t   = 1e-3;
-    */ 
-    /*long le-ps-new
-    long double T_max           = 300000;
-    long double T_mark          = 100000;
-    long double print_delta_t   = -1;
-    */ 
+    long double delta_t         = 1e-5;
+    long double t_max           = 100000;
         /*
-            * Only can be used when the system is ODE
+            Main iteration parameter time(continuous system)
 
-            1. `delta_t` is the step size of the code.
-            2. `T_max` is the final time t.
-            
-            3. After `T_mark`, the code will try to compute the Lyapunov 
-            Spectrum if `print_every_LyaSpec` or `print_final_LyaSpec`
-            != 0.
-
-            4. If     
-                ```      
-                print_every_LyaSpec
-                print_every_values
-                ```
-            != 0, then after every `print_delta_t`, the system will print
-            the result. If `print_delta_t` <= `delta_t`, then the system
-            will print every results after `delta_t`.
-            
-            * If print_delta_t = -1, then the system will print every result.
+            delta_t             time step size for simulation
+            T_max               the max time for simulation
         */
 
     long long int step_max      = 1000000;
-    long long int step_mark     = 900000;
-    long long int print_delta_s = -1;
-        /*
-            * Only can be used when the system is map
 
-            The total iteration step the system will computation.
+        /*
+            Main iteration parameter time(discrete system/map)
+
+            calc_ps = 0:        not output poincare section
+            calc_ps = 1:        output poincare section
+
+            step_max:           the max time for simulation
+        */
+    int         calc_le         = 1;
+    long double t_le            = 0.9;
+
+        /*
+            Time for lyapunov spectrum computation
+
+            calc_le = 0:        not compute LE
+            calc_le = 1:        compute LE
             
-            1. `step_max` is the final iteration step of a map.
-            2. After `step_mark`, the code will try to compute the Lyapunov 
-            Spectrum if `print_every_LyaSpec` or `print_final_LyaSpec`
-            != 0.
+            T_le:               T_max * T_le = time start compute LE
+        */
 
-            4. If     
-                ```      
-                print_every_LyaSpec
-                print_every_values
-                ```
-            != 0, then after every `print_delta_s`, the system will print
-            the result. If `print_delta_s` <= `delta_t`, then the system
-            will print every results after `delta_t`.
+    int         calc_ob         = 1;
+    long double delta_t_ob      = 1e-3;
+    long double t_ob            = 0.99;
+
+        /*
+            Time for orbit/attractor output
+
+            calc_le = 0:        not output orbit
+            calc_le = 1:        output orbit
             
-            * If print_delta_s = -1, then the system will print every result.
+            delta_t_ob:         orbit output delta_t
+
+            T_ob:               T_max * T_ob = time start output orbit
         */
 
-/*
-    * LCE/LE/LS of map are not finish.
-*/
-//===========================================================
+    int         calc_ps         = 1;
+    long double t_ps            = 0.8;
 
-
-
-
-
-//===========================================================
-/*Lyapunov Spectrum parameter*/
-    int print_every_LyaSpec = 0;
         /*
-        value: 0, 1;
-        0 means not print every Lyapunov spectrum;
-        1 means print every Lyapunov spectrum after T_mark.
-        */
+            Time for orbit/attractor output
 
-    int print_final_LyaSpec = 1;
-        /*
-        value: 0, 1;
-        0 means not print the final Lyapunov spectrum;
-        1 means print final Lyapunov spectrum.
-        */
-    /*
-    If both `print_every_LyaSpec` and `print_final_LyaSpec` are 0, 
-    then the code will not compute the Lyapunov Spectrum.
-    */
-//===========================================================
+            calc_ps = 0:        not output poincare section
+            calc_ps = 1:        output poincare section
 
-
-
-
-//===========================================================
-/*Main Computation parameter*/
-    int print_every_values = 1;
-        /*
-        value: 0, 1, 2;
-        0 means not print every value;
-        1 means print every value after T_mark.
-        2 means print every value from the begining
-        */
-    /*
-    If `rand_para_size` in model files is 0, 
-    then the code will use Runge-Kutta 4 method (ode4), 
-    else, the code will use the Euler-Maruyama method.
-    */
-
-    int print_title = 1;
-        /*
-        value: 0, 1
-        0 means the system will not print the parameter information
-        1 means the system will print the parameter information
-        */
-    int print_end = 1;
-        /*
-        value: 0, 1
-        0 means the system will not print the parameter information
-        1 means the system will print the parameter information
+            T_ps:               T_max * T_ps = time start output poincare section
         */
 //===========================================================
 
@@ -159,7 +77,7 @@ struct PARAMETERS{
                                         // Jacobian matrix of the system
     void (*rand_f)(long double*, long double*, long double, long double*, long double*, long double);
                                         // Random part of the system
-    void (*call_info)(long double*);
-                                        // Print data information
+    int (*ps_f)(long double*, int, long double*);
+                                        // Function to find the poincare section
 };
 #endif

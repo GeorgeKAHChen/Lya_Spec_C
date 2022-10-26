@@ -14,9 +14,10 @@ run:
 	@ ./Lya_spec
 
 clean:
-	@ clear
 	@ rm -rf ./Lya_spec
-
+	@ rm -rf output
+	@ mkdir output
+	
 out: clean
 	@ rm -rf output
 	@ g++ -o Lya_spec main.cpp -lm -O3 -ffast-math -lpthread -std=c++11 #-Wall  -Wextra -Werror -pedantic

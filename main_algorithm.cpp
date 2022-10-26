@@ -1,171 +1,228 @@
 #include <cstdio>
 #include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include "layer/ode4.cpp"
 #include "layer/lya_spec.cpp"
 #include "layer/maruyama.cpp"
 #include "setting_parameters.cpp"
 
-int poincare = 0;
-// -1 means not calculate poincare, print every value based on paraemeter_setting
-// 0-n means the dimension of dot x_i = 0, local max
 
-int poin_mod = 0;
-// 0 means dot x = 0
-// 1 means x = 0
+int ttl_group = 0;                      // Value for output file name
+
 void main_algorithm(struct PARAMETERS *parameters)
 {
     /*Define Parameter*/
-        long double curr_t;                  // Time parameter(during the iteration)
-        long double t_after;                 // Lyapunov Spectrum time average use
 
-        long double *curr_x;                 // current x vector
-        long double *spectrum;               // current spectrum vector
-        long double *eye;                    // Lyapunov Spectrum iteration matrix
+        // Computation parameter
+            long double curr_t;             // Time parameter(during the iteration)
 
-        long double *para;                   // Parameter vector
-        long double *rand_para;              // Random parameter vector
+        // System/OB parameter
+            long double t_ob_mark;
+            long double *curr_x;            // current x vector
+            long double *para;              // Parameter vector
+            long double *rand_para;         // Random parameter vector
+            long double curr_ob_t = 0;
 
-        //Parameter for poincare section
-        long double *lastlast;
-        long double *last;
+        // LE parameter
+            long double t_le_mark;
+            long double *spectrum;          // current spectrum vector
+            long double *eye;               // Lyapunov Spectrum iteration matrix
+            long double curr_le_t = 0;
+
+        // PS parameter
+            long double t_ps_mark;
+            long double *ps_return;         // Poincare section value return 
+            int ps_print = -1;               // Poincare section print check
+
+
 
     /*Memory Initialization*/
-        curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
-        spectrum = (long double*) malloc(parameters->dim * sizeof(long double));
-        eye = (long double*) malloc(parameters->dim * parameters->dim * sizeof(long double));
 
-        para = (long double*) malloc(parameters->para_size * sizeof(long double));
-        rand_para = (long double*) malloc(parameters->rand_para_size * sizeof(long double));
+        // System/OB parameter
+            curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
+            para = (long double*) malloc(parameters->para_size * sizeof(long double));
+            rand_para = (long double*) malloc(parameters->rand_para_size * sizeof(long double));
+        
+        // LE parameter
+            spectrum = (long double*) malloc(parameters->dim * sizeof(long double));
+            eye = (long double*) malloc(parameters->dim * parameters->dim * sizeof(long double));
+        
+        // PS parameter
+            ps_return = (long double*) malloc(parameters->dim * sizeof(long double));
 
-        lastlast = (long double*) malloc(parameters->dim * sizeof(long double));
-        last = (long double*) malloc(parameters->dim * sizeof(long double));
 
-    //printf("delta = %Le, T_max = %Le, T_mark = %Le\n", delta_t, T_max, T_mark);
-
+        
     /*Value Initialization*/
-        curr_t = 0;
-        t_after = 0;
-
-        for (int i = 0; i < parameters->dim; i ++){
-            curr_x[i] = parameters->group_data[i];
-            spectrum[i] = 0;
-            for (int j = 0; j < parameters->dim; j ++){
-                if (i == j)             eye[i*parameters->dim + j] = 1;
-                else                    eye[i*parameters->dim + j] = 0;
+        // System/OB parameter
+            curr_t = 0;
+            
+            for (int i = 0; i < parameters->dim; i ++){
+                curr_x[i] = parameters->group_data[i];
+                spectrum[i] = 0;
+                for (int j = 0; j < parameters->dim; j ++){
+                    if (i == j)             eye[i*parameters->dim + j] = 1;
+                    else                    eye[i*parameters->dim + j] = 0;
+                }
             }
-        }
-        for (int i = 0; i < parameters->para_size; i ++)
-                                        para[i] = parameters->group_data[dim + i];
+            for (int i = 0; i < parameters->para_size; i ++)
+                                            para[i] = parameters->group_data[dim + i];
+            for (int i = 0; i < parameters->rand_para_size; i ++)
+                                            rand_para[i] = parameters->group_data[dim + parameters->para_size + i];
+        // OB parameter
+            if (calc_ob == 1)               t_ob_mark = t_max * t_ob;
+
+        // LE parameter
+            if (calc_le == 1)               t_le_mark = t_max * t_le;
+
+        // PS parameter
+            if (calc_ps == 1)               t_ps_mark = t_max * t_ps;
+
+
+    /*Output Initalization*/
+        ttl_group += 1;
+
+        // File name init
+            std::stringstream file_str_info;
+            std::stringstream file_str_ob;
+            std::stringstream file_str_ps;
+        
+        // File name write
+            file_str_info << "output/" << ttl_group << ".info";
+            file_str_ob << "output/" << ttl_group << "_ob.dat";
+            file_str_ps << "output/" << ttl_group << "_ps.dat";
+
+        // File name string init
+            std::string file_name_info;
+            std::string file_name_ob;
+            std::string file_name_ps;
+
+        // File name string build
+            file_str_info >> file_name_info;
+            file_str_ob >> file_name_ob;
+            file_str_ps >> file_name_ps;
+
+        // File init
+            std::ofstream file_info;
+            std::ofstream file_ob;
+            std::ofstream file_ps;
+
+        // File open
+            file_info.open(file_name_info, std::ios_base::app);
+            file_ob.open(file_name_ob, std::ios_base::app);
+            file_ps.open(file_name_ps, std::ios_base::app);
+
+
+
+    /*Standard data output*/
+
+        file_info << "=============================================\n";
+        file_info << "Computation Parameters: \n";
+        file_info << "Iteration: delta_t, t_max" << delta_t << " " << t_max << "\n";
+        file_info << "LE: compute: " << calc_le << ", t_le: " << t_le << "\n";
+        file_info << "OB: compute: " << calc_ob << ", t_ob: " << t_le << ", delta_t_ob: " << delta_t_ob << "\n";
+        file_info << "PS: compute: " << calc_ps << ", t_ob: " << t_ps << "\n";
+        file_info << "=============================================\n";
+        file_info << "Initial Condition: \n";
+        for (int i = 0; i < parameters->dim; i ++)
+                                            file_info << curr_x[i] << " ";
+        file_info << "\n";
+        file_info << "Parameters: \n";
+        for (int i = 0; i < parameters->para_size; i ++)      
+                                            file_info << para[i] << " ";
+        file_info << "\n";
+        file_info << "Random Parameters: \n";
         for (int i = 0; i < parameters->rand_para_size; i ++)
-                                        rand_para[i] = parameters->group_data[dim + parameters->para_size + i];
+                                            file_info << rand_para[i] << " ";
+        file_info << "\n";
+        file_info << "=============================================\n";
+
+        std::cout << "=============================================\n";
+        std::cout << "Computation Parameters: \n";
+        std::cout << "Iteration: delta_t, t_max" << delta_t << " " << t_max << "\n";
+        std::cout << "LE: compute: " << calc_le << ", t_le: " << t_le << "\n";
+        std::cout << "OB: compute: " << calc_ob << ", t_ob: " << t_le << ", delta_t_ob: " << delta_t_ob << "\n";
+        std::cout << "PS: compute: " << calc_ps << ", t_ob: " << t_ps << "\n";
+        std::cout << "=============================================\n";
+        std::cout << "Initial Condition: \n";
+        for (int i = 0; i < parameters->dim; i ++)
+                                            std::cout << curr_x[i] << " ";
+        std::cout << "\n";
+        std::cout << "Parameters: \n";
+        for (int i = 0; i < parameters->para_size; i ++)      
+                                            std::cout << para[i] << " ";
+        std::cout << "\n";
+        std::cout << "Random Parameters: \n";
+        for (int i = 0; i < parameters->rand_para_size; i ++)
+                                            std::cout << rand_para[i] << " ";
+        std::cout << "\n";
+        std::cout << "=============================================\n";
 
 
-    /*Main Loop*/
-    long double print_mark_t = 0;
-    if (print_title == 1){
-                printf("StartValue ");
-    for (int i = 0; i < parameters->dim; i ++)  
-                printf("%Le ", curr_x[i]);
-                printf("Parameter ");
-    for (int i = 0; i < parameters->para_size; i ++)      
-                printf("%Le ", para[i]);
-                printf("RandParameter ");
-    for (int i = 0; i < parameters->rand_para_size; i ++)      
-                printf("%Le ", rand_para[i]);
-    if (print_every_values != 1 && print_every_LyaSpec != 1)
-                printf("MainVals ");
-        else    printf("MainVals\n");
-    }
+    /*Main algorithm*/
+        int print_kase = 0;
+        while (1){
+            /*Condition check*/
+                if (curr_t > t_max)         break;
+                if (curr_x[0] > 1e15 || curr_x[0] < -1e15)
+                                            break;
+                     
+            /*System Calculator*/
+                if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
+                                            ode4(parameters->dim, curr_t, delta_t, curr_x, para, parameters->f);
+                else                        maruyama(parameters->dim, parameters->rand_dim, curr_t, delta_t, curr_x, para, rand_para, parameters->f, parameters->rand_f);        
+        
+            /*OB check and output*/
+                if (calc_ob == 1 && curr_t >= t_ob_mark && curr_ob_t >= delta_t_ob){
+                    curr_ob_t = 0;
+                    for (int i = 0; i < parameters->dim; i ++)
+                                            file_ob << curr_x[i] << " ";
+                    file_ob << "\n";
+                }
 
-    while (1){
-        if (curr_t > T_max)             break;
-        if (curr_x[0] > 1000000 || curr_x[0] < -1000000)         
-                                        break;          //Overflow break
-                                    
-        /*Runge-Kutta Calculator*/
-        if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                        ode4(parameters->dim, curr_t, delta_t, curr_x, para, parameters->f);
-        else                            maruyama(parameters->dim, parameters->rand_dim, curr_t, delta_t, curr_x, para, rand_para, parameters->f, parameters->rand_f);
-    
-        /*Lya_Spec Calculator*/
-        if (curr_t > T_mark){
-            if (print_every_LyaSpec != 0 || print_final_LyaSpec != 0)
-                                        t_after = lya_spec(parameters->dim, curr_x, delta_t, parameters->Jf, eye, spectrum, t_after, para);
-        }
+            /*LE computation*/
+                if (calc_le == 1 && curr_t >= t_le_mark)
+                                            lya_spec(parameters->dim, curr_x, delta_t, parameters->Jf, eye, spectrum, curr_le_t, para);
 
-        curr_t += delta_t;
-        print_mark_t += delta_t;
-
-        /*Output and Print*/
-        if (curr_t > T_mark){
-            if (print_mark_t >= print_delta_t){
-                print_mark_t = 0;
-                if (print_every_values >= 1 || print_every_LyaSpec == 1){
-                    
-                    parameters->call_info(para);
-                    //printf("%Le ", curr_x[2] - last_z);
-                    if (print_every_values == 1){
-                        if (poincare >= 0){
-                            if (poin_mod == 0){
-                                if (last[poincare] > lastlast[poincare] && last[poincare] > curr_x[poincare]){
-                                    printf("%Le %Le ", curr_t, T_max); 
-                                    for (int i = 0; i < parameters->dim; i ++)  
-                                            printf("%Le ", last[i]);
-                                    printf("\n");
-                                }
-                            }
-                            else if(poin_mod == 1){
-                                if (last[poincare] > 0 && curr_x[poincare] < 0){
-                                    printf("%Le %Le ", curr_t, T_max); 
-                                    for (int i = 0; i < parameters->dim; i ++)  
-                                            printf("%Le ", (last[i] + curr_x[i])/2);
-                                    printf("\n");
-                                }
-                            }
-                            for (int i = 0; i < parameters->dim; i ++){
-                                lastlast[i] = last[i];
-                                last[i] = curr_x[i];
-                            }
-                        }
-                        else{
-                            printf("%Le %Le ", curr_t, T_max); 
-                            for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%Le ", curr_x[i]);
-                            printf("\n");
-                        }
-                    }
-                    if (print_every_LyaSpec == 1){
-                        printf("%Le %Le ", curr_t, T_max); 
-                        for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%Le ", spectrum[i]);
-                        printf("\n");
+            /*PS check and output*/
+                if (calc_ps == 1 and curr_t > t_ps_mark){
+                    ps_print = ps_f(curr_x, ps_print, ps_return);
+                    if (ps_print == 1){
+                        for (int i = 0; i < parameters->dim; i ++)
+                                            file_ps << ps_return[i] << " ";
+                        file_ps << "\n";
                     }
                     
+                    ps_print = 0;
                 }
+
+            /*Time iteartion*/
+                if (calc_le == 1 && curr_t >= t_le_mark)
+                                            curr_le_t += delta_t;
+                if (calc_ob == 1 && curr_t >= t_ob_mark)
+                                            curr_ob_t += delta_t;
+                curr_t += delta_t;
+                print_kase += 1;
+                if (print_kase % 10000000 == 0){
+                    std::cout << curr_t << " " << t_max << " " << ttl_group << " " << curr_x[0] << "\n";
+                }
+        }
+
+    /*After treatment and le output*/
+        // LE OUTPUT
+            if (calc_le == 1){
+                file_info << "Lyapunov Spectrum: \n";
+                for (int i = 0; i < parameters->dim; i ++)
+                                            file_info << spectrum[i] << " ";
+                file_info << "\n";
             }
 
-        }
-        else{
-            if (print_mark_t >= print_delta_t){
-                print_mark_t = 0;
-                if (print_every_values == 2){
-                    printf("%Le %Le ", curr_t, T_max); 
-                    for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%Le ", curr_x[i]);
-                    printf("\n");
-                }
-            }
-        }
-    }
-    if (print_end == 1){
-        printf("%Le %Le ", curr_t, T_max); 
-        for (int i = 0; i < parameters->dim; i ++)  printf("%Le ", curr_x[i]);
-                                        
-        if (print_every_LyaSpec == 1 || print_final_LyaSpec == 1){
-            for (int i = 0; i < parameters->dim; i ++)  
-                                        printf("%Le ", spectrum[i]);
-        }
-        printf("\n");
-    }
+        // File close
+            file_info.close();
+            file_ob.close();
+            file_ps.close();
+    return ;
+
 }

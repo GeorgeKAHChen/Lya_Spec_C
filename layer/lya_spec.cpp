@@ -71,7 +71,7 @@ void gram_schmidt(int dim, long double *mat_result, long double *eye, long doubl
 }
 
 
-long double lya_spec(int dim, long double *curr_x,
+void lya_spec(int dim, long double *curr_x,
               long double delta_t, void (*Jf)(long double*, long double*, long double, long double*),
               long double *eye, long double *spectrum, long double t_after, long double * para)
 {
@@ -91,7 +91,6 @@ long double lya_spec(int dim, long double *curr_x,
     for (int i = 0; i < dim; i ++)         
         spectrum[i] = (spectrum[i] * t_after + log(new_spec[i])) / (t_after + delta_t);
 
-    t_after += delta_t;
-    return t_after;
+    return ;
 }
 

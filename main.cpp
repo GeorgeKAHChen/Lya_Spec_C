@@ -68,27 +68,6 @@ int main(int argc, char const *argv[])
         }
     }
 
-    /* Main computation*/
-    /*
-    struct PARAMETERS parameters[sum_group];
-
-    pthread_t threads[sum_group];
-    for (int i = 0; i < sum_group; i ++){
-        parameters[i].group_data = malloc(group_dim * sizeof(double));
-        parameters[i].dim = dim;
-        parameters[i].para_size = para_size;
-        parameters[i].rand_para_size = rand_para_size;
-        parameters[i].f = f;
-        parameters[i].Jf = Jf;
-        memcpy(parameters[i].group_data, total_group + i * group_dim, group_dim * sizeof(double));
-        pthread_create(&(threads[i]), NULL, main_algorithm, &parameters[i]);
-    }
-    for (int i = 0; i < sum_group; i ++)
-        pthread_join(threads[i], NULL);
-    pthread_exit(NULL);
-    */
-    
-
     struct PARAMETERS parameters;
     parameters.group_data = (long double*)malloc(group_dim * sizeof(long double));
     parameters.dim = dim;
@@ -99,7 +78,7 @@ int main(int argc, char const *argv[])
     parameters.f = f;
     parameters.Jf = Jf;
     parameters.rand_f = rand_f;
-    parameters.call_info = call_info;
+    parameters.ps_f = ps_f;
     
     if (this_is_map == 0)
         for (int i = 0; i < sum_group; i ++){
