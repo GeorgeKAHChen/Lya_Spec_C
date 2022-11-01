@@ -1,10 +1,26 @@
 #ifndef INITIALIZATION
 #define INITIALIZATION
+
+    long double delta_t         = 1e-5;
+    long double t_max           = 1e5;
+    
+    long long int step_max      = 1000000;
+    
+    int         calc_le         = 1;
+    long double t_le            = 0.75;
+
+    int         calc_ob         = 1;
+    long double delta_t_ob      = 1e-3;
+    long double t_ob            = 0.999;
+
+    int         calc_ps         = 1;
+    long double t_ps            = 0.25;
+
 //===========================================================
 /*Time parameter*/
 
-    long double delta_t         = 1e-5;
-    long double t_max           = 100000;
+    //long double delta_t         = 1e-5;
+    //long double t_max           = 200000;
         /*
             Main iteration parameter time(continuous system)
 
@@ -12,7 +28,7 @@
             T_max               the max time for simulation
         */
 
-    long long int step_max      = 1000000;
+    //long long int step_max      = 1000000;
 
         /*
             Main iteration parameter time(discrete system/map)
@@ -22,8 +38,8 @@
 
             step_max:           the max time for simulation
         */
-    int         calc_le         = 1;
-    long double t_le            = 0.9;
+    //int         calc_le         = 1;
+    //long double t_le            = 0.8;
 
         /*
             Time for lyapunov spectrum computation
@@ -34,9 +50,9 @@
             T_le:               T_max * T_le = time start compute LE
         */
 
-    int         calc_ob         = 1;
-    long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.99;
+    //int         calc_ob         = 1;
+    //long double delta_t_ob      = 1e-3;
+    //long double t_ob            = 0.999;
 
         /*
             Time for orbit/attractor output
@@ -49,8 +65,8 @@
             T_ob:               T_max * T_ob = time start output orbit
         */
 
-    int         calc_ps         = 1;
-    long double t_ps            = 0.8;
+    //int         calc_ps         = 1;
+    //long double t_ps            = 0.25;
 
         /*
             Time for orbit/attractor output
