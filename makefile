@@ -1,4 +1,3 @@
-
 main: c run
 
 c: clean
@@ -7,7 +6,7 @@ c: clean
 run: del 
 	@ ./Lya_spec
 
-clean: del
+clean:
 	@ rm -rf ./Lya_spec
 
 del:
