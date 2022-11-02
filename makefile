@@ -1,4 +1,5 @@
 main: c run
+	@ echo " "
 
 c: clean
 	@ g++ -o Lya_spec main.cpp -lm -O3 -ffast-math -lpthread -std=c++11 #-Wall  -Wextra -Werror -pedantic

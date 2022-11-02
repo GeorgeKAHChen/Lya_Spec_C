@@ -1,4 +1,4 @@
-#include "model/ExtRoss.cpp"
+//#include "model/ExtRoss.cpp"
 //#include "model/ExtRoss_normal_noise.cpp"
 
 
@@ -6,7 +6,7 @@
 //#include "model/Rossler.cpp"
 //#include "model/Sto_ERG_w.cpp"        //Normally use this
 
-//#include "model/Logistic.cpp"
+#include "model/Logistic.cpp"
 
 
 

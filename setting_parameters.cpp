@@ -4,7 +4,7 @@
     long double delta_t         = 1e-5;
     long double t_max           = 1e5;
     
-    long long int step_max      = 1000000;
+    long long int step_max      = 1e9;
     
     int         calc_le         = 1;
     long double t_le            = 0.75;
