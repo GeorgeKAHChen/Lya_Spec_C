@@ -37,7 +37,8 @@ void main_algorithm(struct PARAMETERS *parameters)
             long double *ps_return;         // Poincare section value return 
             int ps_print = -1;               // Poincare section print check
 
-
+        // Computation method
+            int use_maruyama = 0;
 
     /*Memory Initialization*/
 
@@ -170,8 +171,7 @@ void main_algorithm(struct PARAMETERS *parameters)
                                             break;
                      
             /*System Calculator*/
-                if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                            ode4(parameters->dim, curr_t, delta_t, curr_x, para, parameters->f);
+                if (use_maruyama == 0)      ode4(parameters->dim, curr_t, delta_t, curr_x, para, parameters->f);
                 else                        maruyama(parameters->dim, parameters->rand_dim, curr_t, delta_t, curr_x, para, rand_para, parameters->f, parameters->rand_f);        
         
             /*OB check and output*/
@@ -180,12 +180,18 @@ void main_algorithm(struct PARAMETERS *parameters)
                     for (int i = 0; i < parameters->dim; i ++)
                                             file_ob << curr_x[i] << " ";
                     file_ob << "\n";
+                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
+                                            use_maruyama = 0;
+                    else                    use_maruyama = 1;
                 }
 
             /*LE computation*/
-                if (calc_le == 1 && curr_t >= t_le_mark)
+                if (calc_le == 1 && curr_t >= t_le_mark){
                                             lya_spec(parameters->dim, curr_x, delta_t, parameters->Jf, eye, spectrum, curr_le_t, para);
-
+                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
+                                            use_maruyama = 0;
+                    else                    use_maruyama = 1;
+                }
             /*PS check and output*/
                 if (calc_ps == 1 and curr_t > t_ps_mark){
                     ps_print = ps_f(curr_x, ps_print, ps_return);
@@ -196,6 +202,9 @@ void main_algorithm(struct PARAMETERS *parameters)
                     }
                     
                     ps_print = 0;
+                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
+                                            use_maruyama = 0;
+                    else                    use_maruyama = 1;
                 }
 
             /*Time iteartion*/
@@ -218,7 +227,11 @@ void main_algorithm(struct PARAMETERS *parameters)
                                             file_info << spectrum[i] << " ";
                 file_info << "\n";
             }
-
+        // Saved end Value if system don't save orbit
+            file_info << "Final Value: \n";
+            for (int i = 0; i < parameters->dim; i ++)
+                                        file_info << curr_x[i] << " ";
+            file_info << "\n";
         // File close
             file_info.close();
             file_ob.close();

@@ -11,7 +11,7 @@
     int         calc_le         = 1;
     long double t_le            = 0.5;
 
-    int         calc_ob         = 1;
+    int         calc_ob         = 0;
     long double delta_t_ob      = 1e-3;
     long double t_ob            = 0.75;
 
@@ -19,23 +19,7 @@
     long double t_ps            = 0.25;
 */
 /* Rand system and map (start from attractor)*/
-/*
-    long double delta_t         = 1e-5;
-    long double t_max           = 1e5;
-    
-    long long int step_max      = 2e10;
-    
-    int         calc_le         = 1;
-    long double t_le            = 0.01;
 
-    int         calc_ob         = 1;
-    long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.5;
-
-    int         calc_ps         = 1;
-    long double t_ps            = 0.01;
-*/
-/* Rand - short test*/
     long double delta_t         = 1e-5;
     long double t_max           = 1e5;
     
@@ -44,12 +28,30 @@
     int         calc_le         = 1;
     long double t_le            = 0.01;
 
-    int         calc_ob         = 1;
+    int         calc_ob         = 0;
     long double delta_t_ob      = 1e-3;
     long double t_ob            = 0.5;
 
     int         calc_ps         = 1;
     long double t_ps            = 0.01;
+
+/* Rand - short test*/
+/*
+    long double delta_t         = 1e-4;
+    long double t_max           = 2e5;
+    
+    long long int step_max      = 1e8;
+    
+    int         calc_le         = 1;
+    long double t_le            = 0.01;
+
+    int         calc_ob         = 0;
+    long double delta_t_ob      = 1e-3;
+    long double t_ob            = 0.5;
+
+    int         calc_ps         = 1;
+    long double t_ps            = 0.01;
+*/
 //===========================================================
 /*Time parameter*/
 
