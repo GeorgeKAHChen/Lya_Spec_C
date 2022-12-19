@@ -121,10 +121,10 @@ void main_algorithm(struct PARAMETERS *parameters)
 
         file_info << "=============================================\n";
         file_info << "Computation Parameters: \n";
-        file_info << "Iteration: delta_t, t_max" << delta_t << " " << t_max << "\n";
+        file_info << "Iteration: delta_t, t_max: " << delta_t << " " << t_max << "\n";
         file_info << "LE: compute: " << calc_le << ", t_le: " << t_le << "\n";
         file_info << "OB: compute: " << calc_ob << ", t_ob: " << t_le << ", delta_t_ob: " << delta_t_ob << "\n";
-        file_info << "PS: compute: " << calc_ps << ", t_ob: " << t_ps << "\n";
+        file_info << "PS: compute: " << calc_ps << ", t_ps: " << t_ps << "\n";
         file_info << "=============================================\n";
         file_info << "Initial Condition: \n";
         for (int i = 0; i < parameters->dim; i ++)
@@ -142,10 +142,10 @@ void main_algorithm(struct PARAMETERS *parameters)
 
         std::cout << "=============================================\n";
         std::cout << "Computation Parameters: \n";
-        std::cout << "Iteration: delta_t, t_max" << delta_t << " " << t_max << "\n";
+        std::cout << "Iteration: delta_t, t_max: " << delta_t << " " << t_max << "\n";
         std::cout << "LE: compute: " << calc_le << ", t_le: " << t_le << "\n";
-        std::cout << "OB: compute: " << calc_ob << ", t_ob: " << t_le << ", delta_t_ob: " << delta_t_ob << "\n";
-        std::cout << "PS: compute: " << calc_ps << ", t_ob: " << t_ps << "\n";
+        std::cout << "OB: compute: " << calc_ob << ", t_ob: " << t_ob << ", delta_t_ob: " << delta_t_ob << "\n";
+        std::cout << "PS: compute: " << calc_ps << ", t_ps: " << t_ps << "\n";
         std::cout << "=============================================\n";
         std::cout << "Initial Condition: \n";
         for (int i = 0; i < parameters->dim; i ++)

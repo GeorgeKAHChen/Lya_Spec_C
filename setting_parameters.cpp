@@ -2,7 +2,7 @@
 #define INITIALIZATION
 
 /* Deterministic system and map*/
-/*
+
     long double delta_t         = 1e-5;
     long double t_max           = 2e5;
     
@@ -11,19 +11,19 @@
     int         calc_le         = 1;
     long double t_le            = 0.5;
 
-    int         calc_ob         = 0;
+    int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.75;
+    long double t_ob            = 0.9995; //(2e5/1e-5) * 0.0005 = 1e7
 
     int         calc_ps         = 1;
     long double t_ps            = 0.25;
-*/
-/* Rand system and map (start from attractor)*/
 
+/* Rand system and map (start from attractor)*/
+/*
     long double delta_t         = 1e-5;
-    long double t_max           = 1e5;
+    long double t_max           = 2e5;
     
-    long long int step_max      = 1e10;
+    long long int step_max      = 2e10;
     
     int         calc_le         = 1;
     long double t_le            = 0.01;
@@ -34,7 +34,7 @@
 
     int         calc_ps         = 1;
     long double t_ps            = 0.01;
-
+*/
 /* Rand - short test*/
 /*
     long double delta_t         = 1e-4;
@@ -51,6 +51,23 @@
 
     int         calc_ps         = 1;
     long double t_ps            = 0.01;
+*/
+/* STD + RAND*/
+/*
+    long double delta_t         = 1e-5;
+    long double t_max           = 4e5;
+    
+    long long int step_max      = 4e10;
+    
+    int         calc_le         = 1;
+    long double t_le            = 0.5;
+
+    int         calc_ob         = 0;
+    long double delta_t_ob      = 1e-3;
+    long double t_ob            = 0.5;
+
+    int         calc_ps         = 1;
+    long double t_ps            = 0.5;
 */
 //===========================================================
 /*Time parameter*/
