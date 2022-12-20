@@ -10,12 +10,14 @@
 #include "setting_parameters.cpp"
 
 
+
 int ttl_group = 0;                      // Value for output file name
 
 void main_algorithm(struct PARAMETERS *parameters)
 {
+    std::cout.precision(10);
+    
     /*Define Parameter*/
-
         // Computation parameter
             long double curr_t;             // Time parameter(during the iteration)
 
