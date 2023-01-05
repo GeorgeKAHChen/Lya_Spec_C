@@ -15,7 +15,7 @@ int ttl_group = 0;                      // Value for output file name
 
 void main_algorithm(struct PARAMETERS *parameters)
 {
-    std::cout.precision(10);
+    
     
     /*Define Parameter*/
         // Computation parameter
@@ -120,7 +120,7 @@ void main_algorithm(struct PARAMETERS *parameters)
 
 
     /*Standard data output*/
-
+        std::cout.precision(10);
         file_info << "=============================================\n";
         file_info << "Computation Parameters: \n";
         file_info << "Iteration: delta_t, t_max: " << delta_t << " " << t_max << "\n";
@@ -134,11 +134,11 @@ void main_algorithm(struct PARAMETERS *parameters)
         file_info << "\n";
         file_info << "Parameters: \n";
         for (int i = 0; i < parameters->para_size; i ++)      
-                                            file_info << para[i] << " ";
+                                            file_info << std::fixed << std::setprecision(10) << para[i] << " ";
         file_info << "\n";
         file_info << "Random Parameters: \n";
         for (int i = 0; i < parameters->rand_para_size; i ++)
-                                            file_info << rand_para[i] << " ";
+                                            file_info << std::fixed << std::setprecision(10) << rand_para[i] << " ";
         file_info << "\n";
         file_info << "=============================================\n";
 
