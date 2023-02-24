@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <random>
+#include <iostream>
 
 int rand_map_init = 0;
 long double *map_euler_x;
@@ -34,7 +35,7 @@ void rand_map_calc(int dim, int rand_dim, long double curr_t, long double delta_
 {
     /*Initialization*/
     rand_init_check(dim, rand_dim);
-
+    
     /*Euler Step*/
     f(map_euler_x, curr_x, curr_t, para);               // = dot x
     
@@ -43,9 +44,8 @@ void rand_map_calc(int dim, int rand_dim, long double curr_t, long double delta_
     long double max_rand = rand_para[1];
     for (int i = 0; i < rand_dim; i ++)
         map_random_value[i] = gen_uni_dis() * (max_rand - min_rand) + min_rand; // Random value generator
-
-    rand_f(map_euler_x, curr_x, curr_t, map_random_value, rand_para, delta_t);
+    
     for (int i = 0; i < dim; i ++)
-        curr_x[i] = euler_x[i];
+        curr_x[i] = map_euler_x[i];
     return ;
 }

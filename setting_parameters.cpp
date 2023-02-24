@@ -6,10 +6,10 @@
     long double delta_t         = 1e-5;
     long double t_max           = 2e5;
     
-    long long int step_max      = 2e8;
+    long long int step_max      = 2e9;
     
     int         calc_le         = 1;
-    long double t_le            = 0.8;
+    long double t_le            = 0.5;
 
     int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
