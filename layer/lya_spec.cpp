@@ -3,6 +3,9 @@
 #include <cmath>
 #include <cstring>
 
+#ifndef LYA_INIT
+#define LYA_INIT
+
 int lya_spec_init = 0;
 long double *mat_Jaco;
 long double *mat_result;
@@ -11,7 +14,14 @@ long double *old_eye;
 
 long double inner_beta;
 long double inner_ab;
-
+/*
+void lya_spec_init_check(int dim);
+void mat_multi(int dim, long double *mat_x, long double *mat_y, long double *mat_result);
+void gram_schmidt(int dim, long double *mat_result, long double *eye, long double *new_spec);
+void lya_spec(int dim, long double *curr_x,
+              long double delta_t, void (*Jf)(long double*, long double*, long double, long double*),
+              long double *eye, long double *spectrum, long double t_after, long double * para);
+*/
 
 void lya_spec_init_check(int dim){
     if (lya_spec_init == 0){
@@ -56,7 +66,6 @@ void gram_schmidt(int dim, long double *mat_result, long double *eye, long doubl
                 eye[kase + j*dim] -= (inner_ab/inner_beta) * eye[i+j*dim];
         }
     }
-
     /*Normalization*/
     for (int i = 0; i < dim; i ++){
         new_spec[i] = (long double)0;
@@ -93,4 +102,4 @@ void lya_spec(int dim, long double *curr_x,
 
     return ;
 }
-
+#endif

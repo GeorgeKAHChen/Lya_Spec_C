@@ -6,17 +6,17 @@
     long double delta_t         = 1e-5;
     long double t_max           = 2e5;
     
-    long long int step_max      = 2e10;
+    long long int step_max      = 2e8;
     
     int         calc_le         = 1;
-    long double t_le            = 0.5;
+    long double t_le            = 0.8;
 
     int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.9995; //(2e5/1e-5) * 0.0005 = 1e7
+    long double t_ob            = 0.995; //(2e5/1e-5) * 5e-3 = 1e8
 
     int         calc_ps         = 1;
-    long double t_ps            = 0.25;
+    long double t_ps            = 0.9;
 
 
 /* Local Test Parameter */
@@ -39,7 +39,7 @@
 /* Rand system and map (start from attractor)*/
 /*
     long double delta_t         = 1e-5;
-    long double t_max           = 1e5;
+    long double t_max           = 2e5;
     
     long long int step_max      = 2e10;
     
@@ -48,7 +48,7 @@
 
     int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.999; //（1e5/1e-5) * 0.001 = 1e7
+    long double t_ob            = 0.99; //（2e5/1e-3) * 0.01 = 1e6
 
     int         calc_ps         = 1;
     long double t_ps            = 0.01;

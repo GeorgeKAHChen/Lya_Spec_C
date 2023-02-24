@@ -1,15 +1,16 @@
-#include "model/FDRS.cpp"
+//#include "model/FDRS.cpp"
 //#include "model/FDSRS.cpp"
 //#include "model/RS_add.cpp"
 //#include "model/FDRS_normal_noise.cpp"
 
-//#include "model/Rossler_HC_map.cpp"
+#include "model/Rossler_HC_map.cpp"
 
 //#include "model/Lorenz.cpp"
 //#include "model/Rossler.cpp"
 //#include "model/Sto_ERG_w.cpp"        //Normally use this
 
 //#include "model/Logistic.cpp"
+//#include "model/Logistic_Sto.cpp"
 
 
 

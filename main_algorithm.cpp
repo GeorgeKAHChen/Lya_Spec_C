@@ -5,18 +5,17 @@
 #include <sstream>
 
 #include "layer/ode4.cpp"
-#include "layer/lya_spec.cpp"
 #include "layer/maruyama.cpp"
 #include "setting_parameters.cpp"
-
+#include "layer/lya_spec.cpp"
 
 
 int ttl_group = 0;                      // Value for output file name
 
 void main_algorithm(struct PARAMETERS *parameters)
 {
-    
-    
+
+
     /*Define Parameter*/
         // Computation parameter
             long double curr_t;             // Time parameter(during the iteration)
@@ -43,7 +42,6 @@ void main_algorithm(struct PARAMETERS *parameters)
             int use_maruyama = 0;
 
     /*Memory Initialization*/
-
         // System/OB parameter
             curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
             para = (long double*) malloc(parameters->para_size * sizeof(long double));
@@ -55,7 +53,6 @@ void main_algorithm(struct PARAMETERS *parameters)
         
         // PS parameter
             ps_return = (long double*) malloc(parameters->dim * sizeof(long double));
-
 
         
     /*Value Initialization*/
@@ -194,8 +191,9 @@ void main_algorithm(struct PARAMETERS *parameters)
                                             use_maruyama = 0;
                     else                    use_maruyama = 1;
                 }
+
             /*PS check and output*/
-                if (calc_ps == 1 and curr_t > t_ps_mark){
+                if (calc_ps == 1 && curr_t > t_ps_mark){
                     ps_print = ps_f(curr_x, ps_print, ps_return);
                     if (ps_print == 1){
                         for (int i = 0; i < parameters->dim; i ++)
@@ -239,5 +237,4 @@ void main_algorithm(struct PARAMETERS *parameters)
             file_ob.close();
             file_ps.close();
     return ;
-
 }
