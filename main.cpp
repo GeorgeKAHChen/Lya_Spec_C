@@ -2,7 +2,15 @@
 //#include "model/FDSRS.cpp"
 
 //#include "model/RHC_map.cpp"
-#include "model/RSHC_map.cpp"
+//#include "model/RSHC_map.cpp"
+
+//#include "model/SHTD_map.cpp"
+//#include "model/HTD_map.cpp"
+//#include "model/Henon.cpp"
+//#include "model/Sto_Lorenz.cpp"
+//#include "model/Sto_Logistic.cpp"
+#include "model/GHM.cpp"
+
 
 
 
@@ -16,7 +24,10 @@
 
 
 int main(int argc, char const *argv[])
-{
+{   
+    if (need_initialization){
+        model_initialization();
+    }
 
     /*Group property initialization*/
     long double *total_group;

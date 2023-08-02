@@ -45,6 +45,7 @@ void rand_map_calc(int dim, int rand_dim, long double curr_t, long double delta_
     for (int i = 0; i < rand_dim; i ++)
         map_random_value[i] = gen_uni_dis() * (max_rand - min_rand) + min_rand; // Random value generator
     
+    rand_f(map_euler_x, curr_x, curr_t, map_random_value, rand_para, delta_t);
     for (int i = 0; i < dim; i ++)
         curr_x[i] = map_euler_x[i];
     return ;
