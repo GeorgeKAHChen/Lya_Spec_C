@@ -10,6 +10,7 @@
 //#include "model/Sto_Lorenz.cpp"
 //#include "model/Sto_Logistic.cpp"
 #include "model/GHM.cpp"
+//#include "model/RGHM.cpp"
 
 
 

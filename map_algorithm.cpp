@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 
-#include <chrono>
+//#include <chrono>
 
 #include "layer/map_calc.cpp"
 #include "layer/rand_map_calc.cpp"
@@ -165,8 +165,8 @@ void map_algorithm(struct PARAMETERS *parameters)
 
     /*Main algorithm*/
         int print_kase = 0;
-        auto run_time_mark = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> diff;
+        //auto run_time_mark = std::chrono::high_resolution_clock::now();
+        //std::chrono::duration<double> diff;
 
         while (1){
             /*Condition check*/
@@ -218,9 +218,9 @@ void map_algorithm(struct PARAMETERS *parameters)
                 curr_t += 1;
                 print_kase += 1;
                 if (print_kase % 10000000 == 0){
-                    diff =  std::chrono::high_resolution_clock::now() - run_time_mark;
-                    std::cout << curr_t << " " << step_max << " " << map_ttl_group << " " << curr_x[0] << " " << diff.count() << "\n";
-                    run_time_mark = std::chrono::high_resolution_clock::now();
+                    //diff =  std::chrono::high_resolution_clock::now() - run_time_mark;
+                    std::cout << curr_t << " " << step_max << " " << map_ttl_group << " " << curr_x[0] << "\n";// << " " << diff.count() << "\n";
+                    //run_time_mark = std::chrono::high_resolution_clock::now();
                 }
         }
 

@@ -14,3 +14,7 @@ del:
 	@ rm -rf output
 	@ mkdir output
 
+p:
+	python print_le.py
+	python sto_le_print.py
+	open tmp.png
