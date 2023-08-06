@@ -1,16 +1,21 @@
-//#include "model/FDRS.cpp"
-//#include "model/FDSRS.cpp"
+//HF: Henon family
+//#include "model/HF_2_Henon.cpp"
+//#include "model/HF_N_GHM.cpp"
+//#include "model/HF_N_RGHM.cpp"
 
-//#include "model/RHC_map.cpp"
-//#include "model/RSHC_map.cpp"
+//LF: Lorenz family
+//#include "model/LF_Lorenz.cpp"
+//#include "model/LF_SLS.cpp"
 
-//#include "model/SHTD_map.cpp"
-//#include "model/HTD_map.cpp"
-//#include "model/Henon.cpp"
-//#include "model/Sto_Lorenz.cpp"
-//#include "model/Sto_Logistic.cpp"
-#include "model/GHM.cpp"
-//#include "model/RGHM.cpp"
+//LGF: Logistic family
+//#include "model/LGF_Logistic.cpp"
+//#include "model/LGF_RL.cpp"
+
+//RF: Rossler family
+//#include "model/RF_3_Rossler.cpp"
+//#include "model/RF_4_FDRS.cpp"
+//#include "model/RF_4_FDSRS.cpp"
+
 
 
 
@@ -26,9 +31,7 @@
 
 int main(int argc, char const *argv[])
 {   
-    if (need_initialization){
-        model_initialization();
-    }
+    model_initialization();
 
     /*Group property initialization*/
     long double *total_group;
