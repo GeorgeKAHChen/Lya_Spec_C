@@ -1,0 +1,10 @@
+default_folder = ["output"]
+default_file_code = [[1, 100]]
+#default_para_use = ["", 0]
+default_para_use = ["p", 0]
+default_x_use = 0 # From 0
+default_x_range = [-2, 2, 501]
+default_ob_use = [0, 1]
+default_ob_interval = [["x", -2, 2], ["y", -2, 2]]
+default_ps_use = [0, -1, -2]
+default_ps_interval = [["x", -2, 2], ["y", -2, 2], ["z", -2, 2]]
