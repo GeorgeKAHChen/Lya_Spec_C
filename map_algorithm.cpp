@@ -73,6 +73,7 @@ void map_algorithm(struct PARAMETERS *parameters)
                                             para[i] = parameters->group_data[dim + i];
             for (int i = 0; i < parameters->rand_para_size; i ++)
                                             rand_para[i] = parameters->group_data[dim + parameters->para_size + i];
+                                        
         // OB parameter
             if (calc_ob == 1)               t_ob_mark = (long long int)(step_max * t_ob);
 

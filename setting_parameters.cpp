@@ -6,14 +6,14 @@
     long double delta_t         = 1e-5; //-5
     long double t_max           = 1e5;  //5
     
-    long long int step_max      = 1e8;
+    long long int step_max      = 1e8; //1e8 typically
     
     int         calc_le         = 1;
-    long double t_le            = 0.5;
+    long double t_le            = 0.2;
 
     int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.999; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
+    long double t_ob            = 0.99; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
 
     int         calc_ps         = 0;
     long double t_ps            = 0.95;

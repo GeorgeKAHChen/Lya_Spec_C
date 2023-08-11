@@ -1,7 +1,7 @@
 //HF: Henon family
 //#include "model/HF_2_Henon.cpp"
 //#include "model/HF_N_GHM.cpp"
-//#include "model/HF_N_RGHM.cpp"
+#include "model/HF_N_RGHM.cpp"
 
 //LF: Lorenz family
 //#include "model/LF_Lorenz.cpp"
