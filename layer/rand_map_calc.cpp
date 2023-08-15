@@ -40,6 +40,7 @@ void rand_map_calc(int dim, int rand_dim, long double curr_t, long double delta_
     f(map_euler_x, curr_x, curr_t, para);               // = dot x
     
     /*Maruyama Step*/
+    //long double min_rand = -rand_para[0];
     long double min_rand = -rand_para[0];
     long double max_rand = rand_para[0];
     for (int i = 0; i < rand_dim; i ++)

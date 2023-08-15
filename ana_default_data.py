@@ -1,5 +1,5 @@
-default_folder = ["results_0810/RGHM_N_10_b_006"]
-default_file_code = [[1, 351]]
+default_folder = ["output"]
+default_file_code = [[1, 36]]
 #default_para_use = ["", 0]
 default_para_use = ["r", 0]
 default_x_use = 1 # From 0

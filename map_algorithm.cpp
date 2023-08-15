@@ -73,7 +73,7 @@ void map_algorithm(struct PARAMETERS *parameters)
                                             para[i] = parameters->group_data[dim + i];
             for (int i = 0; i < parameters->rand_para_size; i ++)
                                             rand_para[i] = parameters->group_data[dim + parameters->para_size + i];
-                                        
+
         // OB parameter
             if (calc_ob == 1)               t_ob_mark = (long long int)(step_max * t_ob);
 
@@ -130,7 +130,7 @@ void map_algorithm(struct PARAMETERS *parameters)
         file_info << "=============================================\n";
         file_info << "Initial Condition: \n";
         for (int i = 0; i < parameters->dim; i ++)
-                                            file_info << curr_x[i] << " ";
+                                            file_info << std::fixed << std::setprecision(10) << curr_x[i] << " ";
         file_info << "\n";
         file_info << "Parameters: \n";
         for (int i = 0; i < parameters->para_size; i ++)      
@@ -151,7 +151,7 @@ void map_algorithm(struct PARAMETERS *parameters)
         std::cout << "=============================================\n";
         std::cout << "Initial Condition: \n";
         for (int i = 0; i < parameters->dim; i ++)
-                                            std::cout << curr_x[i] << " ";
+                                            std::cout << std::setprecision(10) << curr_x[i] << " ";
         std::cout << "\n";
         std::cout << "Parameters: \n";
         for (int i = 0; i < parameters->para_size; i ++)      
@@ -181,7 +181,7 @@ void map_algorithm(struct PARAMETERS *parameters)
             /*OB check and output*/
                 if (calc_ob == 1 && curr_t >= t_ob_mark){
                     for (int i = 0; i < parameters->dim; i ++)
-                                            file_ob << curr_x[i] << " ";
+                                            file_ob << std::fixed << std::setprecision(10) << curr_x[i] << " ";
                     file_ob << "\n";
                     if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
                                             use_maruyama = 0;
@@ -201,7 +201,7 @@ void map_algorithm(struct PARAMETERS *parameters)
                     ps_print = ps_f(curr_x, ps_print, ps_return);
                     if (ps_print == 1){
                         for (int i = 0; i < parameters->dim; i ++)
-                                            file_ps << ps_return[i] << " ";
+                                            file_ps << std::fixed << std::setprecision(10) << ps_return[i] << " ";
                         file_ps << "\n";
                     }
                     
@@ -230,13 +230,13 @@ void map_algorithm(struct PARAMETERS *parameters)
             if (calc_le == 1){
                 file_info << "Lyapunov Spectrum: \n";
                 for (int i = 0; i < parameters->dim; i ++)
-                                            file_info << spectrum[i] << " ";
+                                            file_info <<  std::setprecision(10) << spectrum[i] << " ";
                 file_info << "\n";
             }
         // Saved end Value if system don't save orbit
             file_info << "Final Value: \n";
             for (int i = 0; i < parameters->dim; i ++)
-                                        file_info << curr_x[i] << " ";
+                                        file_info << std::setprecision(10) << curr_x[i] << " ";
             file_info << "\n";
         // File close
             file_info.close();

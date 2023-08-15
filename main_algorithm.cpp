@@ -127,7 +127,7 @@ void main_algorithm(struct PARAMETERS *parameters)
         file_info << "=============================================\n";
         file_info << "Initial Condition: \n";
         for (int i = 0; i < parameters->dim; i ++)
-                                            file_info << curr_x[i] << " ";
+                                            file_info << std::fixed << std::setprecision(10) << curr_x[i] << " ";
         file_info << "\n";
         file_info << "Parameters: \n";
         for (int i = 0; i < parameters->para_size; i ++)      
@@ -177,7 +177,7 @@ void main_algorithm(struct PARAMETERS *parameters)
                 if (calc_ob == 1 && curr_t >= t_ob_mark && curr_ob_t >= delta_t_ob){
                     curr_ob_t = 0;
                     for (int i = 0; i < parameters->dim; i ++)
-                                            file_ob << curr_x[i] << " ";
+                                            file_ob << std::fixed << std::setprecision(10) << curr_x[i] << " ";
                     file_ob << "\n";
                     if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
                                             use_maruyama = 0;
@@ -197,7 +197,7 @@ void main_algorithm(struct PARAMETERS *parameters)
                     ps_print = ps_f(curr_x, ps_print, ps_return);
                     if (ps_print == 1){
                         for (int i = 0; i < parameters->dim; i ++)
-                                            file_ps << ps_return[i] << " ";
+                                            file_ps << std::fixed << std::setprecision(10) << ps_return[i] << " ";
                         file_ps << "\n";
                     }
                     
