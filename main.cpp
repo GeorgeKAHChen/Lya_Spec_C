@@ -79,6 +79,16 @@ int main(int argc, char const *argv[])
             total_group[i * group_dim + j] = all_para_vals[mark_all_para_vals];
         }
     }
+    if (rand_init_val == 1){
+        long double *rand_init_vals;
+        rand_init_vals = (long double*)malloc(dim * sizeof(long double));
+        for(int i = 0; i < sum_group; i ++){
+            gen_init_val(rand_init_vals);
+            for (int j = 0; j < dim; j ++){
+                total_group[i * group_dim + j] = rand_init_vals[j];
+            }
+        }
+    }
 
     struct PARAMETERS parameters;
     parameters.group_data = (long double*)malloc(group_dim * sizeof(long double));

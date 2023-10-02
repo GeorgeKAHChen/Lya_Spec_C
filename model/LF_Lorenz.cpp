@@ -16,6 +16,7 @@ int rand_dim = 0;
 int para_size = 3;
 int rand_para_size = 0;
 int this_is_map = 0;
+int rand_init_val = 0;
 
 /* 3 - 2 - 1 - (3) - 2 */
 ///*                       x_0,  y_0, z_0  sigma    rho   beta
@@ -26,6 +27,10 @@ int  group_size[] = {        1,   1,   1,     1,         301,         1};
 //*/
 
 void model_initialization(){
+    return ;
+}
+
+void gen_init_val(){
     return ;
 }
 
