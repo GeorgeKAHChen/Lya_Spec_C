@@ -8,15 +8,15 @@
     
     long long int step_max      = 1e9; //1e8 typically
     
-    int         calc_le         = 1;
+    int         calc_le         = 0;
     long double t_le            = 0.5; // 0.5 typically
 
     int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
     long double t_ob            = 0.999; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
 
-    int         calc_ps         = 0;
-    long double t_ps            = 0.95;
+    int         calc_ps         = 1;
+    long double t_ps            = 0.5;
 
 
 /* Local Test Parameter */

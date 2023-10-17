@@ -195,7 +195,8 @@ void main_algorithm(struct PARAMETERS *parameters)
             /*PS check and output*/
                 if (calc_ps == 1 && curr_t > t_ps_mark){
                     ps_print = ps_f(curr_x, ps_print, ps_return);
-                    if (ps_print == 1){
+                    if (ps_print >= 1){
+                        file_ps << ps_print << " ";
                         for (int i = 0; i < parameters->dim; i ++)
                                             file_ps << std::fixed << std::setprecision(10) << ps_return[i] << " ";
                         file_ps << "\n";
