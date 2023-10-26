@@ -3,22 +3,25 @@
 
 /* Deterministic system and map*/
 
-    long double delta_t         = 1e-5; //-5
-    long double t_max           = 1e5;  //5
+    long double delta_t         =     1e-5; //-5
+    long double t_max           =     1e5;  //5
     
-    long long int step_max      = 1e9; //1e8 typically
+    long long int step_max      =     1e9; //1e9 typically
     
-    int         calc_le         = 0;
-    long double t_le            = 0.5; // 0.5 typically
+    int         calc_le         = 1;
+    long double t_le            = 1 - 5e-1; // 0.5 typically
 
-    int         calc_ob         = 1;
+    int         calc_ob         = 0;
     long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.999; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
+    long double t_ob            = 1 - 1e-4; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
 
-    int         calc_ps         = 1;
-    long double t_ps            = 0.5;
+    int         calc_ps         = 0;
+    long double t_ps            =     5e-1; // 0.5 typically
 
-
+// 1e11 0.995 1-1e-6 0.005
+// 11 -3 -6 -3
+// 10 -2 -5 -2
+// 9  -1 -4 -1
 /* Local Test Parameter */
 /*
     long double delta_t         = 1e-5;

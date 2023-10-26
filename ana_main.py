@@ -1,16 +1,19 @@
-import ana_default_data
+import default_data
 import sys
 from tools import attr_plot
 from tools import bf
 from tools import le
 from tools import video_plot
-
+from tools import ob_time
+from tools import multi_ps
 def main():
     print_ob = False
     print_ps = False
     print_bf = False
     print_le = False
     print_le_ob = False
+    print_ob_time = False
+    print_multi_ps = False
     for i in range(0, len(sys.argv)):
         if sys.argv[i] == "-ob":
             print_ob = True
@@ -22,17 +25,21 @@ def main():
             print_le = True
         if sys.argv[i] == "-le-ob" or sys.argv[i] == "-ob-le":
             print_le_ob = True
+        if sys.argv[i] == "-obt":
+            print_ob_time = True
+        if sys.argv[i] == "-mps":
+            print_multi_ps = True
 
-    default_folder = ana_default_data.default_folder
-    default_file_code = ana_default_data.default_file_code
-    default_para_use = ana_default_data.default_para_use
-    default_x_use = ana_default_data.default_x_use
-    default_x_range = ana_default_data.default_x_range
-    default_ob_use = ana_default_data.default_ob_use
-    default_ob_interval = ana_default_data.default_ob_interval
-    default_ps_use = ana_default_data.default_ps_use
-    default_ps_interval = ana_default_data.default_ps_interval
-    name_code_length = ana_default_data.name_code_length
+    default_folder = default_data.default_folder
+    default_file_code = default_data.default_file_code
+    default_para_use = default_data.default_para_use
+    default_x_use = default_data.default_x_use
+    default_x_range = default_data.default_x_range
+    default_ob_use = default_data.default_ob_use
+    default_ob_interval = default_data.default_ob_interval
+    default_ps_use = default_data.default_ps_use
+    default_ps_interval = default_data.default_ps_interval
+    name_code_length = default_data.name_code_length
 
     file_list = []
     for i in range(0, len(default_folder)):
@@ -49,7 +56,10 @@ def main():
         le.le(file_list, default_para_use)
     if print_le_ob:
         video_plot.video_plot(file_list, default_ob_use, default_para_use, default_ob_interval, "ob", name_code_length)
-
+    if print_ob_time:
+        ob_time.ob_time(file_list, default_x_use, default_x_range)
+    if print_multi_ps:
+        multi_ps.multi_ps(file_list, default_para_use, default_ob_interval, name_code_length)
 
     
 if __name__ == '__main__':

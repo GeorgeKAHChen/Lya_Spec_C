@@ -124,8 +124,8 @@ void map_algorithm(struct PARAMETERS *parameters)
         file_info << "=============================================\n";
         file_info << "Computation Parameters: \n";
         file_info << "Iteration: delta_t, t_max: " << 1 << " " << step_max << "\n";
-        file_info << "LE: compute: " << calc_le << ", t_le: " << t_le << ", mark:" <<t_ob_mark << "\n";
-        file_info << "OB: compute: " << calc_ob << ", t_ob: " << t_le << ", mark:" <<t_le_mark << ", delta_t_ob: " << 1 << "\n";
+        file_info << "LE: compute: " << calc_le << ", t_le: " << t_le << ", mark:" <<t_le_mark << "\n";
+        file_info << "OB: compute: " << calc_ob << ", t_ob: " << t_ob << ", mark:" <<t_ob_mark << ", delta_t_ob: " << 1 << "\n";
         file_info << "PS: compute: " << calc_ps << ", t_ps: " << t_ps << ", mark:" <<t_ps_mark << "\n";
         file_info << "=============================================\n";
         file_info << "Initial Condition: \n";
@@ -145,8 +145,8 @@ void map_algorithm(struct PARAMETERS *parameters)
         std::cout << "=============================================\n";
         std::cout << "Computation Parameters: \n";
         std::cout << "Iteration: delta_t, t_max: " << 1 << " " << step_max << "\n";
-        std::cout << "LE: compute: " << calc_le << ", t_le: " << t_le << ", mark:" <<t_ob_mark << "\n";
-        std::cout << "OB: compute: " << calc_ob << ", t_ob: " << t_le << ", mark:" <<t_le_mark << ", delta_t_ob: " << 1 << "\n";
+        std::cout << "LE: compute: " << calc_le << ", t_le: " << t_le << ", mark:" <<t_le_mark << "\n";
+        std::cout << "OB: compute: " << calc_ob << ", t_ob: " << t_ob << ", mark:" <<t_ob_mark << ", delta_t_ob: " << 1 << "\n";
         std::cout << "PS: compute: " << calc_ps << ", t_ps: " << t_ps << ", mark:" <<t_ps_mark << "\n";
         std::cout << "=============================================\n";
         std::cout << "Initial Condition: \n";

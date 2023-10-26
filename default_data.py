@@ -1,5 +1,5 @@
-default_folder = ["results_0815/RGHM_b_008_1", "results_0815/RGHM_b_008_2", "results_0815/RGHM_b_008_3","results_0815/RGHM_b_008_4", "results_0815/RGHM_b_008_5", "results_0815/RGHM_b_008_6", "results_0815/RGHM_b_008_7", "results_0815/RGHM_b_008_8"]
-default_file_code = [[1, 50], [1, 50], [1, 50], [1, 50], [1, 50], [1, 50], [1, 50], [1, 21]]
+default_folder = ["output"]
+default_file_code = [[1, 1]]
 #default_para_use = ["", 0]
 default_para_use = ["r", 0]
 default_x_use = 1 # From 0
