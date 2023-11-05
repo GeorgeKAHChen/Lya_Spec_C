@@ -1,5 +1,11 @@
-default_folder = ["output"]
-default_file_code = [[1, 1]]
+#default_folder = ["output"]
+#default_file_code = [[1, 51]]
+default_folder = ["results_231103/RGHM_LE_1", "results_231103/RGHM_LE_2",
+               "results_231103/RGHM_LE_3", "results_231103/RGHM_LE_4",
+               "results_231103/RGHM_LE_5", "results_231103/RGHM_LE_6",
+               "results_231103/RGHM_LE_7"]
+default_file_code = [[1, 50], [1, 50], [1, 50], [1, 50], [1, 50], 
+             [1, 50], [1, 51]] 
 #default_para_use = ["", 0]
 default_para_use = ["r", 0]
 default_x_use = 1 # From 0
