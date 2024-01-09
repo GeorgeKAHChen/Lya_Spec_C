@@ -102,7 +102,7 @@ def bf(file_list, default_para_use, default_x_use, default_x_range):
             real_i = i
             real_j = int((bf_data_list[i][j] - x_minn_val)/delta_val)
             if real_j >= 0 and real_j <= x_ttl:
-                img[x_ttl + 1 - real_j][real_i] = 0
+                img[real_j][real_i] = 0
             
     Init.ImageIO(file_dir = "tmp_bf.png", img = np.float32(img), io = "o", mode = "grey", backend = "opencv")
     os.system("open tmp_bf.png")

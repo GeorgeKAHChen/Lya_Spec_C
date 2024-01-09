@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import os
 import numpy as np
 
-DOUBLE_LAYER = True
+DOUBLE_LAYER = False
 LAYER_NAME = "results_0810/RGHM_N_10_b_006/1_ob.dat"
 
 def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
@@ -11,7 +11,6 @@ def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
     """
     image_dim = len(default_ob_use)
     data_for_plot = [[] for n in range(image_dim)]
-
 
 
     """
@@ -44,14 +43,14 @@ def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
         fig = plt.figure(constrained_layout=True, figsize=(8, 8))
         ax = fig.add_subplot(111, projection='3d')
         ax.scatter3D(data_for_plot[0], data_for_plot[1], data_for_plot[2], color = "b", s = 0.1)
-        ax.view_init(elev=45, azim=135)
-        ax.set_zlabel(default_interval[2][0])
-        ax.set_zlim(default_interval[2][1], default_interval[2][2])
+        ax.view_init(elev=5, azim=65)
+        ax.set_zlabel("\n" + default_interval[2][0], fontsize = 22)
+        #ax.set_zlim(default_interval[2][1], default_interval[2][2])
 
-    #ax.set_xlabel(default_interval[0][0])
-    ax.set_xlim(default_interval[0][1], default_interval[0][2])
-    #ax.set_ylabel(default_interval[1][0])
-    ax.set_ylim(default_interval[1][1], default_interval[1][2])
+    ax.set_xlabel("\n" + default_interval[0][0], fontsize = 22)
+    #ax.set_xlim(default_interval[0][1], default_interval[0][2])
+    ax.set_ylabel("\n\n" + default_interval[1][0], fontsize = 22)
+    #ax.set_ylim(default_interval[1][1], default_interval[1][2])
     if DOUBLE_LAYER:
         File2 = open(LAYER_NAME, "r")
         old_data_for_plot = [[] for n in range(image_dim)]

@@ -3,6 +3,8 @@
 //#include "model/HF_2_RH.cpp"
 //#include "model/HF_N_GHM.cpp"
 #include "model/HF_N_RGHM.cpp"
+//#include "model/HF_N_RGHM_2.cpp"
+//#include "model/HF_N_RGHM_3.cpp"
 
 //LF: Lorenz family
 //#include "model/LF_Lorenz.cpp"
