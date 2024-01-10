@@ -107,12 +107,12 @@ int main(int argc, char const *argv[])
     
     if (this_is_map == 0)
         for (int i = 0; i < sum_group; i ++){
-            memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));
+            memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(long double));
             main_algorithm(&parameters);
         }
     else
         for (int i = 0; i < sum_group; i ++){
-            memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(double));
+            memcpy(parameters.group_data, total_group + i * group_dim, group_dim * sizeof(long double));
             map_algorithm(&parameters);
         }
     return 0;
