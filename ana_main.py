@@ -34,8 +34,12 @@ def main():
             print_ob_time = True
         if sys.argv[i] == "-mps":
             print_multi_ps = True
-        if sys.argv[i] == "-distribution":
+        if sys.argv[i] == "-distribution" or sys.argv[i] == "-dist":
             print_distribution = True
+            dist_to_data = False
+        if sys.argv[i] == "-distribution-data" or sys.argv[i] == "-dist-data":
+            print_distribution = True
+            dist_to_data = True
 
     default_folder = default_data.default_folder
     default_file_code = default_data.default_file_code
@@ -68,7 +72,7 @@ def main():
     if print_multi_ps:
         multi_ps.multi_ps(file_list, default_para_use, default_ob_interval, name_code_length)
     if print_distribution:
-        x_distribution.x_distribution(file_list, default_para_use, default_x_use, default_x_range)
+        x_distribution.x_distribution(file_list, default_para_use, default_x_use, default_x_range, to_data = dist_to_data)
     
 if __name__ == '__main__':
     main()
