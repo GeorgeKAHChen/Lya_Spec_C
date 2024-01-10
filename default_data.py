@@ -1,5 +1,5 @@
 default_folder = ["output"]
-default_file_code = [[1, 351]]
+default_file_code = [[1, 1]]
 """
 default_folder = ["results_231107/RGHM_151_LE_1", "results_231107/RGHM_151_LE_2",
                   "results_231107/RGHM_151_LE_3", "results_231107/RGHM_151_LE_4",
