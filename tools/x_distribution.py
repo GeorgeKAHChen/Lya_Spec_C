@@ -113,7 +113,7 @@ def x_distribution(file_list, default_para_use, default_x_use, default_x_range, 
 
             save_file_name = "./distribution.dat"
             save_file = open(save_file_name, "a")
-            save_strings = ""
+            save_strings = str(para) + " "
             for ttl in range(0, len(hist)):
                 save_strings += str(hist[ttl])
                 save_strings += " "

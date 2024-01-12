@@ -7,10 +7,12 @@ from tools import video_plot
 from tools import ob_time
 from tools import multi_ps
 from tools import x_distribution
-
+from tools import full_plot
 
 
 def main():
+
+    # Flag init
     print_ob = False
     print_ps = False
     print_bf = False
@@ -19,6 +21,11 @@ def main():
     print_ob_time = False
     print_multi_ps = False
     print_distribution = False
+    print_all = False
+
+
+
+    # Flag reading
     for i in range(0, len(sys.argv)):
         if sys.argv[i] == "-ob":
             print_ob = True
@@ -40,7 +47,12 @@ def main():
         if sys.argv[i] == "-distribution-data" or sys.argv[i] == "-dist-data":
             print_distribution = True
             dist_to_data = True
+        if sys.argv[i] == "-f" or sys.argv[i] == "-full":
+            print_all = True
 
+
+
+    # Default setting reading
     default_folder = default_data.default_folder
     default_file_code = default_data.default_file_code
     default_para_use = default_data.default_para_use
@@ -51,28 +63,101 @@ def main():
     default_ps_use = default_data.default_ps_use
     default_ps_interval = default_data.default_ps_interval
     name_code_length = default_data.name_code_length
+    default_le_file = default_data.default_le_file
+    default_dist_file = default_data.default_dist_file
+    tikz_axis = default_data.tikz_axis
 
+
+
+    # File list generator
     file_list = []
     for i in range(0, len(default_folder)):
         for j in range(default_file_code[i][0], default_file_code[i][1]+1):
-            file_list.append(default_folder[i] + "/" + str(j))
+            if default_folder[i][-1] != "/":
+                file_list.append(default_folder[i] + "/" + str(j))
+            else:
+                file_list.append(default_folder[i] + str(j))
 
+
+
+    # Function using
     if print_ob:
-        attr_plot.attr_plot(file_list, default_ob_use, default_para_use, default_ob_interval, "ob", name_code_length)
+        attr_plot.attr_plot(file_list, 
+            default_ob_use, 
+            default_para_use, 
+            default_ob_interval, 
+            "ob", 
+            name_code_length)
+
     if print_ps:
-        attr_plot.attr_plot(file_list, default_ps_use, default_para_use, default_ps_interval, "ps", name_code_length)
+        attr_plot.attr_plot(file_list, 
+            default_ps_use, 
+            default_para_use, 
+            default_ps_interval, 
+            "ps", 
+            name_code_length)
+
     if print_bf:
-        bf.bf(file_list, default_para_use, default_x_use, default_x_range)
+        bf.bf(file_list, 
+            default_para_use, 
+            default_x_use, 
+            default_x_range)
+
     if print_le:
-        le.le(file_list, default_para_use)
+        le.le(file_list, 
+            default_para_use)
+
     if print_le_ob:
-        video_plot.video_plot(file_list, default_ob_use, default_para_use, default_ob_interval, "ob", name_code_length)
+        video_plot.video_plot(file_list, 
+            default_ob_use, 
+            default_para_use, 
+            default_ob_interval, 
+            "ob", 
+            name_code_length)
+
     if print_ob_time:
-        ob_time.ob_time(file_list, default_x_use, default_x_range)
+        ob_time.ob_time(file_list, 
+            default_x_use, 
+            default_x_range)
+
     if print_multi_ps:
-        multi_ps.multi_ps(file_list, default_para_use, default_ob_interval, name_code_length)
+        multi_ps.multi_ps(file_list, 
+            default_para_use, 
+            default_ob_interval, 
+            name_code_length)
+
     if print_distribution:
-        x_distribution.x_distribution(file_list, default_para_use, default_x_use, default_x_range, to_data = dist_to_data)
+        x_distribution.x_distribution(file_list, 
+            default_para_use, 
+            default_x_use, 
+            default_x_range, 
+            to_data = dist_to_data)
+
+    if print_all:
+        full_plot.full_plot(file_list, 
+            default_para_use, 
+            default_x_use, 
+            default_x_range, 
+            default_ob_use, 
+            default_ob_interval, 
+            default_le_file, 
+            default_dist_file, 
+            tikz_axis)
+
     
+
+    return 
+
+
+
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+
+

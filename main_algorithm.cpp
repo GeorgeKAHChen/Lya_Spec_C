@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 #include "layer/ode4.cpp"
 #include "layer/maruyama.cpp"

@@ -6,7 +6,7 @@
     long double delta_t         =     1e-5; //-5
     long double t_max           =     1e5;  //5
     
-    long long int step_max      =     1e7; //1e9 typically
+    long long int step_max      =     1e6; //1e9 typically
     
     int         calc_le         = 0;
     long double t_le            = 1 - 5e-1; // 0.5 typically
