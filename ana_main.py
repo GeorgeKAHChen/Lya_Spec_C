@@ -55,20 +55,20 @@ def main():
 
 
     # Default setting reading
-    default_folder = default_data.default_folder
-    default_file_code = default_data.default_file_code
-    default_para_use = default_data.default_para_use
-    default_x_use = default_data.default_x_use
-    default_x_range = default_data.default_x_range
-    default_ob_use = default_data.default_ob_use
+    default_folder      = default_data.default_folder
+    default_file_code   = default_data.default_file_code
+    default_para_use    = default_data.default_para_use
+    default_x_use       = default_data.default_x_use
+    default_x_range     = default_data.default_x_range
+    default_ob_use      = default_data.default_ob_use
     default_ob_interval = default_data.default_ob_interval
-    default_ps_use = default_data.default_ps_use
+    default_ps_use      = default_data.default_ps_use
     default_ps_interval = default_data.default_ps_interval
-    name_code_length = default_data.name_code_length
-    default_le_file = default_data.default_le_file
-    default_dist_file = default_data.default_dist_file
-    tikz_axis = default_data.tikz_axis
-
+    name_code_length    = default_data.name_code_length
+    default_le_file     = default_data.default_le_file
+    default_dist_file   = default_data.default_dist_file
+    tikz_axis           = default_data.tikz_axis
+    bf_merge            = default_data.bf_merge
 
 
     # File list generator
@@ -144,7 +144,8 @@ def main():
             default_ob_interval, 
             default_le_file, 
             default_dist_file, 
-            tikz_axis)
+            tikz_axis,
+            bf_merge)
 
     if print_order_bf:
         order_bf.order_bf(file_list, 

@@ -11,7 +11,7 @@ from matplotlib.ticker import (AutoMinorLocator, MultipleLocator)
 FONT_SIZE = 22
 FOR_TEST = True
 
-def full_plot(file_list, default_para_use, default_x_use, default_x_range, default_ob_use, default_ob_interval, default_le_file, default_dist_file, tikz_axis):
+def full_plot(file_list, default_para_use, default_x_use, default_x_range, default_ob_use, default_ob_interval, default_le_file, default_dist_file, tikz_axis, bf_merge = True):
     """
     +++++++++++++++++++++++++++++++++++++++++++++
     Image Initialization
@@ -24,8 +24,8 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
     ax_le   = plt.subplot2grid(shape=(49, 30), loc=( 0, 0), rowspan = 9, colspan = 30)
     ax_D_ky = plt.subplot2grid(shape=(49, 30), loc=(10, 0), rowspan = 9, colspan = 30, sharex=ax_le)
     ax_H_ks = plt.subplot2grid(shape=(49, 30), loc=(20, 0), rowspan = 9, colspan = 30, sharex=ax_le)
-    ax_bf   = plt.subplot2grid(shape=(49, 30), loc=(30, 0), rowspan = 9, colspan = 30, sharex=ax_le)
-    ax_dist = plt.subplot2grid(shape=(49, 30), loc=(40, 0), rowspan = 9, colspan = 30, sharex=ax_le)
+    ax_dist = plt.subplot2grid(shape=(49, 30), loc=(30, 0), rowspan = 9, colspan = 30, sharex=ax_le)
+    ax_bf   = plt.subplot2grid(shape=(49, 30), loc=(40, 0), rowspan = 9, colspan = 30, sharex=ax_le)
     
     if tikz_axis:
         ax_le.set_xticklabels([])
@@ -124,109 +124,15 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
 
     """
     +++++++++++++++++++++++++++++++++++++++++++++
-    Plot ax_bf
+    Plot ax_dist / ax_bf_dist_merge
     +++++++++++++++++++++++++++++++++++++++++++++
     """
-    print("ax_bf plotting")
-    
-
-    for kase in range(0, len(file_list)):
-        print(kase, file_list[kase], end = ": ")
-
-        if FOR_TEST and kase > 50:
-            break
-        if kase % 3 != 0:
-            print()
-            continue
-
-        # read x data(parameter)
-        bf_x = 0
-        file = open(file_list[kase] + ".info", "r")
-        
-        file_lines = []
-        while 1:
-            line = file.readline()
-            if not line:
-                break
-            file_lines.append(line)
-
-        file.close()
-
-        if default_para_use[0] != "r":
-            bf_x = float(file_lines[10].split(" ")[default_para_use[1]])
-        else:
-            bf_x = float(file_lines[12].split(" ")[default_para_use[1]])
-
-        file = open(file_list[kase] + "_ob.dat", "r")
-        bf_y_axis = []
-        while 1:
-            file_line = file.readline()
-            if not file_line:
-                break
-            bf_y_axis.append(float(file_line.split(" ")[default_x_use]))
-
-        bf_x_axis = [bf_x for n in range(len(bf_y_axis))]
-        print(bf_x, len(bf_y_axis))
-        ax_bf.scatter(bf_x_axis, bf_y_axis, s = 1, c = "black", marker = ".")
-
-    print()
-
-    """
-    +++++++++++++++++++++++++++++++++++++++++++++
-    Plot ax_dist
-    +++++++++++++++++++++++++++++++++++++++++++++
-    """
-
-    
     # Init
     print("ax_dist")
     file = open(default_dist_file, "r")
     init_data = True
     print(default_dist_file)
     ax_dist.set_ylim([-2, 2])
-    
-
-    """
-
-    # For distribution min-max curve
-    val_points = []
-    x_min_points = []
-    y_min_points = []
-    x_max_points = []
-    y_max_points = []
-    while 1:
-        file_line = file.readline()
-
-        if not file_line:
-            break
-
-        file_line = file_line.split(" ")[0: -1]
-        if init_data:
-            for i in range(0, len(file_line) - 1):
-                val_points.append((float(file_line[i])+float(file_line[i+1]))/2)
-            init_data = False
-            continue
-        
-        for i in range(0, len(file_line)):
-            file_line[i] = float(file_line[i])
-        
-        for i in range(2, len(file_line)-1):
-            if file_line[i] == 0:
-                continue
-            if file_line[i] - file_line[i-1] > 0.01 and file_line[i] - file_line[i+1] > 0.01:
-                print(file_line[i-1], file_line[i], file_line[i+1])
-                x_max_points.append(file_line[0])
-                y_max_points.append(val_points[i])
-            if file_line[i] - file_line[i-1] < -0.008 and file_line[i] - file_line[i+1] < -0.008:
-                print(file_line[i-1], file_line[i], file_line[i+1])
-                x_min_points.append(file_line[0])
-                y_min_points.append(val_points[i])
-    print(len(x_min_points), len(y_min_points))
-    print(len(x_max_points), len(y_max_points))
-
-    ax_dist.scatter(x_min_points, y_min_points, s = 1, color = "red")
-    ax_dist.scatter(x_max_points, y_max_points, s = 1, color = "blue")
-    """
 
 
     
@@ -256,7 +162,7 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
         x_vals.append(file_line[0])
         z_vals.append(file_line[1: ])
 
-
+    minn = 0
     maxx = 2
     x_vals = np.array(x_vals)
     y_vals = np.array(y_vals)
@@ -280,7 +186,7 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
             delta_y = y_vals[j][1]-y_vals[j][0]
             curr_color = (1.0, 1.0, 1.0, 1.0)
             if z_vals[i][j] != 0:
-                tmp_color = (z_vals[i][j] - 0) / (maxx - 0)
+                tmp_color = (z_vals[i][j] - minn) / (maxx - minn)
                 tmp_color = min(tmp_color, 1.0)
                 tmp_color = max(tmp_color, 0.0)
                 curr_color = color_map_main(tmp_color)
@@ -288,7 +194,57 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
             ax_dist.add_patch(rect1)
 
 
-    
+
+    """
+    +++++++++++++++++++++++++++++++++++++++++++++
+    Plot ax_bf
+    +++++++++++++++++++++++++++++++++++++++++++++
+    """
+    if not bf_merge:
+        print("ax_bf plotting")
+        
+
+        for kase in range(0, len(file_list)):
+            print(kase, file_list[kase], end = ": ")
+
+            if FOR_TEST and kase > 50:
+                break
+            if kase % 3 != 0:
+                print()
+                continue
+
+            # read x data(parameter)
+            bf_x = 0
+            file = open(file_list[kase] + ".info", "r")
+            
+            file_lines = []
+            while 1:
+                line = file.readline()
+                if not line:
+                    break
+                file_lines.append(line)
+
+            file.close()
+
+            if default_para_use[0] != "r":
+                bf_x = float(file_lines[10].split(" ")[default_para_use[1]])
+            else:
+                bf_x = float(file_lines[12].split(" ")[default_para_use[1]])
+
+            file = open(file_list[kase] + "_ob.dat", "r")
+            bf_y_axis = []
+            while 1:
+                file_line = file.readline()
+                if not file_line:
+                    break
+                bf_y_axis.append(float(file_line.split(" ")[default_x_use]))
+
+            bf_x_axis = [bf_x for n in range(len(bf_y_axis))]
+            print(bf_x, len(bf_y_axis))
+            ax_bf.scatter(bf_x_axis, bf_y_axis, s = 1, c = "black", marker = ".")
+
+        print()
+
 
     """
     +++++++++++++++++++++++++++++++++++++++++++++

@@ -14,3 +14,4 @@ name_code_length = 5 #include a.cde -> 5
 default_le_file = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_le.dat"
 default_dist_file = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_dist_2.dat"
 tikz_axis = True
+bf_merge = True
