@@ -4,12 +4,10 @@ from libpy import Init
 import os
 
 
-def bf(file_list, default_para_use, default_x_use, default_x_range):
+def order_bf(file_list, default_para_use, default_x_use, default_x_range):
     """
     PARAMETER DEFINITION
     """
-    para_list = []
-    bf_data_list = []
     sys_dim = -1
     sys_rand = False
     is_map = False
@@ -47,34 +45,21 @@ def bf(file_list, default_para_use, default_x_use, default_x_range):
     """
     MAIN ITERATION
     """
+    # Init
+    img = [[] for n in range(x_ttl + 5)]
+    delta_val = (x_maxx_val - x_minn_val + 1e-4)/x_ttl
+
+
     for i in range(0, len(file_list)):
+        #if i % 5 != 0:
+        #    continue
         # File Name Initialization
-        file_name_info = file_list[i] + ".info"
         file_name_data = file_list[i]
         if is_map:
             file_name_data += "_ob"
         else:
             file_name_data += "_ps"
         file_name_data += ".dat"
-
-
-
-        # Read Parameter
-        file = open(file_name_info, "r")
-        file_lines = []
-        while 1:
-            line = file.readline()
-            if not line:
-                break
-            file_lines.append(line)
-        file.close()
-
-        if not sys_rand:
-            para = file_lines[10].split(" ")
-            para_list.append(float(para[default_para_use[1]]))
-        else:
-            para = file_lines[12].split(" ")
-            para_list.append(float(para[default_para_use[1]]))
 
 
 
@@ -87,24 +72,19 @@ def bf(file_list, default_para_use, default_x_use, default_x_range):
                 break
             line = line.split(" ")
             bf_vals.append(float(line[default_x_use]))
-        print(len(bf_vals))
-        bf_data_list.append(bf_vals)
+        print(file_name_data, len(bf_vals))
 
-            
+        
 
-    """
-    IMAGE GENERATOR
-    """
-    img = [[255 for n in range(len(para_list))] for n in range(x_ttl + 5)]
-    delta_val = (x_maxx_val - x_minn_val + 1e-4)/x_ttl
-    print(x_maxx_val, x_minn_val, x_ttl)
-    for i in range(0, len(para_list)):
-        for j in range(0, len(bf_data_list[i])):
-            real_i = i
-            real_j = int((bf_data_list[i][j] - x_minn_val)/delta_val)
+        # Image plot
+        tmp_img = [255 for n in range(x_ttl + 5)]
+        for j in range(0, len(bf_vals)):
+            real_j = int((bf_vals[j] - x_minn_val)/delta_val)
             if real_j >= 0 and real_j <= x_ttl:
-                img[real_j][real_i] = 0
-            
+                tmp_img[x_ttl - real_j] = 0
+        for j in range(0, len(tmp_img)):
+            img[j].append(tmp_img[j])
+
     Init.ImageIO(file_dir = "tmp_bf.png", img = np.float32(img), io = "o", mode = "grey", backend = "opencv")
     os.system("open tmp_bf.png")
 

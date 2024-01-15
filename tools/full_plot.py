@@ -9,7 +9,7 @@ import time
 from matplotlib.ticker import (AutoMinorLocator, MultipleLocator)
 
 FONT_SIZE = 22
-FOR_TEST = False
+FOR_TEST = True
 
 def full_plot(file_list, default_para_use, default_x_use, default_x_range, default_ob_use, default_ob_interval, default_le_file, default_dist_file, tikz_axis):
     """
@@ -177,14 +177,14 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
     +++++++++++++++++++++++++++++++++++++++++++++
     """
 
-    """
+    
     # Init
     print("ax_dist")
     file = open(default_dist_file, "r")
     init_data = True
     print(default_dist_file)
     ax_dist.set_ylim([-2, 2])
-    """
+    
 
     """
 
@@ -229,7 +229,7 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
     """
 
 
-    """
+    
     # For distribution heat map
     x_vals = []
     y_vals = []
@@ -268,14 +268,16 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
     #color_map_main = plt.cm.get_cmap('hsv')
     color_map_main = plt.cm.get_cmap('jet')
 
-    delta_x = 0.001
-    delta_y = 4/1000
+    
+    
 
-    for i in range(0, len(x_vals)):
+    for i in range(0, len(x_vals)-1):
         print(i)
         #if FOR_TEST and i % 10 != 0:
         #    continue
+        delta_x = x_vals[i+1] - x_vals[i]
         for j in range(0, len(y_vals)):
+            delta_y = y_vals[j][1]-y_vals[j][0]
             curr_color = (1.0, 1.0, 1.0, 1.0)
             if z_vals[i][j] != 0:
                 tmp_color = (z_vals[i][j] - 0) / (maxx - 0)
@@ -286,7 +288,7 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
             ax_dist.add_patch(rect1)
 
 
-    """
+    
 
     """
     +++++++++++++++++++++++++++++++++++++++++++++

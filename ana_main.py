@@ -8,6 +8,7 @@ from tools import ob_time
 from tools import multi_ps
 from tools import x_distribution
 from tools import full_plot
+from tools import order_bf
 
 
 def main():
@@ -22,7 +23,7 @@ def main():
     print_multi_ps = False
     print_distribution = False
     print_all = False
-
+    print_order_bf = False
 
 
     # Flag reading
@@ -49,7 +50,8 @@ def main():
             dist_to_data = True
         if sys.argv[i] == "-f" or sys.argv[i] == "-full":
             print_all = True
-
+        if sys.argv[i] == "-obf":
+            print_order_bf = True
 
 
     # Default setting reading
@@ -144,7 +146,11 @@ def main():
             default_dist_file, 
             tikz_axis)
 
-    
+    if print_order_bf:
+        order_bf.order_bf(file_list, 
+            default_para_use, 
+            default_x_use, 
+            default_x_range)
 
     return 
 

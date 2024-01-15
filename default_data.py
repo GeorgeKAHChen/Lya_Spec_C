@@ -1,16 +1,5 @@
 default_folder = ["/Users/amakawa/LocalCode/___data/RGHM_10_151_080_ob_bf"]
 default_file_code = [[1, 3501]]
-"""
-default_folder = ["results_231107/RGHM_151_LE_1", "results_231107/RGHM_151_LE_2",
-                  "results_231107/RGHM_151_LE_3", "results_231107/RGHM_151_LE_4",
-                  "results_231107/RGHM_151_LE_5", "results_231107/RGHM_151_LE_6",
-                  "results_231107/RGHM_151_LE_7", "results_231107/RGHM_151_LE_8",
-                  "results_231107_a/RGHM_151_LE_9", "results_231107_a/RGHM_151_LE_a",
-                  "results_231107_a/RGHM_151_LE_b", "results_231107_a/RGHM_151_LE_c"]
-default_file_code = [[1, 30], [1, 30], [1, 30], [1, 30], [1, 30],
-                     [1, 30], [1, 30], [1, 30], [1, 30], [1, 30], 
-                     [1, 30], [1, 21]] 
-"""
 #default_para_use = ["", 1]
 default_para_use = ["r", 0]
 default_x_use = 0 # From 0
@@ -23,5 +12,5 @@ default_ps_interval = [["x", -2, 2], ["y", -2, 2], ["z", -2, 2]]
 name_code_length = 5 #include a.cde -> 5 
 
 default_le_file = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_le.dat"
-default_dist_file = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_dist.dat"
+default_dist_file = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_dist_2.dat"
 tikz_axis = True
