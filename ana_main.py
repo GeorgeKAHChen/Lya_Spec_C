@@ -1,5 +1,8 @@
 import default_data
+
 import sys
+import matplotlib.pyplot as plt
+
 from tools import attr_plot
 from tools import bf
 from tools import le
@@ -9,11 +12,13 @@ from tools import multi_ps
 from tools import x_distribution
 from tools import full_plot
 from tools import order_bf
+from tools import le_file_heat_map
 
 
 def main():
-
-    # Flag init
+    """
+    FLAG INIT
+    """ 
     print_ob = False
     print_ps = False
     print_bf = False
@@ -24,9 +29,13 @@ def main():
     print_distribution = False
     print_all = False
     print_order_bf = False
+    plot_heat_map = False
 
 
-    # Flag reading
+
+    """
+    FLAG CHECKING
+    """
     for i in range(0, len(sys.argv)):
         if sys.argv[i] == "-ob":
             print_ob = True
@@ -52,9 +61,13 @@ def main():
             print_all = True
         if sys.argv[i] == "-obf":
             print_order_bf = True
+        if sys.argv[i] == "-map":
+            plot_heat_map = True
 
 
-    # Default setting reading
+    """
+    DEFAULT SETTING READING
+    """
     default_folder      = default_data.default_folder
     default_file_code   = default_data.default_file_code
     default_para_use    = default_data.default_para_use
@@ -69,9 +82,19 @@ def main():
     default_dist_file   = default_data.default_dist_file
     tikz_axis           = default_data.tikz_axis
     bf_merge            = default_data.bf_merge
+    le_file_folder      = default_data.le_file_folder
+    le_file_code        = default_data.le_file_code
+    le_para_use         = default_data.le_para_use
+    le_start            = default_data.le_start
+    le_color_table      = default_data.le_color_table
+    heat_map_table      = default_data.heat_map_table
 
 
-    # File list generator
+
+    """
+    FILE LIST / LE FILE LIST INITIALIZATION
+    """
+    # File list init
     file_list = []
     for i in range(0, len(default_folder)):
         for j in range(default_file_code[i][0], default_file_code[i][1]+1):
@@ -80,9 +103,33 @@ def main():
             else:
                 file_list.append(default_folder[i] + str(j))
 
+    # LE file list init
+    le_file_list = []
+    for i in range(0, len(le_file_folder)):
+        for j in range(le_file_code[i][0], le_file_code[i][1]+1):
+            if le_file_folder[i][-1] != "/":
+                le_file_list.append(le_file_folder[i] + "/" + str(j))
+            else:
+                le_file_list.append(le_file_folder[i] + str(j))
+
+    # LE Color map init
+    for i in range(0, len(le_color_table)):
+        if le_color_table[i][0] == "rgb" or le_color_table[i][0] == "rgba":
+            le_color_table[i] = le_color_table[i][1]
+        else:
+            color_map = plt.cm.get_cmap(le_color_table[i][0])
+            le_color_table[i] = color_map(le_color_table[i][1])
+    for i in range(0, len(le_color_table)):
+        le_color_table[i] = (255 * le_color_table[i][0], 
+                             255 * le_color_table[i][1],
+                             255 * le_color_table[i][2], 
+                             le_color_table[i][3])
 
 
-    # Function using
+
+    """
+    MAIN FUNCTION USING
+    """
     if print_ob:
         attr_plot.attr_plot(file_list, 
             default_ob_use, 
@@ -153,6 +200,12 @@ def main():
             default_x_use, 
             default_x_range)
 
+    if plot_heat_map:
+        le_file_heat_map.le_file_heat_map(le_file_list,
+            le_para_use,
+            le_start,
+            le_color_table,
+            heat_map_table)
     return 
 
 
