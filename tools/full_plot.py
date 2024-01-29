@@ -11,7 +11,17 @@ from matplotlib.ticker import (AutoMinorLocator, MultipleLocator)
 FONT_SIZE = 22
 FOR_TEST = True
 
-def full_plot(file_list, default_para_use, default_x_use, default_x_range, default_ob_use, default_ob_interval, default_le_file, default_dist_file, tikz_axis, bf_merge = True):
+def full_plot(file_list, 
+              default_para_use, 
+              default_x_use, 
+              default_x_range, 
+              default_ob_use, 
+              default_ob_interval, 
+              default_le_file, 
+              default_dist_file, 
+              tikz_axis, 
+              bf_merge = True,
+              ax_will_plot = [1, 1, 1, 1, 1]):
     """
     +++++++++++++++++++++++++++++++++++++++++++++
     Image Initialization
@@ -61,64 +71,67 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
     Plot ax_le - ax_D_ky - ax_H_ks
     +++++++++++++++++++++++++++++++++++++++++++++
     """ 
+    if ax_will_plot[0] == 1 or ax_will_plot[1] == 1 or ax_will_plot[2] == 1:
+        # data read and dky, hks computation
+        file = open(default_le_file, "r")
+        
+        les = [[] for n in range(9)]
+        x_data = []
+        D_ky = []
+        H_ks = []
 
-    # data read and dky, hks computation
-    file = open(default_le_file, "r")
-    
-    les = [[] for n in range(9)]
-    x_data = []
-    D_ky = []
-    H_ks = []
+        while 1:
+            line = file.readline()
 
-    while 1:
-        line = file.readline()
-
-        if not line:
-            break
-
-        line = line.split(" ")
-
-        x_data.append(float(line[2]))
-        D_new = 0
-        D_sum = 0
-        H_new = 0
-        for i in range(3, 12):
-            les[i-3].append(float(line[i]))
-
-        for i in range(3, 13):
-            val = float(line[i])
-            D_sum += val
-            if D_sum < 0:
-                D_sum -= val
-                D_new = i-3 + D_sum / abs(float(line[i]))
-                D_ky.append(D_new)
+            if not line:
                 break
 
-        for i in range(3, 13):
-            val = float(line[i])
-            if val > 0:
-                H_new += val
-            else:
-                H_ks.append(H_new)
-                break
-    
-    print(len(x_data), len(D_ky), len(H_ks))
+            line = line.split(" ")
+
+            x_data.append(float(line[2]))
+            D_new = 0
+            D_sum = 0
+            H_new = 0
+            for i in range(3, 12):
+                les[i-3].append(float(line[i]))
+
+            for i in range(3, 13):
+                val = float(line[i])
+                D_sum += val
+                if D_sum < 0:
+                    D_sum -= val
+                    D_new = i-3 + D_sum / abs(float(line[i]))
+                    D_ky.append(D_new)
+                    break
+
+            for i in range(3, 13):
+                val = float(line[i])
+                if val > 0:
+                    H_new += val
+                else:
+                    H_ks.append(H_new)
+                    break
+        
+        print(len(x_data), len(D_ky), len(H_ks))
 
 
-    # image plot    
-    #   ax_le - LE plot
-    print("ax_le plotting")
-    for i in range(0, 9):
-        ax_le.plot(x_data, les[i], linewidth=5.0)
-        ax_le.plot([0, 0.35], [0, 0], "r-.")
+        # image plot    
+        #   ax_le - LE plot
+        if ax_will_plot[0] == 1:
+            print("ax_le plotting")
+            for i in range(0, 9):
+                ax_le.plot(x_data, les[i], linewidth=5.0)
+                ax_le.plot([0, 0.1], [0, 0], "r-.")
 
-    #   ax_D_ky - Dky plot
-    print("ax_D_ky plotting")
-    ax_D_ky.plot(x_data, D_ky, linewidth=5.0)
+        #   ax_D_ky - Dky plot
+        if ax_will_plot[1] == 1:
+            print("ax_D_ky plotting")
+            ax_D_ky.plot(x_data, D_ky, linewidth=5.0)
 
-    #   ax_H_ks - Hks plot
-    print("ax_H_ks plotting")
-    ax_H_ks.plot(x_data, H_ks, linewidth=5.0)
+        #   ax_H_ks - Hks plot
+        if ax_will_plot[2] == 1:
+            print("ax_H_ks plotting")
+            ax_H_ks.plot(x_data, H_ks, linewidth=5.0)
 
 
 
@@ -127,71 +140,72 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
     Plot ax_dist / ax_bf_dist_merge
     +++++++++++++++++++++++++++++++++++++++++++++
     """
-    # Init
-    print("ax_dist")
-    file = open(default_dist_file, "r")
-    init_data = True
-    print(default_dist_file)
-    ax_dist.set_ylim([-2, 2])
+    if ax_will_plot[3] == 1:
+        # Init
+        print("ax_dist")
+        file = open(default_dist_file, "r")
+        init_data = True
+        print(default_dist_file)
+        ax_dist.set_ylim([-2, 2])
 
 
-    
-    # For distribution heat map
-    x_vals = []
-    y_vals = []
-    z_vals = []
-
-    maxx = -1
-    while 1:
-        file_line = file.readline()
-
-        if not file_line:
-            break
-
-        file_line = file_line.split(" ")[0: -1]
-        if init_data:
-            for i in range(0, len(file_line) - 1):
-                y_vals.append([float(file_line[i]), float(file_line[i+1])])
-            init_data = False
-            continue
         
-        for i in range(0, len(file_line)):
-            file_line[i] = float(file_line[i])
-            maxx = max(maxx, file_line[i])
+        # For distribution heat map
+        x_vals = []
+        y_vals = []
+        z_vals = []
+
+        maxx = -1
+        while 1:
+            file_line = file.readline()
+
+            if not file_line:
+                break
+
+            file_line = file_line.split(" ")[0: -1]
+            if init_data:
+                for i in range(0, len(file_line) - 1):
+                    y_vals.append([float(file_line[i]), float(file_line[i+1])])
+                init_data = False
+                continue
+            
+            for i in range(0, len(file_line)):
+                file_line[i] = float(file_line[i])
+                maxx = max(maxx, file_line[i])
+            
+            x_vals.append(file_line[0])
+            z_vals.append(file_line[1: ])
+
+        minn = 0
+        maxx = 2
+        x_vals = np.array(x_vals)
+        y_vals = np.array(y_vals)
+        z_vals = np.array(z_vals)
+        print(x_vals[0], x_vals[1], x_vals[2])
+        print(len(x_vals), len(y_vals))
+        print(len(z_vals), len(z_vals[0]))
+
+        #color_map_main = plt.cm.get_cmap('hsv')
+        color_map_main = plt.cm.get_cmap('jet')
+
         
-        x_vals.append(file_line[0])
-        z_vals.append(file_line[1: ])
+        
 
-    minn = 0
-    maxx = 2
-    x_vals = np.array(x_vals)
-    y_vals = np.array(y_vals)
-    z_vals = np.array(z_vals)
-    print(x_vals[0], x_vals[1], x_vals[2])
-    print(len(x_vals), len(y_vals))
-    print(len(z_vals), len(z_vals[0]))
-
-    #color_map_main = plt.cm.get_cmap('hsv')
-    color_map_main = plt.cm.get_cmap('jet')
-
-    
-    
-
-    for i in range(0, len(x_vals)-1):
-        print(i)
-        #if FOR_TEST and i % 10 != 0:
-        #    continue
-        delta_x = x_vals[i+1] - x_vals[i]
-        for j in range(0, len(y_vals)):
-            delta_y = y_vals[j][1]-y_vals[j][0]
-            curr_color = (1.0, 1.0, 1.0, 1.0)
-            if z_vals[i][j] != 0:
-                tmp_color = (z_vals[i][j] - minn) / (maxx - minn)
-                tmp_color = min(tmp_color, 1.0)
-                tmp_color = max(tmp_color, 0.0)
-                curr_color = color_map_main(tmp_color)
-            rect1 = Rectangle((x_vals[i], y_vals[j][0]), delta_x, delta_y, color = curr_color)
-            ax_dist.add_patch(rect1)
+        for i in range(0, len(x_vals)-1):
+            print(i)
+            #if FOR_TEST and i % 10 != 0:
+            #    continue
+            delta_x = x_vals[i+1] - x_vals[i]
+            for j in range(0, len(y_vals)):
+                delta_y = y_vals[j][1]-y_vals[j][0]
+                curr_color = (1.0, 1.0, 1.0, 1.0)
+                if z_vals[i][j] != 0:
+                    tmp_color = (z_vals[i][j] - minn) / (maxx - minn)
+                    tmp_color = min(tmp_color, 1.0)
+                    tmp_color = max(tmp_color, 0.0)
+                    curr_color = color_map_main(tmp_color)
+                rect1 = Rectangle((x_vals[i], y_vals[j][0]), delta_x, delta_y, color = curr_color)
+                ax_dist.add_patch(rect1)
 
 
 
@@ -200,50 +214,51 @@ def full_plot(file_list, default_para_use, default_x_use, default_x_range, defau
     Plot ax_bf
     +++++++++++++++++++++++++++++++++++++++++++++
     """
-    if not bf_merge:
-        print("ax_bf plotting")
-        
-
-        for kase in range(0, len(file_list)):
-            print(kase, file_list[kase], end = ": ")
-
-            if FOR_TEST and kase > 50:
-                break
-            if kase % 3 != 0:
-                print()
-                continue
-
-            # read x data(parameter)
-            bf_x = 0
-            file = open(file_list[kase] + ".info", "r")
+    if ax_will_plot[4] == 1:
+        if not bf_merge:
+            print("ax_bf plotting")
             
-            file_lines = []
-            while 1:
-                line = file.readline()
-                if not line:
+
+            for kase in range(0, len(file_list)):
+                print(kase, file_list[kase], end = ": ")
+
+                if FOR_TEST and kase > 50:
                     break
-                file_lines.append(line)
+                if kase % 3 != 0:
+                    print()
+                    continue
 
-            file.close()
+                # read x data(parameter)
+                bf_x = 0
+                file = open(file_list[kase] + ".info", "r")
+                
+                file_lines = []
+                while 1:
+                    line = file.readline()
+                    if not line:
+                        break
+                    file_lines.append(line)
 
-            if default_para_use[0] != "r":
-                bf_x = float(file_lines[10].split(" ")[default_para_use[1]])
-            else:
-                bf_x = float(file_lines[12].split(" ")[default_para_use[1]])
+                file.close()
 
-            file = open(file_list[kase] + "_ob.dat", "r")
-            bf_y_axis = []
-            while 1:
-                file_line = file.readline()
-                if not file_line:
-                    break
-                bf_y_axis.append(float(file_line.split(" ")[default_x_use]))
+                if default_para_use[0] != "r":
+                    bf_x = float(file_lines[10].split(" ")[default_para_use[1]])
+                else:
+                    bf_x = float(file_lines[12].split(" ")[default_para_use[1]])
 
-            bf_x_axis = [bf_x for n in range(len(bf_y_axis))]
-            print(bf_x, len(bf_y_axis))
-            ax_bf.scatter(bf_x_axis, bf_y_axis, s = 1, c = "black", marker = ".")
+                file = open(file_list[kase] + "_ob.dat", "r")
+                bf_y_axis = []
+                while 1:
+                    file_line = file.readline()
+                    if not file_line:
+                        break
+                    bf_y_axis.append(float(file_line.split(" ")[default_x_use]))
 
-        print()
+                bf_x_axis = [bf_x for n in range(len(bf_y_axis))]
+                print(bf_x, len(bf_y_axis))
+                ax_bf.scatter(bf_x_axis, bf_y_axis, s = 1, c = "black", marker = ".")
+
+            print()
 
 
     """

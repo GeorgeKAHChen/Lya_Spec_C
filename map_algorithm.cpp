@@ -181,8 +181,13 @@ void map_algorithm(struct PARAMETERS *parameters)
 
             /*OB check and output*/
                 if (calc_ob == 1 && curr_t >= t_ob_mark){
-                    for (int i = 0; i < parameters->dim; i ++)
+                    if (OB_ONLY_XI){
+                                            file_ob << std::fixed << std::setprecision(10) << curr_x[OB_XI_USE] << " ";
+                    }
+                    else{
+                        for (int i = 0; i < parameters->dim; i ++)
                                             file_ob << std::fixed << std::setprecision(10) << curr_x[i] << " ";
+                    }
                     file_ob << "\n";
                     if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
                                             use_maruyama = 0;

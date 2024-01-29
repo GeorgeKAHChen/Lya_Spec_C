@@ -88,7 +88,7 @@ def main():
     le_start            = default_data.le_start
     le_color_table      = default_data.le_color_table
     heat_map_table      = default_data.heat_map_table
-
+    ax_will_plot        = default_data.ax_will_plot
 
 
     """
@@ -192,7 +192,8 @@ def main():
             default_le_file, 
             default_dist_file, 
             tikz_axis,
-            bf_merge)
+            bf_merge,
+            ax_will_plot)
 
     if print_order_bf:
         order_bf.order_bf(file_list, 

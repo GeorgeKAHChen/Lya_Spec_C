@@ -15,7 +15,14 @@ name_code_length        = 5 #include a.cde -> 5
 
 
 ### full curve plot parameter (le_dky_hks_bf_dist plot)
-default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_le.dat"
+ax_will_plot            = [1,   #ax_le
+                           1,   #ax_D_ky
+                           1,   #ax_H_ks
+                           0,   #ax_dist
+                           0,   #ax_bf
+                        ]
+#default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_le.dat"
+default_le_file         = "/Users/amakawa/LocalCode/Lya_Spec_CPP/tools_other/tmp.dat"
 default_dist_file       = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_dist_2.dat"
 tikz_axis               = True
 bf_merge                = True

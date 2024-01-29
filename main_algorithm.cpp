@@ -16,7 +16,6 @@ int ttl_group = 0;                      // Value for output file name
 void main_algorithm(struct PARAMETERS *parameters)
 {
 
-
     /*Define Parameter*/
         // Computation parameter
             long double curr_t;             // Time parameter(during the iteration)
@@ -83,6 +82,7 @@ void main_algorithm(struct PARAMETERS *parameters)
 
 
     /*Output Initalization*/
+        // info/ob/ps info
         ttl_group += 1;
 
         // File name init
@@ -114,7 +114,6 @@ void main_algorithm(struct PARAMETERS *parameters)
             file_info.open(file_name_info, std::ios_base::app);
             file_ob.open(file_name_ob, std::ios_base::app);
             file_ps.open(file_name_ps, std::ios_base::app);
-
 
 
     /*Standard data output*/
