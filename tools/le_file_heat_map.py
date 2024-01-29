@@ -67,6 +67,8 @@ def le_file_heat_map(file_list, para_use, le_start, color_table, color_map):
             line = file.readline()
             if not line:
                 break
+            if line[0] == " " or line[0] == "\n":
+                continue
             line = line.split(" ")
             
             table_loc_x =              int((float(line[x_para_loc]) - x_para_min)/x_para_dis + 0.5) - 1
@@ -172,7 +174,7 @@ def le_file_heat_map(file_list, para_use, le_start, color_table, color_map):
     # image output
     Init.ImageIO(file_dir = "imgs/tmp_le_img.png",   img = np.array(Le_img), io = "o", mode = "rgba", backend = "opencv")
     Init.ImageIO(file_dir = "imgs/tmp_d_ky_img.png", img = np.array(D_ky_img), io = "o", mode = "rgba", backend = "opencv")
-    Init.ImageIO(file_dir = "imgs/tmp_H_ks_img.png", img = np.array(H_ks_img), io = "o", mode = "rgba", backend = "opencv")
+    Init.ImageIO(file_dir = "imgs/tmp_h_ks_img.png", img = np.array(H_ks_img), io = "o", mode = "rgba", backend = "opencv")
 
 
 

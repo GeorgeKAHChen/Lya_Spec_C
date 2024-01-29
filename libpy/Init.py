@@ -405,7 +405,7 @@ def ImageIO(file_dir = "", img = [], io = "i", mode = "rgb", backend = ""):
                     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 cv2.imwrite(file_dir, img)
             else:
-                raise ValueError("mode error, the image mode must be confirmed as 'grey' for mono or 'rgp' for rgb image")
+                raise ValueError("mode error, the image mode must be confirmed as 'grey' for mono or 'rgb' for rgb image")
             return True
 
         else:

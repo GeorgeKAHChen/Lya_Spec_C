@@ -23,18 +23,19 @@ bf_merge                = True
 
 
 ### heat map plot parameter (le_dky_hks heat map - 2d)
-"""
-## fix a 
-le_file_folder          = ["/Users/amakawa/LocalCode/___data/results_240116_nf/a"]
-le_file_code            = [[1, 18]]
-le_para_use             = [[1, 0.05, 0.11, 0.0002], [2, 0.00, 0.35, 0.001]] #from 0
-"""
 
+## fix a 
+le_file_folder          = ["/Users/amakawa/LocalCode/___data/results_240117_nf/a_151_1",
+                           "/Users/amakawa/LocalCode/___data/results_240117_nf/a_151_2"]
+le_file_code            = [[1, 8], [1, 10]]
+le_para_use             = [[1, 0.05, 0.11, 0.0002], [2, 0.00, 0.35, 0.001]] #from 0
+
+"""
 ## fix b
-le_file_folder          = ["/Users/amakawa/LocalCode/___data/results_240116_nf/b"]
+le_file_folder          = ["/Users/amakawa/LocalCode/___data/results_240117_nf/b_080_2"]
 le_file_code            = [[1, 12]]
 le_para_use             = [[0, 1.2, 1.6, 0.002], [2, 0.00, 0.35, 0.001]] #from 0
-
+"""
 
 le_start                = 3
 le_color_table          = [["jet", 0.00], ["jet", 0.11], ["jet", 0.22], ["jet", 0.33], 
