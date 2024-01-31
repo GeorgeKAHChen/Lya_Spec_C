@@ -28,41 +28,41 @@ def full_plot(file_list,
     +++++++++++++++++++++++++++++++++++++++++++++
     """
 
-    fig = plt.figure(constrained_layout=True, figsize=(30, 50))
+    fig = plt.figure(constrained_layout=True, figsize=(30, 40))
     plt.rcParams.update({'font.size': FONT_SIZE})
 
     ax_le   = plt.subplot2grid(shape=(49, 30), loc=( 0, 0), rowspan = 9, colspan = 30)
     ax_D_ky = plt.subplot2grid(shape=(49, 30), loc=(10, 0), rowspan = 9, colspan = 30, sharex=ax_le)
     ax_H_ks = plt.subplot2grid(shape=(49, 30), loc=(20, 0), rowspan = 9, colspan = 30, sharex=ax_le)
     ax_dist = plt.subplot2grid(shape=(49, 30), loc=(30, 0), rowspan = 9, colspan = 30, sharex=ax_le)
-    ax_bf   = plt.subplot2grid(shape=(49, 30), loc=(40, 0), rowspan = 9, colspan = 30, sharex=ax_le)
+    #ax_bf   = plt.subplot2grid(shape=(49, 30), loc=(40, 0), rowspan = 9, colspan = 30, sharex=ax_le)
     
     if tikz_axis:
         ax_le.set_xticklabels([])
         ax_D_ky.set_xticklabels([])
         ax_H_ks.set_xticklabels([])
         ax_bf.set_xticklabels([])
-        ax_dist.set_xticklabels([])
+        #ax_dist.set_xticklabels([])
 
         ax_le.set_yticklabels([])
         ax_D_ky.set_yticklabels([])
         ax_H_ks.set_yticklabels([])
         ax_bf.set_yticklabels([])
-        ax_dist.set_yticklabels([])
+        #ax_dist.set_yticklabels([])
 
     #ax0.xaxis.set_major_locator(MultipleLocator(0.025))
     ax_le.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
     ax_D_ky.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
     ax_H_ks.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
     ax_bf.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
-    ax_dist.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
+    #ax_dist.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
     
     if not tikz_axis:
         ax_le.set_title("(a) sigma - LE",y=-0.1,pad=-12)
         ax_D_ky.set_title("(b) sigma - D_KY",y=-0.1,pad=-12)
         ax_H_ks.set_title("(c) sigma - H_KS",y=-0.1,pad=-12)
         ax_bf.set_title("(d) sigma - Bifurcation diagram",y=-0.1,pad=-12)
-        ax_dist.set_title("(e) sigma - x_1 distribution",y=-0.1,pad=-12)
+        #ax_dist.set_title("(e) sigma - x_1 distribution",y=-0.1,pad=-12)
     
 
 
@@ -119,9 +119,11 @@ def full_plot(file_list,
         #   ax_le - LE plot
         if ax_will_plot[0] == 1:
             print("ax_le plotting")
+            min_para_x = min(x_data)
+            max_para_x = max(x_data)
             for i in range(0, 9):
                 ax_le.plot(x_data, les[i], linewidth=5.0)
-                ax_le.plot([0, 0.1], [0, 0], "r-.")
+            ax_le.plot([min_para_x, max_para_x], [0, 0], "r-.")
 
         #   ax_D_ky - Dky plot
         if ax_will_plot[1] == 1:
@@ -146,7 +148,7 @@ def full_plot(file_list,
         file = open(default_dist_file, "r")
         init_data = True
         print(default_dist_file)
-        ax_dist.set_ylim([-2, 2])
+        ax_dist.set_ylim([default_x_range[0], default_x_range[1]])
 
 
         
@@ -214,6 +216,7 @@ def full_plot(file_list,
     Plot ax_bf
     +++++++++++++++++++++++++++++++++++++++++++++
     """
+    """
     if ax_will_plot[4] == 1:
         if not bf_merge:
             print("ax_bf plotting")
@@ -260,7 +263,7 @@ def full_plot(file_list,
 
             print()
 
-
+    """
     """
     +++++++++++++++++++++++++++++++++++++++++++++
     FINAL Image output

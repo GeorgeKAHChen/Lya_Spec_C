@@ -1,4 +1,7 @@
-### main parameter
+"""
+[MAIN] parameter
+"""
+
 default_folder          = ["/Users/amakawa/LocalCode/___data/RGHM_10_151_080_ob_bf"]
 default_file_code       = [[1, 3501]]
 #default_para_use        = ["", 1]
@@ -13,37 +16,52 @@ default_ps_interval     = [["x", -2, 2], ["y", -2, 2], ["z", -2, 2]]
 name_code_length        = 5 #include a.cde -> 5 
 
 
-
-### full curve plot parameter (le_dky_hks_bf_dist plot)
+"""
+[FULL] curve plot parameter (le_dky_hks_bf_dist plot)
+"""
 ax_will_plot            = [1,   #ax_le
                            1,   #ax_D_ky
                            1,   #ax_H_ks
-                           0,   #ax_dist
+                           1,   #ax_dist
                            0,   #ax_bf
                         ]
 #default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_le.dat"
-default_le_file         = "/Users/amakawa/LocalCode/Lya_Spec_CPP/tools_other/tmp.dat"
-default_dist_file       = "/Users/amakawa/LocalCode/___data/RGHM_10_151_080_dist_2.dat"
-tikz_axis               = True
+default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_LE.dat"
+default_dist_file       = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_dist.dat"
+tikz_axis               = False
 bf_merge                = True
 
 
 
-### heat map plot parameter (le_dky_hks heat map - 2d)
 
-## fix a 
+
+
+"""
+[HEAT MAP] plot parameter (le_dky_hks heat map - 2d)
+"""
+
+"""
+## [b-simga]: fix a 
 le_file_folder          = ["/Users/amakawa/LocalCode/___data/results_240117_nf/a_151_1",
                            "/Users/amakawa/LocalCode/___data/results_240117_nf/a_151_2"]
 le_file_code            = [[1, 8], [1, 10]]
 le_para_use             = [[1, 0.05, 0.11, 0.0002], [2, 0.00, 0.35, 0.001]] #from 0
+"""
 
 """
-## fix b
+## [a-sigma]: fix b
 le_file_folder          = ["/Users/amakawa/LocalCode/___data/results_240117_nf/b_080_2"]
 le_file_code            = [[1, 12]]
 le_para_use             = [[0, 1.2, 1.6, 0.002], [2, 0.00, 0.35, 0.001]] #from 0
 """
 
+## [a-b]: fix sigma
+le_file_folder          = ["/Users/amakawa/LocalCode/___data/results_240131/"]
+le_file_code            = [[1, 12]]
+le_para_use             = [[0, 0.05, 0.11, 0.002], [1, 1.2, 1.8, 0.001]] #from 0
+
+
+## [others]
 le_start                = 3
 le_color_table          = [["jet", 0.00], ["jet", 0.11], ["jet", 0.22], ["jet", 0.33], 
                            ["jet", 0.44], ["jet", 0.55], ["jet", 0.66], ["jet", 0.77],

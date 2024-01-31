@@ -180,7 +180,8 @@ def main():
             default_para_use, 
             default_x_use, 
             default_x_range, 
-            to_data = dist_to_data)
+            dist_to_data,
+            )
 
     if print_all:
         full_plot.full_plot(file_list, 

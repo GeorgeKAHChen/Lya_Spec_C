@@ -1,21 +1,24 @@
 #ifndef INITIALIZATION
 #define INITIALIZATION
 
-    int         ONLY_LE_MODE    = 0;
-    int         ATTR_CHECK_MODE = 0;
+/* Global setting flags*/
+
+    int         ONLY_LE_MODE    = 0; // not finish0130
+    int         ATTR_CHECK_MODE = 0; // not finish
     int         OB_ONLY_XI      = 1;
     int         OB_XI_USE       = 0; // START FROM 0
+
 /* Deterministic system and map*/
 
     long double delta_t         =     1e-5; //-5
     long double t_max           =     1e5;  //5
     
-    long long int step_max      =     1e9; //1e9 typically
+    long long int step_max      =     1e7; //1e9 typically
     
-    int         calc_le         = 0;
+    int         calc_le         = 1;
     long double t_le            = 1 - 5e-1; // 0.5 typically
 
-    int         calc_ob         = 1;
+    int         calc_ob         = 0;
     long double delta_t_ob      = 1e-3;
     long double t_ob            = 1 - 1e-2; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
     //long double t_ob            = 0.9;
@@ -23,141 +26,6 @@
 
     int         calc_ps         = 0;
     long double t_ps            = 1 - 5e-1; // 0.5 typically
-
-// 1e11 0.995 1-1e-6 0.005
-// 11 -3 -6 -3
-// 10 -2 -5 -2
-// 9  -1 -4 -1
-/* Local Test Parameter */
-/*
-    long double delta_t         = 1e-5;
-    long double t_max           = 1e5;
-    
-    long long int step_max      = 1e10;
-    
-    int         calc_le         = 1;
-    long double t_le            = 0.5;
-
-    int         calc_ob         = 1;
-    long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.999; //(1e5/1e-5) * 0.001 = 1e7
-
-    int         calc_ps         = 1;
-    long double t_ps            = 0.25;
-*/
-/* Rand system and map (start from attractor)*/
-/*
-    long double delta_t         = 1e-5;
-    long double t_max           = 2e5;
-    
-    long long int step_max      = 2e10;
-    
-    int         calc_le         = 1;
-    long double t_le            = 0.01;
-
-    int         calc_ob         = 1;
-    long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.99; //（2e5/1e-3) * 0.01 = 1e6
-
-    int         calc_ps         = 1;
-    long double t_ps            = 0.01;
-*/
-/* Rand - short test*/
-/*
-    long double delta_t         = 1e-4;
-    long double t_max           = 2e5;
-    
-    long long int step_max      = 1e8;
-    
-    int         calc_le         = 1;
-    long double t_le            = 0.01;
-
-    int         calc_ob         = 0;
-    long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.5;
-
-    int         calc_ps         = 1;
-    long double t_ps            = 0.01;
-*/
-/* STD + RAND*/
-/*
-    long double delta_t         = 1e-5;
-    long double t_max           = 4e5;
-    
-    long long int step_max      = 4e10;
-    
-    int         calc_le         = 1;
-    long double t_le            = 0.5;
-
-    int         calc_ob         = 0;
-    long double delta_t_ob      = 1e-3;
-    long double t_ob            = 0.5;
-
-    int         calc_ps         = 1;
-    long double t_ps            = 0.5;
-*/
-//===========================================================
-/*Time parameter*/
-
-    //long double delta_t         = 1e-5;
-    //long double t_max           = 200000;
-        /*
-            Main iteration parameter time(continuous system)
-
-            delta_t             time step size for simulation
-            T_max               the max time for simulation
-        */
-
-    //long long int step_max      = 1000000;
-
-        /*
-            Main iteration parameter time(discrete system/map)
-
-            calc_ps = 0:        not output poincare section
-            calc_ps = 1:        output poincare section
-
-            step_max:           the max time for simulation
-        */
-    //int         calc_le         = 1;
-    //long double t_le            = 0.8;
-
-        /*
-            Time for lyapunov spectrum computation
-
-            calc_le = 0:        not compute LE
-            calc_le = 1:        compute LE
-            
-            T_le:               T_max * T_le = time start compute LE
-        */
-
-    //int         calc_ob         = 1;
-    //long double delta_t_ob      = 1e-3;
-    //long double t_ob            = 0.999;
-
-        /*
-            Time for orbit/attractor output
-
-            calc_le = 0:        not output orbit
-            calc_le = 1:        output orbit
-            
-            delta_t_ob:         orbit output delta_t
-
-            T_ob:               T_max * T_ob = time start output orbit
-        */
-
-    //int         calc_ps         = 1;
-    //long double t_ps            = 0.25;
-
-        /*
-            Time for orbit/attractor output
-
-            calc_ps = 0:        not output poincare section
-            calc_ps = 1:        output poincare section
-
-            T_ps:               T_max * T_ps = time start output poincare section
-        */
-//===========================================================
-
 
 
 struct PARAMETERS{
