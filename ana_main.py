@@ -13,6 +13,9 @@ from tools import x_distribution
 from tools import full_plot
 from tools import order_bf
 from tools import le_file_heat_map
+from tools import mod_attr_plot
+
+
 
 
 def main():
@@ -30,7 +33,7 @@ def main():
     print_all = False
     print_order_bf = False
     plot_heat_map = False
-
+    plot_mod_ob = False
 
 
     """
@@ -63,6 +66,8 @@ def main():
             print_order_bf = True
         if sys.argv[i] == "-map":
             plot_heat_map = True
+        if sys.argv[i] == "-mod-ob" or sys.argv[i] == "-ob-mod":
+            plot_mod_ob = True
 
 
     """
@@ -73,6 +78,7 @@ def main():
     default_para_use    = default_data.default_para_use
     default_x_use       = default_data.default_x_use
     default_x_range     = default_data.default_x_range
+    default_t_mod       = default_data.default_t_mod
     default_ob_use      = default_data.default_ob_use
     default_ob_interval = default_data.default_ob_interval
     default_ps_use      = default_data.default_ps_use
@@ -208,6 +214,13 @@ def main():
             le_start,
             le_color_table,
             heat_map_table)
+
+    if plot_mod_ob:
+        mod_attr_plot.mod_attr_plot(file_list,
+            default_x_use, 
+            default_x_range,
+            default_t_mod
+            )
     return 
 
 

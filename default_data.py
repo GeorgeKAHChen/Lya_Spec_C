@@ -2,12 +2,15 @@
 [MAIN] parameter
 """
 
-default_folder          = ["/Users/amakawa/LocalCode/___data/RGHM_10_151_080_ob_bf"]
-default_file_code       = [[1, 3501]]
+default_folder          = ["/Users/amakawa/LocalCode/___data/a_151_b_008_w_w_o_noise_test"]
+default_file_code       = [[1, 8]]
+#default_folder          = ["./output"]
+#default_file_code       = [[1, 1]]
 #default_para_use        = ["", 1]
 default_para_use        = ["r", 0]
 default_x_use           = 0 # From 0
 default_x_range         = [-2, 2, 1001]
+default_t_mod           = 2
 default_ob_use          = [0, 8, 9]
 default_ob_interval     = [["x_1", -2, 2], ["x_9", -2, 2], ["x_10", -2, 2]]
 #default_ob_interval     = [["x", 1, 1.6], ["y", -0.6, 0.6]]
