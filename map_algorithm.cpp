@@ -15,6 +15,7 @@
 
 int map_ttl_group = 0;    
 
+
 void map_algorithm(struct PARAMETERS *parameters)
 {
 
@@ -44,6 +45,13 @@ void map_algorithm(struct PARAMETERS *parameters)
         // Computation method
             int use_maruyama = 0;
 
+        // Other parameter
+            long double *noise_change_mark;
+            long long int *noise_change_memo;
+
+
+
+
     /*Memory Initialization*/
         // System/OB parameter
             curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
@@ -56,6 +64,10 @@ void map_algorithm(struct PARAMETERS *parameters)
 
         // PS parameter
             ps_return = (long double*) malloc(parameters->dim * sizeof(long double));
+
+        // Other parameter 
+            noise_change_mark = (long double*) malloc(NOISE_ADD_RM * sizeof(long double));
+            noise_change_memo = (long long int*) malloc(NOISE_ADD_RM * sizeof(long long int));
 
 
     /*Value Initialization*/
@@ -83,6 +95,12 @@ void map_algorithm(struct PARAMETERS *parameters)
 
         // PS parameter
             if (calc_ps == 1)               t_ps_mark = (long long int)(step_max * t_ps);
+
+        // Other parameter
+            for (int i = 0; i < NOISE_ADD_RM; i ++){
+                noise_change_mark[i] = (long long int)(step_max * noise_change[i]);
+                noise_change_memo[i] = 0;
+            }
 
 
     /*Output Initalization*/
@@ -165,6 +183,14 @@ void map_algorithm(struct PARAMETERS *parameters)
         std::cout << "=============================================\n";
 
 
+
+
+
+
+
+
+
+
     /*Main algorithm*/
         int print_kase = 0;
         //auto run_time_mark = std::chrono::high_resolution_clock::now();
@@ -178,6 +204,21 @@ void map_algorithm(struct PARAMETERS *parameters)
             /*System Calculator*/
                 if (use_maruyama == 0)      map_calc(parameters->dim, curr_t, 1, curr_x, para, parameters->f);
                 else                        rand_map_calc(parameters->dim, parameters->rand_dim, curr_t, 1, curr_x, para, rand_para, parameters->f, parameters->rand_f);        
+            
+            /*Noise Add Check*/
+                if (parameters->rand_para_size != 0 and parameters->rand_dim != 0){
+                    if (NOISE_ADD_RM > 0){
+                        for(int i = 0; i < NOISE_ADD_RM; i ++){
+                            if (curr_t >= noise_change_mark[i] && noise_change_memo[i] == 0){
+                                use_maruyama = 1 - use_maruyama;
+                                noise_change_memo[i] = 1;
+                            }
+                        }
+                    }
+                    else if (curr_t == t_ob_mark || curr_t ==t_le_mark || curr_t == t_ps_mark){
+                        use_maruyama = 1;
+                    }
+                }
 
             /*OB check and output*/
                 if (calc_ob == 1 && curr_t >= t_ob_mark){
@@ -189,21 +230,15 @@ void map_algorithm(struct PARAMETERS *parameters)
                                             file_ob << std::fixed << std::setprecision(10) << curr_x[i] << " ";
                     }
                     file_ob << "\n";
-                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                            use_maruyama = 0;
-                    else                    use_maruyama = 1;
                 }
 
             /*LE computation*/
                 if (calc_le == 1 && curr_t >= t_le_mark){
                                             lya_spec(parameters->dim, curr_x, 1, parameters->Jf, eye, spectrum, curr_le_t, para);
-                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                            use_maruyama = 0;
-                    else                    use_maruyama = 1;
                 }
 
             /*PS check and output*/
-                if (calc_ps == 1 && curr_t > t_ps_mark){
+                if (calc_ps == 1 && curr_t >= t_ps_mark){
                     ps_print = ps_f(curr_x, ps_print, ps_return);
                     if (ps_print >= 1){
                         file_ps << ps_print << " ";
@@ -213,9 +248,6 @@ void map_algorithm(struct PARAMETERS *parameters)
                     }
                     
                     ps_print = 0;
-                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                            use_maruyama = 0;
-                    else                    use_maruyama = 1;
                 }
 
             /*Time iteartion*/

@@ -41,6 +41,14 @@ void main_algorithm(struct PARAMETERS *parameters)
         // Computation method
             int use_maruyama = 0;
 
+        // Other parameter
+            long double *noise_change_mark;
+            long long int *noise_change_memo;
+
+
+
+
+
     /*Memory Initialization*/
         // System/OB parameter
             curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
@@ -54,7 +62,14 @@ void main_algorithm(struct PARAMETERS *parameters)
         // PS parameter
             ps_return = (long double*) malloc(parameters->dim * sizeof(long double));
 
-        
+        // Other parameter 
+            noise_change_mark = (long double*) malloc(NOISE_ADD_RM * sizeof(long double));
+            noise_change_memo = (long long int*) malloc(NOISE_ADD_RM * sizeof(long long int));
+
+
+
+
+
     /*Value Initialization*/
         // System/OB parameter
             curr_t = 0;
@@ -79,6 +94,15 @@ void main_algorithm(struct PARAMETERS *parameters)
 
         // PS parameter
             if (calc_ps == 1)               t_ps_mark = t_max * t_ps;
+
+        // Other parameter
+            for (int i = 0; i < NOISE_ADD_RM; i ++){
+                noise_change_mark[i] = (long long int)(step_max * noise_change[i]);
+                noise_change_memo[i] = 0;
+            }
+
+
+
 
 
     /*Output Initalization*/
@@ -173,23 +197,32 @@ void main_algorithm(struct PARAMETERS *parameters)
                 if (use_maruyama == 0)      ode4(parameters->dim, curr_t, delta_t, curr_x, para, parameters->f);
                 else                        maruyama(parameters->dim, parameters->rand_dim, curr_t, delta_t, curr_x, para, rand_para, parameters->f, parameters->rand_f);        
         
+            /*Noise Add Check*/
+                if (parameters->rand_para_size != 0 and parameters->rand_dim != 0){
+                    if (NOISE_ADD_RM > 0){
+                        for(int i = 0; i < NOISE_ADD_RM; i ++){
+                            if (curr_t >= noise_change_mark[i] && noise_change_memo[i] == 0){
+                                use_maruyama = 1 - use_maruyama;
+                                noise_change_memo[i] = 1;
+                            }
+                        }
+                    }
+                    else if (curr_t == t_ob_mark || curr_t ==t_le_mark || curr_t == t_ps_mark){
+                        use_maruyama = 1;
+                    }
+                }
+
             /*OB check and output*/
                 if (calc_ob == 1 && curr_t >= t_ob_mark && curr_ob_t >= delta_t_ob){
                     curr_ob_t = 0;
                     for (int i = 0; i < parameters->dim; i ++)
                                             file_ob << std::fixed << std::setprecision(10) << curr_x[i] << " ";
                     file_ob << "\n";
-                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                            use_maruyama = 0;
-                    else                    use_maruyama = 1;
                 }
 
             /*LE computation*/
                 if (calc_le == 1 && curr_t >= t_le_mark){
                                             lya_spec(parameters->dim, curr_x, delta_t, parameters->Jf, eye, spectrum, curr_le_t, para);
-                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                            use_maruyama = 0;
-                    else                    use_maruyama = 1;
                 }
 
             /*PS check and output*/
@@ -203,9 +236,6 @@ void main_algorithm(struct PARAMETERS *parameters)
                     }
                     
                     ps_print = 0;
-                    if (parameters->rand_para_size == 0 || parameters->rand_dim == 0)
-                                            use_maruyama = 0;
-                    else                    use_maruyama = 1;
                 }
 
             /*Time iteartion*/

@@ -45,7 +45,7 @@ def le_file_heat_map(file_list, para_use, le_start, color_table, color_map):
     print(x_para_loc, x_para_min, x_para_max, x_para_len, x_para_dis)
     print(y_para_loc, y_para_min, y_para_max, y_para_len, y_para_dis)
 
-
+    input("Press Enter to continue")
 
     """
     File read and main calc
@@ -74,7 +74,7 @@ def le_file_heat_map(file_list, para_use, le_start, color_table, color_map):
             table_loc_x =              int((float(line[x_para_loc]) - x_para_min)/x_para_dis + 0.5) - 1
             table_loc_y = y_para_len - int((float(line[y_para_loc]) - y_para_min)/y_para_dis + 0.5) - 1
             print(table_loc_x, table_loc_y)
-            if table_loc_x < 0 or table_loc_x > x_para_len or table_loc_y < 0 or table_loc_y > y_para_len:
+            if table_loc_x < 0 or table_loc_x >= x_para_len or table_loc_y < 0 or table_loc_y >= y_para_len:
                 print("Ignore data out of range, from file: " + file_name + ",line: " + str(cnt))
                 continue
 
@@ -92,6 +92,8 @@ def le_file_heat_map(file_list, para_use, le_start, color_table, color_map):
                 except:
                     continue
             
+            if line[le_start] == line[le_start+1] and line[le_start] == line[le_start+2]:
+                Le_img[table_loc_y][table_loc_x] = -1
 
 
             # D_ky calc
@@ -132,34 +134,33 @@ def le_file_heat_map(file_list, para_use, le_start, color_table, color_map):
     for i in range(0, y_para_len):
         print(i, y_para_len)
         for j in range(0, x_para_len):
-            Le_img[i][j]        = color_table[Le_img[i][j] % len(color_table)]
+            if Le_img[i][j] >= 0:
+                Le_img[i][j]    = color_table[Le_img[i][j] % len(color_table)]
 
-            # normalization
-            D_ky_img[i][j]      = (D_ky_img[i][j] - D_ky_minn) / D_ky_size
-            H_ks_img[i][j]      = (H_ks_img[i][j] - H_ks_minn) / H_ks_size
-            
-            # boundary check
-            D_ky_img[i][j]      = min(D_ky_img[i][j], 1.0)
-            H_ks_img[i][j]      = min(H_ks_img[i][j], 1.0)
-            
-            D_ky_img[i][j]      = max(D_ky_img[i][j], 0.0)
-            H_ks_img[i][j]      = max(H_ks_img[i][j], 0.0)
-            
-            # val 2 color
-            D_ky_img[i][j]      = color_map(D_ky_img[i][j])
-            H_ks_img[i][j]      = color_map(H_ks_img[i][j])
-            
-            # 0,1 to 0,255
-            D_ky_img[i][j]      = [int(D_ky_img[i][j][0] * 255), int(D_ky_img[i][j][1] * 255), int(D_ky_img[i][j][2] * 255), D_ky_img[i][j][3]]
-            H_ks_img[i][j]      = [int(H_ks_img[i][j][0] * 255), int(H_ks_img[i][j][1] * 255), int(H_ks_img[i][j][2] * 255), H_ks_img[i][j][3]]
-            
-            """
-            for k in range(0, 3):
-                D_ky_color_2[k] = max(D_ky_color_2[k], 0)
-                D_ky_color_2[k] = min(D_ky_color_2[k], 255)
-                H_ks_color_2[k] = max(H_ks_color_2[k], 0)
-                H_ks_color_2[k] = min(H_ks_color_2[k], 255)
-            """
+                # normalization
+                D_ky_img[i][j]      = (D_ky_img[i][j] - D_ky_minn) / D_ky_size
+                H_ks_img[i][j]      = (H_ks_img[i][j] - H_ks_minn) / H_ks_size
+                
+                # boundary check
+                D_ky_img[i][j]      = min(D_ky_img[i][j], 1.0)
+                H_ks_img[i][j]      = min(H_ks_img[i][j], 1.0)
+                
+                D_ky_img[i][j]      = max(D_ky_img[i][j], 0.0)
+                H_ks_img[i][j]      = max(H_ks_img[i][j], 0.0)
+                
+                # val 2 color
+                D_ky_img[i][j]      = color_map(D_ky_img[i][j])
+                H_ks_img[i][j]      = color_map(H_ks_img[i][j])
+                
+                # 0,1 to 0,255
+                D_ky_img[i][j]      = [int(D_ky_img[i][j][0] * 255), int(D_ky_img[i][j][1] * 255), int(D_ky_img[i][j][2] * 255), D_ky_img[i][j][3]]
+                H_ks_img[i][j]      = [int(H_ks_img[i][j][0] * 255), int(H_ks_img[i][j][1] * 255), int(H_ks_img[i][j][2] * 255), H_ks_img[i][j][3]]
+
+            else:
+                Le_img[i][j]        = color_table[len(color_table) - 1]
+                D_ky_img[i][j]      = color_table[len(color_table) - 1]
+                H_ks_img[i][j]      = color_table[len(color_table) - 1]
+
 
             # array to tuple
             Le_img[i][j]        = tuple(Le_img[i][j])
