@@ -14,7 +14,7 @@ from tools import full_plot
 from tools import order_bf
 from tools import le_file_heat_map
 from tools import mod_attr_plot
-
+from tools import power_spectrum
 
 
 
@@ -34,6 +34,7 @@ def main():
     print_order_bf = False
     plot_heat_map = False
     plot_mod_ob = False
+    plot_power_spectrum = False
 
 
     """
@@ -68,6 +69,8 @@ def main():
             plot_heat_map = True
         if sys.argv[i] == "-mod-ob" or sys.argv[i] == "-ob-mod":
             plot_mod_ob = True
+        if sys.argv[i] == "-fft":
+            plot_power_spectrum = True
 
 
     """
@@ -95,7 +98,7 @@ def main():
     le_color_table      = default_data.le_color_table
     heat_map_table      = default_data.heat_map_table
     ax_will_plot        = default_data.ax_will_plot
-
+    power_spectrum_para = default_data.power_spectrum_para
 
     """
     FILE LIST / LE FILE LIST INITIALIZATION
@@ -220,6 +223,11 @@ def main():
             default_x_use, 
             default_x_range,
             default_t_mod
+            )
+    if plot_power_spectrum:
+        power_spectrum.power_spectrum(file_list,
+            power_spectrum_para,
+            default_x_use
             )
     return 
 

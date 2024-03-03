@@ -78,23 +78,12 @@ heat_map_table          = "jet"
 
 
 
-"""
-[HEAT MAP] 6-d parameter
-
-## [a-b]: fix sigma - demo
-le_file_folder          = ["/Users/amakawa/LocalCode/___data/RGHM_N_6_a_b"]
-le_file_code            = [[6, 6]]
-le_para_use             = [[0, 1.2, 1.8, 0.002], [1, 0.05, 0.11, 0.0002]] #from 0
-
-
-## [others]
-le_start                = 3         # from 0
-le_color_table          = [["jet", 0.00], ["jet", 0.20], ["jet", 0.40], ["jet", 0.60], 
-                           ["jet", 0.80], ["jet", 1.00], ["rgba", (1.0, 1.0, 1.0, 1.0)]]
-heat_map_table          = "jet"
 
 """
-
-
-
+Power spectrum parameter group
+"""
+power_spectrum_para     = [1e7,             # Total time sequence use
+                           [0.15, 0.2],     # x-axis lim
+                           [1e-5, 1e10]     # y-axis lim
+                          ]
 
