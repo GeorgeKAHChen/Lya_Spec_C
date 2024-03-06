@@ -238,7 +238,8 @@ def main():
         ave_power_spectrum.ave_power_spectrum(file_list,
             power_spectrum_para,
             default_x_use,
-            tikz_axis
+            tikz_axis,
+            default_file_code
             )
     return 
 

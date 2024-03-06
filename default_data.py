@@ -7,8 +7,8 @@ tikz_axis               = False
 
 #default_folder          = ["/Users/amakawa/LocalCode/___data/results_240306"]
 #default_file_code       = [[1, 6]]
-default_folder          = ["./output"]
-default_file_code       = [[1, 100]]
+default_folder          = ["./output1", "./output"]
+default_file_code       = [[1, 10], [1, 10]]
 #default_para_use        = ["", 1]
 default_para_use        = ["r", 0]
 default_x_use           = 0 # From 0
@@ -84,8 +84,8 @@ heat_map_table          = "jet"
 """
 Power spectrum parameter group
 """
-power_spectrum_para     = [1e7,             # Total time sequence use
+power_spectrum_para     = [1000001,             # Total time sequence use
                            [0.0, 0.51],     # x-axis lim
-                           [0, 1e9]     # y-axis lim
+                           [1e-14, 1e9]     # y-axis lim
                           ]
 
