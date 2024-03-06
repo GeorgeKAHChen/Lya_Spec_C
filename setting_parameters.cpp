@@ -10,7 +10,7 @@
 
 
 /* Noise add delay*/
-    int         NOISE_ADD_RM    = 2;
+    int         NOISE_ADD_RM    = 0;
     long double noise_change[]  = {1 - 3e-3, 1 - 7e-3};
 
 /* Deterministic system and map*/

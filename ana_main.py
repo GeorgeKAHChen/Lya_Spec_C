@@ -15,6 +15,7 @@ from tools import order_bf
 from tools import le_file_heat_map
 from tools import mod_attr_plot
 from tools import power_spectrum
+from tools import ave_power_spectrum
 
 
 
@@ -35,6 +36,7 @@ def main():
     plot_heat_map = False
     plot_mod_ob = False
     plot_power_spectrum = False
+    ave_plot_power_spectrum = False
 
 
     """
@@ -71,6 +73,8 @@ def main():
             plot_mod_ob = True
         if sys.argv[i] == "-fft":
             plot_power_spectrum = True
+        if sys.argv[i] == "-afft":
+            ave_plot_power_spectrum = True
 
 
     """
@@ -227,7 +231,14 @@ def main():
     if plot_power_spectrum:
         power_spectrum.power_spectrum(file_list,
             power_spectrum_para,
-            default_x_use
+            default_x_use,
+            tikz_axis
+            )
+    if ave_plot_power_spectrum:
+        ave_power_spectrum.ave_power_spectrum(file_list,
+            power_spectrum_para,
+            default_x_use,
+            tikz_axis
             )
     return 
 

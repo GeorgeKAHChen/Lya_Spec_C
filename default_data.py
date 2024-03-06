@@ -1,16 +1,19 @@
+tikz_axis               = False
+
+
 """
 [MAIN] parameter
 """
 
-default_folder          = ["/Users/amakawa/LocalCode/___data/a_151_b_008_w_w_o_noise_test"]
-default_file_code       = [[1, 8]]
-#default_folder          = ["./output"]
-#default_file_code       = [[1, 1]]
+#default_folder          = ["/Users/amakawa/LocalCode/___data/results_240306"]
+#default_file_code       = [[1, 6]]
+default_folder          = ["./output"]
+default_file_code       = [[1, 100]]
 #default_para_use        = ["", 1]
 default_para_use        = ["r", 0]
 default_x_use           = 0 # From 0
 default_x_range         = [-2, 2, 1001]
-default_t_mod           = 2
+default_t_mod           = 4
 default_ob_use          = [0, 8, 9]
 default_ob_interval     = [["x_1", -2, 2], ["x_9", -2, 2], ["x_10", -2, 2]]
 #default_ob_interval     = [["x", 1, 1.6], ["y", -0.6, 0.6]]
@@ -31,7 +34,6 @@ ax_will_plot            = [1,   #ax_le
 default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_LE.dat"
 #default_le_file         = "/Users/amakawa/LocalCode/Lya_Spec_CPP/tools_other/tmp.dat"
 default_dist_file       = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_dist.dat"
-tikz_axis               = True
 bf_merge                = True
 
 
@@ -83,7 +85,7 @@ heat_map_table          = "jet"
 Power spectrum parameter group
 """
 power_spectrum_para     = [1e7,             # Total time sequence use
-                           [0.15, 0.2],     # x-axis lim
-                           [1e-5, 1e10]     # y-axis lim
+                           [0.0, 0.51],     # x-axis lim
+                           [0, 1e9]     # y-axis lim
                           ]
 

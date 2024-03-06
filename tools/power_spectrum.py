@@ -4,8 +4,10 @@ import numpy as np
 import numpy as np
 import matplotlib.pyplot as plt
 
+periodic_loc    = [2,3,4,5,6,7,8,9,10,12,18,25,35]
+plot_periodic   = True 
 
-def power_spectrum(file_list, power_spectrum_para, default_x_use):
+def power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis):
 
     os.system("rm -rf imgs")
     os.system("mkdir imgs")
@@ -16,8 +18,12 @@ def power_spectrum(file_list, power_spectrum_para, default_x_use):
     y_lim_min = power_spectrum_para[2][0]
     y_lim_max = power_spectrum_para[2][1]
 
-    for i in range(0, len(file_list)):
-        file_name = file_list[i] + "_ob.dat"
+    #for kase in range(0, len(file_list)):
+    fig = plt.figure(constrained_layout=True, figsize=(24, 12))
+    ax = plt.subplot(111)
+    colors = ["red", "blue", "green"]
+    for kase in range(0, len(file_list)):
+        file_name = file_list[kase] + "_ob.dat"
 
         data_arr = []
         file = open(file_name, "r")
@@ -50,12 +56,22 @@ def power_spectrum(file_list, power_spectrum_para, default_x_use):
         time_step = 1
 
         freqs = np.fft.rfftfreq(data_arr.size, time_step)
-        idx = np.argsort(freqs)
-
-        fig = plt.figure(constrained_layout=True, figsize=(12, 6))
-        ax = plt.subplot(111)
-        ax.semilogy(freqs[idx], ps[idx], linewidth = 0.1)
+        ps = ps * pow(1e-3, kase)
+        #ax.semilogy(freqs[idx], ps[idx], linewidth = 0.1, color = colors[kase % 3])
+        ax.scatter(freqs, ps, linewidth = 0.1, color = colors[kase % 3], s = 0.01)
+        #ax.loglog(freqs[idx], ps[idx], linewidth = 0.1, color[kase])
+        ax.set_yscale('log')
         ax.set_xlim(x_lim_min, x_lim_max)
         ax.set_ylim(y_lim_min, y_lim_max)
+        
+        if plot_periodic:
+            for i in range(0, len(periodic_loc)):
+                ax.plot([1/periodic_loc[i], 1/periodic_loc[i]], [y_lim_min, y_lim_max], linewidth = 0.4, color = "black", linestyle = "dashed")
+        
+        if tikz_axis:
+            ax.set_xticklabels([])
+            ax.set_yticklabels([])
+        else:
+            plt.title(str(kase+1))
 
-        plt.savefig("imgs/" + str(i) + ".png")
+    plt.savefig("imgs/" + str(kase+1) + ".png")
