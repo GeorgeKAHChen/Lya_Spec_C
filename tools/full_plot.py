@@ -86,13 +86,17 @@ def full_plot(file_list,
             ax_dist.set_title("(d) sigma - x_1 distribution",y=-0.1,pad=-12)
         #ax_bf.set_title("(d) sigma - Bifurcation diagram",y=-0.1,pad=-12)
     
-
-
+    para_use = -1
+    if default_para_use[0] == "r":
+        para_use = 2 + default_para_use[1]
+    else:
+        para_use = default_para_use[1]
     """ 
     +++++++++++++++++++++++++++++++++++++++++++++
     Plot ax_le - ax_D_ky - ax_H_ks
     +++++++++++++++++++++++++++++++++++++++++++++
     """ 
+
     if ax_will_plot[0] == 1 or ax_will_plot[1] == 1 or ax_will_plot[2] == 1:
         # data read and dky, hks computation
         file = open(default_le_file, "r")
@@ -113,7 +117,7 @@ def full_plot(file_list,
 
             line = line.split(" ")
 
-            x_data.append(float(line[2]))
+            x_data.append(float(line[para_use]))
             D_new = 0
             D_sum = 0
             H_new = 0

@@ -16,8 +16,8 @@ from tools import le_file_heat_map
 from tools import mod_attr_plot
 from tools import power_spectrum
 from tools import ave_power_spectrum
-
-
+from tools import high_mod_attr_plot
+from tools import bf_2_img
 
 def main():
     """
@@ -35,9 +35,10 @@ def main():
     print_order_bf = False
     plot_heat_map = False
     plot_mod_ob = False
+    plot_high_mod_ob = False
     plot_power_spectrum = False
     ave_plot_power_spectrum = False
-
+    plot_bf_2_img = False
 
     """
     FLAG CHECKING
@@ -71,10 +72,14 @@ def main():
             plot_heat_map = True
         if sys.argv[i] == "-mod-ob" or sys.argv[i] == "-ob-mod":
             plot_mod_ob = True
+        if sys.argv[i] == "-hmod":
+            plot_high_mod_ob = True
         if sys.argv[i] == "-fft":
             plot_power_spectrum = True
         if sys.argv[i] == "-afft":
             ave_plot_power_spectrum = True
+        if sys.argv[i] == "-bfd":
+            plot_bf_2_img = True
 
 
     """
@@ -228,12 +233,14 @@ def main():
             default_x_range,
             default_t_mod
             )
+
     if plot_power_spectrum:
         power_spectrum.power_spectrum(file_list,
             power_spectrum_para,
             default_x_use,
             tikz_axis
             )
+
     if ave_plot_power_spectrum:
         ave_power_spectrum.ave_power_spectrum(file_list,
             power_spectrum_para,
@@ -241,6 +248,16 @@ def main():
             tikz_axis,
             default_file_code
             )
+
+    if plot_high_mod_ob:
+        high_mod_attr_plot.high_mod_attr_plot(file_list,
+            default_x_use, 
+            default_x_range,
+            default_t_mod
+            )
+
+    if plot_bf_2_img:
+        bf_2_img.bf_2_img(file_list)
     return 
 
 

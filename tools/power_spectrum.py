@@ -36,7 +36,7 @@ def power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis):
 
             if not file_line:
                 break
-            if cnt > total_file_size :
+            if cnt >= total_file_size :
                 break
 
             file_line = file_line.split(" ")
@@ -48,7 +48,7 @@ def power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis):
                 continue
 
         print(cnt, end = ", ")
-
+        print(len(data_arr), end = "! ")
         data_arr = np.array(data_arr)
 
         ps = np.abs(np.fft.rfft(data_arr))**2
@@ -57,8 +57,10 @@ def power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis):
 
         freqs = np.fft.rfftfreq(data_arr.size, time_step)
         ps = ps * pow(1e-3, kase)
+        idx = np.argsort(freqs)
         #ax.semilogy(freqs[idx], ps[idx], linewidth = 0.1, color = colors[kase % 3])
-        ax.scatter(freqs, ps, linewidth = 0.1, color = colors[kase % 3], s = 0.01)
+        ax.plot(freqs[idx], ps[idx], linewidth = 0.1, color = colors[kase % 3])
+        #ax.scatter(freqs, ps, linewidth = 0.1, color = colors[kase % 3], s = 0.01)
         #ax.loglog(freqs[idx], ps[idx], linewidth = 0.1, color[kase])
         ax.set_yscale('log')
         ax.set_xlim(x_lim_min, x_lim_max)
@@ -66,7 +68,8 @@ def power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis):
         
         if plot_periodic:
             for i in range(0, len(periodic_loc)):
-                ax.plot([1/periodic_loc[i], 1/periodic_loc[i]], [y_lim_min, y_lim_max], linewidth = 0.4, color = "black", linestyle = "dashed")
+                ax.plot([1/periodic_loc[i], 1/periodic_loc[i]], [y_lim_min, y_lim_min * 100], linewidth = 1, color = "black", linestyle = "dashed")
+                ax.text(x = 1/periodic_loc[i], y = y_lim_min, s = str(periodic_loc[i]))
         
         if tikz_axis:
             ax.set_xticklabels([])

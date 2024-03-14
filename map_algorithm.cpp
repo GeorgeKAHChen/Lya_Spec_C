@@ -42,6 +42,11 @@ void map_algorithm(struct PARAMETERS *parameters)
             long double *ps_return;
             int ps_print = -1;
 
+        // BF parameter
+            long long int t_bf_mark;
+            double bf_distance;
+            long long int *bf_output_arr;
+            int curr_x_bf_loc;
         // Computation method
             int use_maruyama = 0;
 
@@ -54,20 +59,25 @@ void map_algorithm(struct PARAMETERS *parameters)
 
     /*Memory Initialization*/
         // System/OB parameter
-            curr_x = (long double*) malloc(parameters->dim * sizeof(long double));
-            para = (long double*) malloc(parameters->para_size * sizeof(long double));
-            rand_para = (long double*) malloc(parameters->rand_para_size * sizeof(long double));
+            curr_x              = (long double*) malloc(parameters->dim * sizeof(long double));
+            para                = (long double*) malloc(parameters->para_size * sizeof(long double));
+            rand_para           = (long double*) malloc(parameters->rand_para_size * sizeof(long double));
         
         // LE parameter
-            spectrum = (long double*) malloc(parameters->dim * sizeof(long double));
-            eye = (long double*) malloc(parameters->dim * parameters->dim * sizeof(long double));
+            spectrum            = (long double*) malloc(parameters->dim * sizeof(long double));
+            eye                 = (long double*) malloc(parameters->dim * parameters->dim * sizeof(long double));
 
         // PS parameter
-            ps_return = (long double*) malloc(parameters->dim * sizeof(long double));
+            ps_return           = (long double*) malloc(parameters->dim * sizeof(long double));
+
+        // BF parameter
+            bf_output_arr       = (long long int*) malloc(bf_total_x  * sizeof(long long int));
 
         // Other parameter 
-            noise_change_mark = (long double*) malloc(NOISE_ADD_RM * sizeof(long double));
-            noise_change_memo = (long long int*) malloc(NOISE_ADD_RM * sizeof(long long int));
+            noise_change_mark   = (long double*) malloc(NOISE_ADD_RM * sizeof(long double));
+            noise_change_memo   = (long long int*) malloc(NOISE_ADD_RM * sizeof(long long int));
+
+
 
 
     /*Value Initialization*/
@@ -96,6 +106,15 @@ void map_algorithm(struct PARAMETERS *parameters)
         // PS parameter
             if (calc_ps == 1)               t_ps_mark = (long long int)(step_max * t_ps);
 
+        // BF parameter
+            if (calc_bf == 1){
+                                            t_bf_mark = (long long int)(step_max * t_bf);
+                for (int i = 0; i < bf_total_x; i ++){
+                                            bf_output_arr[i] = 0;
+                }
+                                            bf_distance = (bf_x_limit[1] - bf_x_limit[0]) / (bf_total_x - 1);
+            }
+
         // Other parameter
             for (int i = 0; i < NOISE_ADD_RM; i ++){
                 noise_change_mark[i] = (long long int)(step_max * noise_change[i]);
@@ -110,31 +129,37 @@ void map_algorithm(struct PARAMETERS *parameters)
             std::stringstream file_str_info;
             std::stringstream file_str_ob;
             std::stringstream file_str_ps;
+            std::stringstream file_str_bf;
         
         // File name write
             file_str_info << "output/" << map_ttl_group << ".info";
             file_str_ob << "output/" << map_ttl_group << "_ob.dat";
             file_str_ps << "output/" << map_ttl_group << "_ps.dat";
+            file_str_bf << "output/" << map_ttl_group << "_bf.dat";
 
         // File name string init
             std::string file_name_info;
             std::string file_name_ob;
             std::string file_name_ps;
+            std::string file_name_bf;
 
         // File name string build
             file_str_info >> file_name_info;
             file_str_ob >> file_name_ob;
             file_str_ps >> file_name_ps;
+            file_str_bf >> file_name_bf;
 
         // File init
             std::ofstream file_info;
             std::ofstream file_ob;
             std::ofstream file_ps;
+            std::ofstream file_bf;
 
         // File open
             file_info.open(file_name_info, std::ios_base::app);
             file_ob.open(file_name_ob, std::ios_base::app);
             file_ps.open(file_name_ps, std::ios_base::app);
+            file_bf.open(file_name_bf, std::ios_base::app);
 
 
 
@@ -160,6 +185,8 @@ void map_algorithm(struct PARAMETERS *parameters)
                                             file_info << std::fixed << std::setprecision(10) << rand_para[i] << " ";
         file_info << "\n";
         file_info << "=============================================\n";
+        file_info << "BF: compute: " << calc_bf << ", t_ps: " << t_bf << ", mark:" <<t_bf_mark << "\n";
+        file_info << "=============================================\n";
 
         std::cout << "=============================================\n";
         std::cout << "Computation Parameters: \n";
@@ -181,6 +208,9 @@ void map_algorithm(struct PARAMETERS *parameters)
                                             std::cout << rand_para[i] << " ";
         std::cout << "\n";
         std::cout << "=============================================\n";
+        std::cout << "BF: compute: " << calc_bf << ", t_ps: " << t_bf << ", mark:" <<t_bf_mark << "\n";
+        std::cout << "=============================================\n";
+
 
 
 
@@ -215,7 +245,7 @@ void map_algorithm(struct PARAMETERS *parameters)
                             }
                         }
                     }
-                    else if (curr_t == t_ob_mark || curr_t ==t_le_mark || curr_t == t_ps_mark){
+                    else if (curr_t == t_ob_mark || curr_t ==t_le_mark || curr_t == t_ps_mark || curr_t == t_bf_mark){
                         use_maruyama = 1;
                     }
                 }
@@ -249,6 +279,12 @@ void map_algorithm(struct PARAMETERS *parameters)
                     
                     ps_print = 0;
                 }
+            /*BF check and output*/
+                if (calc_bf == 1 && curr_t >= t_bf_mark){
+                    curr_x_bf_loc = (int)((curr_x[bf_x_use] - bf_x_limit[0]) / bf_distance);
+                    if (curr_x_bf_loc >= 0 && curr_x_bf_loc < bf_total_x)
+                                            bf_output_arr[curr_x_bf_loc] += 1;
+                }
 
             /*Time iteartion*/
                 if (calc_le == 1 && curr_t >= t_le_mark)
@@ -275,8 +311,14 @@ void map_algorithm(struct PARAMETERS *parameters)
         // Saved end Value if system don't save orbit
             file_info << "Final Value: \n";
             for (int i = 0; i < parameters->dim; i ++)
-                                        file_info << std::setprecision(10) << curr_x[i] << " ";
+                                            file_info << std::setprecision(10) << curr_x[i] << " ";
             file_info << "\n";
+        // BF OUTPUT
+            if (calc_bf == 1){
+                file_bf << std::setprecision(10) << bf_x_limit[0] << " " << bf_x_limit[1] << " " << bf_total_x << "\n";
+                for (int i = 0; i < bf_total_x; i ++)
+                                            file_bf << std::setprecision(10) << bf_output_arr[i] << "\n";
+            }
         // File close
             file_info.close();
             file_ob.close();

@@ -4,7 +4,7 @@ import numpy as np
 
 DOUBLE_LAYER = False
 LAYER_NAME = "results_0810/RGHM_N_10_b_006/1_ob.dat"
-
+delay_system = True
 def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
     """
     INTIALIZATION
@@ -29,14 +29,24 @@ def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
             break
         line = line.split(" ")
         for i in range(0, len(default_ob_use)):
-            data_for_plot[i].append(float(line[default_ob_use[i]]))
+            if not delay_system:
+                data_for_plot[i].append(float(line[default_ob_use[i]]))
+            else:
+                data_for_plot[i].append(float(line[default_ob_use[0]]))
     file.close()
+    if delay_system:
+        data_for_plot[0] = data_for_plot[0][0: len(data_for_plot[i]) - 9]
+        data_for_plot[1] = data_for_plot[1][9: len(data_for_plot[i])]
 
     print(len(data_for_plot[0]))
     if image_dim == 2:
         fig = plt.figure(constrained_layout=True, figsize=(8, 8))
         ax = plt.subplot(111)
         ax.scatter(data_for_plot[0], data_for_plot[1], color = "b", s = 0.1)
+        ax.scatter([0.25700, 1.33700], [1.33700, -0.25700], color = "r", s = 5)
+        ax.scatter([-1.87985,-1.79978,0.88217], [0.88217, -1.87985,-1.79978], color = "g", s = 5)
+        ax.scatter([-1.80231,0.79985,0.87992], [0.87992, -1.80231,0.79985], color = "g", s = 5)
+
 
 
     else:
@@ -48,9 +58,9 @@ def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
         #ax.set_zlim(default_interval[2][1], default_interval[2][2])
 
     ax.set_xlabel("\n" + default_interval[0][0], fontsize = 22)
-    #ax.set_xlim(default_interval[0][1], default_interval[0][2])
+    ax.set_xlim(default_interval[0][1], default_interval[0][2])
     ax.set_ylabel("\n\n" + default_interval[1][0], fontsize = 22)
-    #ax.set_ylim(default_interval[1][1], default_interval[1][2])
+    ax.set_ylim(default_interval[1][1], default_interval[1][2])
     if DOUBLE_LAYER:
         File2 = open(LAYER_NAME, "r")
         old_data_for_plot = [[] for n in range(image_dim)]

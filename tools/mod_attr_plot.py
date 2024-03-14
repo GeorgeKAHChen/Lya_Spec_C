@@ -12,7 +12,7 @@ def mod_attr_plot(file_list, default_x_use, default_x_range, default_t_mod):
     os.system("mkdir imgs")
     
     size_a = (default_t_mod+1)*10-2
-
+    
     for kase in range(0, len(file_list)):
         read_file_name = file_list[kase] + "_ob.dat"
         file = open(read_file_name, "r")

@@ -49,6 +49,7 @@ def bf(file_list, default_para_use, default_x_use, default_x_range):
     """
     for i in range(0, len(file_list)):
         # File Name Initialization
+        print(file_list[i], end = ": ")
         file_name_info = file_list[i] + ".info"
         file_name_data = file_list[i]
         if is_map:

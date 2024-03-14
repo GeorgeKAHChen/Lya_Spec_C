@@ -8,7 +8,6 @@
     int         OB_ONLY_XI      = 1;
     int         OB_XI_USE       = 0; // START FROM 0
 
-
 /* Noise add delay*/
     int         NOISE_ADD_RM    = 0;
     long double noise_change[]  = {1 - 3e-3, 1 - 7e-3};
@@ -18,19 +17,28 @@
     long double delta_t         =     1e-5; //-5
     long double t_max           =     1e5;  //5
     
-    long long int step_max      =     1e8; //1e9 typically
+    long long int step_max      =     1e7; //1e9 typically
     
     int         calc_le         = 0;
-    long double t_le            = 1 - 5e-1; // 0.5 typically
+    long double t_le            = 1 - 5e-2; // 0.5 typically
 
-    int         calc_ob         = 1;
+    int         calc_ob         = 0;
     long double delta_t_ob      = 1e-3;
-    long double t_ob            = 1 - 1e-2; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
+    long double t_ob            = 1 - 1e-3; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
     //long double t_ob            = 0.9;
     //long double t_ob            = 1e-4; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
 
     int         calc_ps         = 0;
     long double t_ps            = 1 - 5e-1; // 0.5 typically
+
+
+    int         calc_bf         = 1;
+    long double t_bf            = 1 - 1e-2;
+
+    int         bf_x_use        = 0; // START FROM 0
+    long double bf_x_limit[]    = {-2, 2};
+    int         bf_total_x      = 100001;
+
 
 
 struct PARAMETERS{

@@ -4,7 +4,7 @@ import numpy as np
 import numpy as np
 import matplotlib.pyplot as plt
 
-periodic_loc    = [2,3,4,5,6,7,8,9,10,12,18,25,35]
+periodic_loc    = [2,3,4,5,6,7,8,9,10,12,18,25,35,72,144]
 plot_periodic   = True 
 colors = ["red", "blue", "green"]
 
