@@ -32,14 +32,14 @@ def bf_2_img(file_list):
             if not line:
                 break
             bf_x_arr_sub.append(int(line))
-            bf_x_ttl += int(line)
+            bf_x_ttl = max(bf_x_ttl, int(line))
 
         for i in range(0, len(bf_x_arr_sub)):
-            val = 255
-            if bf_x_arr_sub[i] != 0:
-                val = 127
-                val -= (bf_x_arr_sub[i] / bf_x_ttl) * 127
-            bf_x_arr_sub[i] = val
+            #val = 255
+            #if bf_x_arr_sub[i] != 0:
+            #    val = 127
+            #    val -= (bf_x_arr_sub[i] / bf_x_ttl) * 127
+            bf_x_arr_sub[i] = (1 - bf_x_arr_sub[i] / bf_x_ttl) * 255
         bf_x_arr.append(bf_x_arr_sub)
     bf_x_arr = np.array(bf_x_arr)
     bf_x_arr = np.fliplr(bf_x_arr).T

@@ -36,8 +36,8 @@
     long double t_bf            = 1 - 1e-2;
 
     int         bf_x_use        = 0; // START FROM 0
-    long double bf_x_limit[]    = {-2, 2};
-    int         bf_total_x      = 100001;
+    long double bf_x_limit[]    = {-1, 1.6};
+    int         bf_total_x      = 10001;
 
 
 

@@ -154,7 +154,8 @@ def main():
             default_para_use, 
             default_ob_interval, 
             "ob", 
-            name_code_length)
+            name_code_length,
+            tikz_axis)
 
     if print_ps:
         attr_plot.attr_plot(file_list, 
@@ -162,7 +163,8 @@ def main():
             default_para_use, 
             default_ps_interval, 
             "ps", 
-            name_code_length)
+            name_code_length,
+            tikz_axis)
 
     if print_bf:
         bf.bf(file_list, 

@@ -5,7 +5,7 @@ import numpy as np
 DOUBLE_LAYER = False
 LAYER_NAME = "results_0810/RGHM_N_10_b_006/1_ob.dat"
 delay_system = True
-def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
+def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval, tikz_axis):
     """
     INTIALIZATION
     """
@@ -43,9 +43,9 @@ def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
         fig = plt.figure(constrained_layout=True, figsize=(8, 8))
         ax = plt.subplot(111)
         ax.scatter(data_for_plot[0], data_for_plot[1], color = "b", s = 0.1)
-        ax.scatter([0.25700, 1.33700], [1.33700, -0.25700], color = "r", s = 5)
-        ax.scatter([-1.87985,-1.79978,0.88217], [0.88217, -1.87985,-1.79978], color = "g", s = 5)
-        ax.scatter([-1.80231,0.79985,0.87992], [0.87992, -1.80231,0.79985], color = "g", s = 5)
+        #ax.scatter([0.25700, 1.33700], [1.33700, -0.25700], color = "r", s = 5)
+        #ax.scatter([-1.87985,-1.79978,0.88217], [0.88217, -1.87985,-1.79978], color = "g", s = 5)
+        #ax.scatter([-1.80231,0.79985,0.87992], [0.87992, -1.80231,0.79985], color = "g", s = 5)
 
 
 
@@ -57,9 +57,13 @@ def plot_main(read_file_name, save_file_loc, default_ob_use, default_interval):
         ax.set_zlabel("\n" + default_interval[2][0], fontsize = 22)
         #ax.set_zlim(default_interval[2][1], default_interval[2][2])
 
-    ax.set_xlabel("\n" + default_interval[0][0], fontsize = 22)
+    if tikz_axis:
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+    else:
+        ax.set_xlabel("\n" + default_interval[0][0], fontsize = 22)
+        ax.set_ylabel("\n\n" + default_interval[1][0], fontsize = 22)
     ax.set_xlim(default_interval[0][1], default_interval[0][2])
-    ax.set_ylabel("\n\n" + default_interval[1][0], fontsize = 22)
     ax.set_ylim(default_interval[1][1], default_interval[1][2])
     if DOUBLE_LAYER:
         File2 = open(LAYER_NAME, "r")
@@ -110,7 +114,7 @@ def info_read(file_name, default_para_use, name_code_length):
 
 
 
-def attr_plot(file_list, default_ob_use, default_para_use, default_interval, flag, name_code_length):
+def attr_plot(file_list, default_ob_use, default_para_use, default_interval, flag, name_code_length, tikz_axis):
     os.system("rm -rf imgs")
     os.system("mkdir imgs")
 
@@ -123,6 +127,6 @@ def attr_plot(file_list, default_ob_use, default_para_use, default_interval, fla
 
         read_file_name = file_list[i] + "_" + flag + ".dat" 
         save_file_loc = "imgs/ob_" + name_middle_str + ".png"
-        plot_main(read_file_name, save_file_loc, default_ob_use, default_interval)
+        plot_main(read_file_name, save_file_loc, default_ob_use, default_interval, tikz_axis)
 
     return 

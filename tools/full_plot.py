@@ -65,14 +65,15 @@ def full_plot(file_list,
         #ax_bf.set_yticklabels([])
 
     #ax0.xaxis.set_major_locator(MultipleLocator(0.025))
-    if ax_will_plot[0]:
-        ax_le.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
-    if ax_will_plot[1]:
-        ax_D_ky.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
-    if ax_will_plot[2]:
-        ax_H_ks.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
-    if ax_will_plot[3]:
-        ax_dist.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
+    if not tikz_axis:
+        if ax_will_plot[0]:
+            ax_le.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
+        if ax_will_plot[1]:
+            ax_D_ky.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
+        if ax_will_plot[2]:
+            ax_H_ks.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
+        if ax_will_plot[3]:
+            ax_dist.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
     #ax_bf.grid(which='major', color='grey', linestyle='-', linewidth=0.4)
     
     if not tikz_axis:

@@ -1,4 +1,4 @@
-tikz_axis               = False
+tikz_axis               = True
 
 
 """
@@ -6,16 +6,16 @@ tikz_axis               = False
 """
 
 default_folder          = ["./output"]
-default_file_code       = [[1, 1700]]
+default_file_code       = [[1, 101]]
 #default_para_use        = ["r", 0]
 default_para_use        = ["", 0]
 default_x_use           = 0 # From 0
 
-default_x_range         = [-2, 2.0, 400]
+default_x_range         = [-1, 1.6, 400]
 #default_x_range         = [1.1, 1.45, 5001]
 default_t_mod           = 4
-default_ob_use          = [0, 5]
-default_ob_interval     = [["x_1", -2, 2], ["x_9", -2, 2], ["x_10", -2, 2]]
+default_ob_use          = [0, 1]
+default_ob_interval     = [["x_1", -1, 1.6], ["x_2", -1, 1.6], ["x_10", -2, 2]]
 #default_ob_interval     = [["x", 1, 1.6], ["y", -0.6, 0.6]]
 default_ps_use          = [0, -1, -2]
 default_ps_interval     = [["x", -2, 2], ["y", -2, 2], ["z", -2, 2]]
