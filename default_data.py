@@ -5,8 +5,8 @@ tikz_axis               = True
 [MAIN] parameter
 """
 
-default_folder          = ["./output"]
-default_file_code       = [[1, 101]]
+default_folder          = ["/Users/amakawa/LocalCode/___data/results_240306"]
+default_file_code       = [[1, 6]]
 #default_para_use        = ["r", 0]
 default_para_use        = ["", 0]
 default_x_use           = 0 # From 0
@@ -84,8 +84,9 @@ heat_map_table          = "jet"
 """
 Power spectrum parameter group
 """
-power_spectrum_para     = [524288,             # Total time sequence use
-                           [0.0, 0.51],     # x-axis lim
-                           [1e-40, 1e20]     # y-axis lim
+power_spectrum_para     = [100000000,               # Total time sequence use
+                           [0.1, 0.125],            # x-axis lim
+                           [1, 1e5],                # y-axis lim
+                           "1"                      # "1" means plot all ps in one figure, "n" means plot ps in different figure 
                           ]
 

@@ -19,6 +19,13 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
     y_lim_min = power_spectrum_para[2][0]
     y_lim_max = power_spectrum_para[2][1]
 
+    all_in_one = False
+    if power_spectrum_para[3] == "1":
+        all_in_one = True
+    elif power_spectrum_para[3] == "n":
+        all_in_one = False
+    else:
+        ValueError("Import parameter error")
 
     file_code_use = []
     loc = 0
@@ -27,14 +34,19 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
         file_code_use.append(loc)
     print(file_code_use)
 
-    fig = plt.figure(constrained_layout=True, figsize=(24, 12))
-    ax = plt.subplot(111)
+    fig, ax = 0, 0
+
+    if all_in_one:
+        fig_all_in_one = plt.figure(constrained_layout=True, figsize=(24, 12))
+        ax_all_in_one = plt.subplot(111)
+
     freqs = []
     ps_sum = []
     cnt = 0
     loc = 0
     time_step = 1
     for kase in range(0, len(file_list)):
+
         file_name = file_list[kase] + "_ob.dat"
 
         data_arr = []
@@ -71,6 +83,7 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
             print("freqs = " + str(len(freqs)) )
         else:
             print()
+
         if kase == file_code_use[loc] - 1:
             print("Average and output")
             ps_final = []
@@ -79,27 +92,55 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
                 for i in range(0, len(ps_sum)):
                     val += ps_sum[i][j]
                 val /= len(ps_sum)
-                val = val * pow(1e-2, loc)
+                
+                if all_in_one:
+                    val = val * pow(1e-2, loc)
+                
                 ps_final.append(val)
+
             print(len(freqs), len(ps_final))
-            ax.scatter(freqs, ps_final, linewidth = 0.1, color = colors[loc % 3], s = 0.05)
-            ax.set_yscale('log')
-            ax.set_xlim(x_lim_min, x_lim_max)
-            ax.set_ylim(y_lim_min, y_lim_max)
+
+            if all_in_one:
+                ax_all_in_one.scatter(freqs, ps_final, linewidth = 0.1, color = colors[loc % 3], s = 0.05)
+                ax_all_in_one.set_yscale('log')
+                ax_all_in_one.set_xlim(x_lim_min, x_lim_max)
+                ax_all_in_one.set_ylim(y_lim_min, y_lim_max)
+
+            else:
+                fig = plt.figure(constrained_layout=True, figsize=(24, 12))
+                ax = plt.subplot(111)
+
+                ax.scatter(freqs, ps_final, linewidth = 0.1, color = colors[loc % 3], s = 0.05)
+                ax.set_yscale('log')
+                ax.set_xlim(x_lim_min, x_lim_max)
+                ax.set_ylim(y_lim_min, y_lim_max)
+
+                if plot_periodic:
+                    for i in range(0, len(periodic_loc)):
+                        ax.plot([1/periodic_loc[i], 1/periodic_loc[i]], [y_lim_min, y_lim_min * 100], linewidth = 1, color = "black", linestyle = "dashed")
+                        ax.text(x = 1/periodic_loc[i], y = y_lim_min, s = str(periodic_loc[i]))
+                if tikz_axis:
+                    ax.set_xticklabels([])
+                    ax.set_yticklabels([])
+                else:
+                    plt.title(str(kase+1))
+
+                plt.savefig("imgs/" + str(loc + 1) + ".png")
 
             freqs = []
             ps_sum = []
             loc += 1
-            
-    if plot_periodic:
-        for i in range(0, len(periodic_loc)):
-            ax.plot([1/periodic_loc[i], 1/periodic_loc[i]], [y_lim_min, y_lim_min * 100], linewidth = 1, color = "black", linestyle = "dashed")
-            ax.text(x = 1/periodic_loc[i], y = y_lim_min, s = str(periodic_loc[i]))
-    if tikz_axis:
-        ax.set_xticklabels([])
-        ax.set_yticklabels([])
-    else:
-        plt.title(str(kase+1))
 
-    plt.savefig("imgs/output.png")
-    os.system("open imgs/output.png")
+    if all_in_one:
+        if plot_periodic:
+            for i in range(0, len(periodic_loc)):
+                ax_all_in_one.plot([1/periodic_loc[i], 1/periodic_loc[i]], [y_lim_min, y_lim_min * 100], linewidth = 1, color = "black", linestyle = "dashed")
+                ax_all_in_one.text(x = 1/periodic_loc[i], y = y_lim_min, s = str(periodic_loc[i]))
+        if tikz_axis:
+            ax_all_in_one.set_xticklabels([])
+            ax_all_in_one.set_yticklabels([])
+        else:
+            plt.title(str(kase+1))
+
+        plt.savefig("imgs/output.png")
+        os.system("open imgs")
