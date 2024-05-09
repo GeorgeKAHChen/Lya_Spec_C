@@ -2,6 +2,10 @@
 
 This is a dynamic system data generator and analyzer.
 
+
+### Refer this code: 
+`NOT FINISH`
+
 ### Data generator
 
 #### Code use: c/cpp

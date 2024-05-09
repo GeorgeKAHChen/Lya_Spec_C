@@ -232,6 +232,8 @@ void map_algorithm(struct PARAMETERS *parameters)
                 if (curr_x[0] > 1e15 || curr_x[0] < -1e15)
                                             break;
             /*System Calculator*/
+                //if (curr_t > t_ob_mark && curr_t % 10000 == 0)
+                //    std::cout << use_maruyama << "\n";
                 if (use_maruyama == 0)      map_calc(parameters->dim, curr_t, 1, curr_x, para, parameters->f);
                 else                        rand_map_calc(parameters->dim, parameters->rand_dim, curr_t, 1, curr_x, para, rand_para, parameters->f, parameters->rand_f);        
             
@@ -242,6 +244,7 @@ void map_algorithm(struct PARAMETERS *parameters)
                             if (curr_t >= noise_change_mark[i] && noise_change_memo[i] == 0){
                                 use_maruyama = 1 - use_maruyama;
                                 noise_change_memo[i] = 1;
+                                std::cout << "test: " << use_maruyama << ", " << curr_t << std::endl;
                             }
                         }
                     }

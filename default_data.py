@@ -1,23 +1,27 @@
-tikz_axis               = True
+tikz_axis               = False
 
 
 """
 [MAIN] parameter
 """
 
-default_folder          = ["/Users/amakawa/LocalCode/___data/results_240306"]
-default_file_code       = [[1, 6]]
+#default_folder          = ["std_ob"]
+#default_file_code       = [[5, 5]]
+#default_folder          = ["w_wo_noise"]
+#default_file_code       = [[1, 4]]
+default_folder          = ["output"]
+default_file_code       = [[1, 5]]
 #default_para_use        = ["r", 0]
-default_para_use        = ["", 0]
+default_para_use        = ["r", 0]
 default_x_use           = 0 # From 0
 
-default_x_range         = [-1, 1.6, 400]
+default_x_range         = [0, 1, 400]
 #default_x_range         = [1.1, 1.45, 5001]
 default_t_mod           = 4
-default_ob_use          = [0, 1]
-default_ob_interval     = [["x_1", -1, 1.6], ["x_2", -1, 1.6], ["x_10", -2, 2]]
+default_ob_use          = [1, 2]    # from 1
+default_ob_interval     = [["x", -1.5, 1.5], ["y", -1.5, 1.5]]
 #default_ob_interval     = [["x", 1, 1.6], ["y", -0.6, 0.6]]
-default_ps_use          = [0, -1, -2]
+default_ps_use          = [2, 3, 4]
 default_ps_interval     = [["x", -2, 2], ["y", -2, 2], ["z", -2, 2]]
 name_code_length        = 5 #include a.cde -> 5 
 
@@ -31,8 +35,9 @@ ax_will_plot            = [1,   #ax_le
                            0,   #ax_dist
                            0,   #ax_bf
                         ]
-default_le_file         = "/Users/amakawa/LocalCode/___data/a_145_155_b_008_simga_000_1.dat"
-#default_le_file         = "/Users/amakawa/LocalCode/Lya_Spec_CPP/tools_other/tmp.dat"
+#default_le_file         = "/Users/amakawa/LocalCode/___data/a_145_155_b_008_simga_000_1.dat"
+default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_LE.dat"
+#default_le_file         = "/Users/amakawa/LocalCode/Lya_Spec_C/tools_other/tmp.dat"
 default_dist_file       = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_dist.dat"
 bf_merge                = True
 
@@ -85,8 +90,31 @@ heat_map_table          = "jet"
 Power spectrum parameter group
 """
 power_spectrum_para     = [100000000,               # Total time sequence use
-                           [0.1, 0.125],            # x-axis lim
-                           [1, 1e5],                # y-axis lim
+                           [0, 0.5],            # x-axis lim
+                           [1e1, 1e7],                # y-axis lim
                            "1"                      # "1" means plot all ps in one figure, "n" means plot ps in different figure 
                           ]
+
+
+
+"""
+2-d distribution and UPO
+"""
+heat_map_dist_para      = [int(5e2),                # x-axis nodes
+                           int(5e2),                # y-axis nodes
+                           'jet'                    # heat map color
+                          ]
+pk_data_files           = [
+                           "/Users/amakawa/LocalCode/___data/pk_6/pk_6_1.dat", 
+                           #"/Users/amakawa/LocalCode/___data/pk_6/pk_6_2.dat", 
+                           #"/Users/amakawa/LocalCode/___data/pk_6/pk_6_3.dat", 
+                           #"/Users/amakawa/LocalCode/___data/pk_6/pk_6_4.dat", 
+                           #"/Users/amakawa/LocalCode/___data/pk_6/pk_6_5.dat", 
+                           #"/Users/amakawa/LocalCode/___data/pk_6/pk_6_6.dat", 
+                           #"/Users/amakawa/LocalCode/___data/pk_6/pk_6_7.dat", 
+                           #"/Users/amakawa/LocalCode/___data/pk_6/pk_6_8.dat"
+                           ]
+
+
+
 

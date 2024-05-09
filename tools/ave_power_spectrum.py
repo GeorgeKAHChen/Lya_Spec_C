@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 periodic_loc    = [2,3,4,5,6,7,8,9,10,12,18,25,35,72,144]
-plot_periodic   = True 
+plot_periodic   = False 
 colors = ["red", "blue", "green"]
 
 def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis, default_file_code):
@@ -101,7 +101,7 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
             print(len(freqs), len(ps_final))
 
             if all_in_one:
-                ax_all_in_one.scatter(freqs, ps_final, linewidth = 0.1, color = colors[loc % 3], s = 0.05)
+                ax_all_in_one.scatter(freqs, ps_final, linewidth = 0.1, color = colors[loc % 3], s = 0.1)
                 ax_all_in_one.set_yscale('log')
                 ax_all_in_one.set_xlim(x_lim_min, x_lim_max)
                 ax_all_in_one.set_ylim(y_lim_min, y_lim_max)
@@ -110,7 +110,7 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
                 fig = plt.figure(constrained_layout=True, figsize=(24, 12))
                 ax = plt.subplot(111)
 
-                ax.scatter(freqs, ps_final, linewidth = 0.1, color = colors[loc % 3], s = 0.05)
+                ax.scatter(freqs, ps_final, linewidth = 0.1, color = colors[loc % 3], s = 0.1)
                 ax.set_yscale('log')
                 ax.set_xlim(x_lim_min, x_lim_max)
                 ax.set_ylim(y_lim_min, y_lim_max)

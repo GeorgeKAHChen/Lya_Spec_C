@@ -142,6 +142,7 @@ void main_algorithm(struct PARAMETERS *parameters)
 
     /*Standard data output*/
         std::cout.precision(10);
+        
         file_info << "=============================================\n";
         file_info << "Computation Parameters: \n";
         file_info << "Iteration: delta_t, t_max: " << delta_t << " " << t_max << "\n";
@@ -246,7 +247,10 @@ void main_algorithm(struct PARAMETERS *parameters)
                 curr_t += delta_t;
                 print_kase += 1;
                 if (print_kase % 10000000 == 0){
-                    std::cout << curr_t << " " << t_max << " " << ttl_group << " " << curr_x[0] << "\n";
+                    std::cout << curr_t << " " << t_max << " " << ttl_group << " " << curr_x[0] << " " << use_maruyama << "\n";
+                    if (calc_le == 1){
+                        std::cout << spectrum[0] << " " << spectrum[1] << " " << spectrum[2] << " " << spectrum[3] << "\n";
+                    }
                 }
         }
 

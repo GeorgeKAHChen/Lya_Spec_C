@@ -60,8 +60,10 @@ def multi_ps(file_list, default_para_use, default_interval, name_code_length):
                 ps_code.append(file_line[0])
                 plot_data.append([[], []])
 
+            #plot_data[save_ps_code][0].append(float(file_line[(int(file_line[0])+1) % 10]))
+            #plot_data[save_ps_code][1].append(float(file_line[(int(file_line[0])+2) % 10]))
             plot_data[save_ps_code][0].append(float(file_line[1]))
-            plot_data[save_ps_code][1].append(float(file_line[int(file_line[0])]))
+            plot_data[save_ps_code][1].append(float(file_line[3]))
 
         file.close()
 

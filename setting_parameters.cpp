@@ -5,7 +5,7 @@
 
     int         ONLY_LE_MODE    = 0; // not finish0130
     int         ATTR_CHECK_MODE = 0; // not finish
-    int         OB_ONLY_XI      = 1;
+    int         OB_ONLY_XI      = 1; // time delay system plot
     int         OB_XI_USE       = 0; // START FROM 0
 
 /* Noise add delay*/
@@ -14,17 +14,17 @@
 
 /* Deterministic system and map*/
 
-    long double delta_t         =     1e-5; //-5
+    long double delta_t         =     1e-4; //-5
     long double t_max           =     1e5;  //5
     
     long long int step_max      =     1e7; //1e9 typically
     
-    int         calc_le         = 0;
-    long double t_le            = 1 - 5e-2; // 0.5 typically
+    int         calc_le         = 1;
+    long double t_le            = 1 - 1e-2; // 0.5 typically
 
-    int         calc_ob         = 0;
+    int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
-    long double t_ob            = 1 - 1e-3; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
+    long double t_ob            = 1 - 1e-2; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
     //long double t_ob            = 0.9;
     //long double t_ob            = 1e-4; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
 
@@ -32,7 +32,7 @@
     long double t_ps            = 1 - 5e-1; // 0.5 typically
 
 
-    int         calc_bf         = 1;
+    int         calc_bf         = 0;
     long double t_bf            = 1 - 1e-2;
 
     int         bf_x_use        = 0; // START FROM 0

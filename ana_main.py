@@ -14,10 +14,14 @@ from tools import full_plot
 from tools import order_bf
 from tools import le_file_heat_map
 from tools import mod_attr_plot
+from tools import mod_attr_plot_2
 from tools import power_spectrum
 from tools import ave_power_spectrum
 from tools import high_mod_attr_plot
 from tools import bf_2_img
+from tools import heat_map_dist
+
+
 
 def main():
     """
@@ -39,6 +43,7 @@ def main():
     plot_power_spectrum = False
     ave_plot_power_spectrum = False
     plot_bf_2_img = False
+    plot_dist_hm = False
 
     """
     FLAG CHECKING
@@ -80,7 +85,8 @@ def main():
             ave_plot_power_spectrum = True
         if sys.argv[i] == "-bfd":
             plot_bf_2_img = True
-
+        if sys.argv[i] == "-map-dist" or sys.argv[i] == "-dist-map":
+            plot_dist_hm = True
 
     """
     DEFAULT SETTING READING
@@ -108,7 +114,8 @@ def main():
     heat_map_table      = default_data.heat_map_table
     ax_will_plot        = default_data.ax_will_plot
     power_spectrum_para = default_data.power_spectrum_para
-
+    pk_data_files       = default_data.pk_data_files
+    heat_map_dist_para  = default_data.heat_map_dist_para
     """
     FILE LIST / LE FILE LIST INITIALIZATION
     """
@@ -230,7 +237,7 @@ def main():
             heat_map_table)
 
     if plot_mod_ob:
-        mod_attr_plot.mod_attr_plot(file_list,
+        mod_attr_plot_2.mod_attr_plot_2(file_list,
             default_x_use, 
             default_x_range,
             default_t_mod
@@ -260,6 +267,19 @@ def main():
 
     if plot_bf_2_img:
         bf_2_img.bf_2_img(file_list)
+
+    if plot_dist_hm:
+        heat_map_dist.heat_map_dist(file_list, 
+            default_ob_use, 
+            default_ob_interval, 
+            pk_data_files, 
+            heat_map_dist_para, 
+            default_para_use, 
+            name_code_length, 
+            tikz_axis
+            )
+
+
     return 
 
 

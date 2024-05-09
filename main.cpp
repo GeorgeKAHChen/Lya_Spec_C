@@ -1,5 +1,6 @@
 //HF: Henon family
 #include "model/HF_N_RGHM.cpp"
+//#include "model/HF_2_Henon.cpp"
 
 //LF: Lorenz family
 //#include "model/LF_Lorenz.cpp"
@@ -14,8 +15,8 @@
 //#include "model/RF_4_FDRS.cpp"
 //#include "model/RF_4_FDSRS.cpp"
 
-
-
+//RF: Belousov-Zhabotinsky reaction model
+//#include "model/bz.cpp"
 
 
 
