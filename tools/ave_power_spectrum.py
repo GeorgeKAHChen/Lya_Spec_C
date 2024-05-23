@@ -3,6 +3,7 @@ import os
 import numpy as np
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.signal import detrend, windows
 
 periodic_loc    = [2,3,4,5,6,7,8,9,10,12,18,25,35,72,144]
 plot_periodic   = False 
@@ -73,13 +74,34 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
         print(cnt, end = ", ")
         cnt = 0
 
+
+        #print("sb=============")
+
         data_arr = np.array(data_arr)
+        data_arr -= np.mean(data_arr)
 
-        ps = np.abs(np.fft.rfft(data_arr))**2
+        data_arr = detrend(data_arr)
+        window = windows.hann(len(data_arr))
+        #print(data_arr, data_arr.size)
+        data_arr = data_arr * window
+        #print(data_arr, data_arr.size)
+        ps = np.fft.fft(data_arr)
+        #print(ps[0], ps[1], ps[ps.size - 1])
+        ps = np.abs(ps) / data_arr.size
+        #print(ps[0], ps[1], ps[ps.size - 1])
+        ps = np.power(np.abs(ps), 2)
+        #print(ps[0], ps[1], ps[ps.size - 1])
+        ps = ps[0: int(data_arr.size/2 + 0.1)]
+        #print(ps[0], ps[1], ps[ps.size - 1])
+        ps[0] = ps[0] / 2
+        ps[ps.size - 1] = ps[ps.size - 1] / 2
+        #print(ps[0], ps[1], ps[ps.size - 1])
+        ps = ps * 2
+        #print(ps[0], ps[1], ps[ps.size - 1])
         ps_sum.append(ps)
-
+        #input()
         if kase == 0 or kase == file_code_use[loc - 1]:
-            freqs = np.fft.rfftfreq(data_arr.size, time_step)
+            freqs = np.fft.fftfreq(data_arr.size, time_step)[0: int(data_arr.size/2 + 0.1)]
             print("freqs = " + str(len(freqs)) )
         else:
             print()

@@ -92,6 +92,7 @@ int main(int argc, char const *argv[])
             for(int i = 0; i < sum_group; i ++){
                 gen_init_val(rand_init_vals);
                 for (int j = 0; j < dim; j ++){
+                //for (int j = 0; j < dim; j ++){
                     total_group[i * group_dim + j] = rand_init_vals[j];
                 }
             }

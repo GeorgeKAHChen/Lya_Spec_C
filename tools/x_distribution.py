@@ -4,6 +4,15 @@ from libpy import Init
 import os
 import time
 
+#pk_points = [[-1.882237, "r"], [0.802237, "r"], [-0.256994, "b"], [1.336994, "b"]] # 46810 p12
+#pk_points = [[-1.882237, "r"], [0.802237, "r"], [0.879851, "b"], [-1.799851, "b"]] # 579 p12
+#pk_points = [[1.242996, "g"], [-0.409346, "g"], [1.397173, "g"], [-0.032444, "g"]] # 48 p4
+
+#pk_points = [[-0.256994, "b"], [1.336994, "b"]] # p2 for 6, 10
+# p5 for 6
+#pk_points = [-1.88223687, "b"], [-1.88223481, "b"], [-1.88216997, "b"], [-1.88216778, "b"], [-1.87992219, "b"], [-1.87991988, "b"], [-1.87985087, "b"], [-1.87984842, "b"], [-1.80231236, "b"], [-1.8023103, "b"], [-1.8022369, "b"], [-1.80223457, "b"], [-1.79985074, "b"], [-1.79984843, "b"], [-1.79977934, "b"], [-1.79977717, "b"], [0.79977749, "b"], [0.79977963, "b"], [0.7998487, "b"], [0.79985084, "b"], [0.80223473, "b"], [0.80223701, "b"], [0.80231043, "b"], [0.80231263, "b"], [0.87984866, "b"], [0.87985089, "b"], [0.87992007, "b"], [0.87992223, "b"], [0.88216798, "b"], [0.88216998, "b"], [0.88223505, "b"], [0.88223674, "b"]
+# p4N6
+pk_points = [[-0.455352170851475, "b"], [1.39824080951107, "b"], [0.128435118366160, "b"], [1.19079513573996, "b"]]
 def x_distribution(file_list, default_para_use, default_x_use, default_x_range, to_data = False):
     if not to_data:
         os.system("rm -rf imgs")
@@ -86,7 +95,9 @@ def x_distribution(file_list, default_para_use, default_x_use, default_x_range, 
             fig = plt.figure(constrained_layout=True, figsize=(8, 8))
             ax = plt.subplot(111)
             ax.hist(ob_vals, bins = default_x_range[2], range = [default_x_range[0], default_x_range[1]], density=True)
-            ax.set_ylim([0, 10])
+            ax.set_ylim([0, 6])
+            for val in (pk_points):
+                ax.plot([val[0], val[0]], [0, 6], val[1])
             ax.set_xlabel("x_1")
             ax.set_ylabel("")
             para = str(para)

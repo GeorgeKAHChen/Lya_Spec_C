@@ -22,14 +22,14 @@
     int         calc_le         = 1;
     long double t_le            = 1 - 1e-2; // 0.5 typically
 
-    int         calc_ob         = 1;
+    int         calc_ob         = 0;
     long double delta_t_ob      = 1e-3;
     long double t_ob            = 1 - 1e-2; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
     //long double t_ob            = 0.9;
     //long double t_ob            = 1e-4; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
 
     int         calc_ps         = 0;
-    long double t_ps            = 1 - 5e-1; // 0.5 typically
+    long double t_ps            = 5e-2; // 0.5 typically
 
 
     int         calc_bf         = 0;

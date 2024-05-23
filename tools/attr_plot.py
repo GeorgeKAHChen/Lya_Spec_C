@@ -1,10 +1,14 @@
 import matplotlib.pyplot as plt
 import os
 import numpy as np
+from copy import deepcopy
 
-DOUBLE_LAYER = False
-LAYER_NAME = "results_0810/RGHM_N_10_b_006/1_ob.dat"
+DOUBLE_LAYER = True
+#LAYER_NAME = "results_0810/RGHM_N_10_b_006/1_ob.dat"
+LAYER_NAME = "output/2_ob.dat"
 delay_system = True
+local_kase = 1
+
 def plot_main(sys_dim, read_file_name, save_file_loc, default_ob_use, default_interval, tikz_axis):
     """
     INTIALIZATION
@@ -20,7 +24,7 @@ def plot_main(sys_dim, read_file_name, save_file_loc, default_ob_use, default_in
     print(read_file_name, end = ": ")
     count = 0
     while 1:
-        if count >= int(5e4):
+        if count >= int(3e4):
             break
         else:
             count += 1
@@ -42,7 +46,7 @@ def plot_main(sys_dim, read_file_name, save_file_loc, default_ob_use, default_in
     if image_dim == 2:
         fig = plt.figure(constrained_layout=True, figsize=(8, 8))
         ax = plt.subplot(111)
-        ax.scatter(data_for_plot[0], data_for_plot[1], color = "b", s = 0.01)
+        ax.scatter(data_for_plot[0], data_for_plot[1], color = "b", s = 0.1)
 
 
     else:
@@ -66,10 +70,10 @@ def plot_main(sys_dim, read_file_name, save_file_loc, default_ob_use, default_in
     ax.set_ylim(default_interval[1][1], default_interval[1][2])
     if DOUBLE_LAYER:
         File2 = open(LAYER_NAME, "r")
-        old_data_for_plot = [[] for n in range(image_dim)]
+        old_data_for_plot = [[] for n in range(len(default_ob_use))]
         count = 0
         while 1:
-            if count >= 500000:
+            if count >= int(10):
                 break
             else:
                 count += 1
@@ -77,9 +81,20 @@ def plot_main(sys_dim, read_file_name, save_file_loc, default_ob_use, default_in
             if not line:
                 break
             line = line.split(" ")
+            if delay_system:
+                for i in range(0, len(default_ob_use)):
+                    old_data_for_plot[i].append(float(line[0]))
+            else:                
+                for i in range(0, len(default_ob_use)):
+                    old_data_for_plot[i].append(float(line[default_ob_use[i]]))
+        if delay_system:
             for i in range(0, len(default_ob_use)):
-                old_data_for_plot[i].append(float(line[default_ob_use[i]]))
-        ax.scatter(old_data_for_plot[0], old_data_for_plot[1], color = "r", s = 0.1)
+                old_data_for_plot[i] = old_data_for_plot[i][sys_dim - default_ob_use[i]: len(old_data_for_plot[i]) - default_ob_use[i] + 1]
+
+        if image_dim == 2:
+            ax.scatter(old_data_for_plot[0], old_data_for_plot[1], color = "r", s = 3)
+        else:
+            ax.scatter3D(old_data_for_plot[0], old_data_for_plot[1], old_data_for_plot[2], color = "r", s = 3)
         File2.close()
     #plt.show()
     plt.savefig(save_file_loc)
@@ -102,8 +117,12 @@ def info_read(file_name, default_para_use, name_code_length):
         para = file_lines[12].split(" ")
 
     sys_dim = len(file_lines[8].split(" ")) - 1
-
-    name_middle_str = str(float(para[default_para_use[1]]))
+    if default_para_use[1] == -1:
+        global local_kase
+        name_middle_str = str(local_kase)
+        local_kase += 1
+    else:
+        name_middle_str = str(float(para[default_para_use[1]]))
     while 1:
         if len(name_middle_str) < name_code_length:
             name_middle_str += "0"

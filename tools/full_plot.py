@@ -12,8 +12,9 @@ FONT_SIZE = 22
 FOR_TEST = False
 D_KY_TEST = False
 
-how_many_para = 3
-sys_dim = 10
+how_many_para = 2
+sys_dim = 6
+para_use = 1
 def full_plot(file_list, 
               default_para_use, 
               default_x_use, 
@@ -90,9 +91,9 @@ def full_plot(file_list,
             ax_dist.set_title("(d) sigma - x_1 distribution",y=-0.1,pad=-12)
         #ax_bf.set_title("(d) sigma - Bifurcation diagram",y=-0.1,pad=-12)
     
-    para_use = 2
     
-    print(para_use)
+    
+    #print(para_use)
     """ 
     +++++++++++++++++++++++++++++++++++++++++++++
     Plot ax_le - ax_D_ky - ax_H_ks
@@ -162,7 +163,8 @@ def full_plot(file_list,
 
         print(len(x_data), len(D_ky), len(H_ks))
 
-        ax_le.set_xlim(x_data[0], x_data[len(x_data)-1])
+        #ax_le.set_xlim(x_data[0], x_data[len(x_data)-1])
+        ax_le.set_xlim(0, 0.1)
 
 
 
@@ -175,7 +177,7 @@ def full_plot(file_list,
             for i in range(0, le_length):
                 ax_le.plot(x_data, les[i], linewidth=3.0)
             ax_le.plot([min_para_x, max_para_x], [0, 0], "r-.")
-            ax_le.set_ylim(-0.02, 0.035)
+            ax_le.set_ylim(-0.035, 0.06)
 
 
 
@@ -186,7 +188,7 @@ def full_plot(file_list,
             if D_KY_TEST:
                 ax_D_ky.plot(x_data, D_ky_8, linewidth=3.0, linestyle="dotted")
                 ax_D_ky.plot(x_data, D_ky_9, linewidth=3.0, linestyle="dotted")
-            ax_D_ky.set_ylim(8.3, 9.1)
+            ax_D_ky.set_ylim(4.4, 5.1)
         
 
 
@@ -194,7 +196,7 @@ def full_plot(file_list,
         if ax_will_plot[2] == 1:
             print("ax_H_ks plotting")
             ax_H_ks.plot(x_data, H_ks, linewidth=3.0)
-            ax_H_ks.set_ylim(0, 0.18)
+            ax_H_ks.set_ylim(0.00, 0.2)
 
     for i in range(0, len(x_data)):
         print(x_data[i], D_ky[i], H_ks[i])
