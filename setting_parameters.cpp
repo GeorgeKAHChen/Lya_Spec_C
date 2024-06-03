@@ -17,12 +17,12 @@
     long double delta_t         =     1e-4; //-5
     long double t_max           =     1e5;  //5
     
-    long long int step_max      =     1e7; //1e9 typically
+    long long int step_max      =     1e8; //1e9 typically
     
-    int         calc_le         = 1;
-    long double t_le            = 1 - 1e-2; // 0.5 typically
+    int         calc_le         = 0;
+    long double t_le            = 0.5; // 0.5 typically
 
-    int         calc_ob         = 0;
+    int         calc_ob         = 1;
     long double delta_t_ob      = 1e-3;
     long double t_ob            = 1 - 1e-2; //0.995 typically //(2e5/1e-5) * 5e-3 = 1e8
     //long double t_ob            = 0.9;

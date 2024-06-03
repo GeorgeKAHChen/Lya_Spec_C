@@ -15,6 +15,8 @@ D_KY_TEST = False
 how_many_para = 2
 sys_dim = 6
 para_use = 1
+
+size_of_le2 = 0.33
 def full_plot(file_list, 
               default_para_use, 
               default_x_use, 
@@ -24,22 +26,28 @@ def full_plot(file_list,
               default_le_file, 
               default_dist_file, 
               tikz_axis, 
+              full_plot_parameters,
               bf_merge = True,
-              ax_will_plot = [1, 1, 1, 1, 1]):
+              ax_will_plot = [1, 1, 1, 1, 1]
+              ):
     """
     +++++++++++++++++++++++++++++++++++++++++++++
     Image Initialization
     +++++++++++++++++++++++++++++++++++++++++++++
     """
     size_a = sum(ax_will_plot)*11-2
-
-    fig = plt.figure(constrained_layout=True, figsize=(30, 10 * sum(ax_will_plot)))
+    size_b = 10 * sum(ax_will_plot)
+    if ax_will_plot[0] == 1:
+        size_a += 9
+        size_b += 10
+    fig = plt.figure(constrained_layout=True, figsize=(30, size_b))
     plt.rcParams.update({'font.size': FONT_SIZE})
 
     loc = 0
     if ax_will_plot[0]:
-        ax_le   = plt.subplot2grid(shape=(size_a, 30), loc=(loc, 0), rowspan = 9, colspan = 30)
-        loc += 11
+        ax_le   = plt.subplot2grid(shape=(size_a, 30), loc=(loc, 0), rowspan = 18, colspan = 30)
+        ax_le_2 = ax_le.twinx()  
+        loc += 20
     if ax_will_plot[1]:
         ax_D_ky = plt.subplot2grid(shape=(size_a, 30), loc=(loc, 0), rowspan = 9, colspan = 30, sharex=ax_le)
         loc += 11
@@ -55,6 +63,8 @@ def full_plot(file_list,
         if ax_will_plot[0]:
             ax_le.set_xticklabels([])
             ax_le.set_yticklabels([])
+            ax_le_2.set_xticklabels([])
+            ax_le_2.set_yticklabels([])
         if ax_will_plot[1]:
             ax_D_ky.set_xticklabels([])
             ax_D_ky.set_yticklabels([])
@@ -106,8 +116,8 @@ def full_plot(file_list,
         # data read and dky, hks computation
         file = open(default_le_file, "r")
         
-        les = [[] for n in range(max(1, sys_dim - 1))]
-        le_length = max(1, sys_dim - 1)
+        les = [[] for n in range(max(1, sys_dim))]
+        le_length = max(1, sys_dim)
         x_data = []
         D_ky = []
         H_ks = []
@@ -164,7 +174,7 @@ def full_plot(file_list,
         print(len(x_data), len(D_ky), len(H_ks))
 
         #ax_le.set_xlim(x_data[0], x_data[len(x_data)-1])
-        ax_le.set_xlim(0, 0.1)
+        ax_le.set_xlim(full_plot_parameters[0][0], full_plot_parameters[0][1])
 
 
 
@@ -174,11 +184,18 @@ def full_plot(file_list,
             print("ax_le plotting")
             min_para_x = min(x_data)
             max_para_x = max(x_data)
-            for i in range(0, le_length):
+            for i in range(0, le_length-1):
                 ax_le.plot(x_data, les[i], linewidth=3.0)
-            ax_le.plot([min_para_x, max_para_x], [0, 0], "r-.")
-            ax_le.set_ylim(-0.035, 0.06)
+            if not tikz_axis:
+                ax_le.plot([min_para_x, max_para_x], [0, 0], "r-.")
+                ax_le.plot([min_para_x, max_para_x], [full_plot_parameters[1][0], full_plot_parameters[1][0]], color = "black", linewidth = 1, linestyle = "-.")
 
+            ax_le_2.plot(x_data, les[le_length-1], linewidth=3.0, color = "black")
+            
+            len_le_interval = (full_plot_parameters[1][1] - full_plot_parameters[1][0]) / (1 - size_of_le2)
+            ax_le.set_ylim(full_plot_parameters[1][1] - len_le_interval, full_plot_parameters[1][1])
+            len_le_2_interval = (full_plot_parameters[2][1] - full_plot_parameters[2][0]) / size_of_le2
+            ax_le_2.set_ylim(full_plot_parameters[2][0], full_plot_parameters[2][0] + len_le_2_interval)
 
 
         #   ax_D_ky - Dky plot
@@ -188,7 +205,7 @@ def full_plot(file_list,
             if D_KY_TEST:
                 ax_D_ky.plot(x_data, D_ky_8, linewidth=3.0, linestyle="dotted")
                 ax_D_ky.plot(x_data, D_ky_9, linewidth=3.0, linestyle="dotted")
-            ax_D_ky.set_ylim(4.4, 5.1)
+            ax_D_ky.set_ylim(full_plot_parameters[3][0], full_plot_parameters[3][1])
         
 
 
@@ -196,7 +213,9 @@ def full_plot(file_list,
         if ax_will_plot[2] == 1:
             print("ax_H_ks plotting")
             ax_H_ks.plot(x_data, H_ks, linewidth=3.0)
-            ax_H_ks.set_ylim(0.00, 0.2)
+            if not tikz_axis:
+                ax_H_ks.plot([x_data[0], x_data[len(x_data) - 1]], [H_ks[0], H_ks[0]], "r-.")
+            ax_H_ks.set_ylim(full_plot_parameters[4][0], full_plot_parameters[4][1])
 
     for i in range(0, len(x_data)):
         print(x_data[i], D_ky[i], H_ks[i])

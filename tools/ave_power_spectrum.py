@@ -5,9 +5,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import detrend, windows
 
-periodic_loc    = [2,3,4,5,6,7,8,9,10,12,18,25,35,72,144]
+periodic_loc    = [20]
 plot_periodic   = False 
 colors = ["red", "blue", "green"]
+colors = ["black", "black", "black"]
+mod_data = 0 # 0 means off
 
 def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis, default_file_code):
 
@@ -73,6 +75,18 @@ def ave_power_spectrum(file_list, power_spectrum_para, default_x_use, tikz_axis,
 
         print(cnt, end = ", ")
         cnt = 0
+        
+        print(len(data_arr), end = ", ")
+        if mod_data != 0:
+            mod_data_arr = []
+            for i in range(0, len(data_arr)):
+                #tmp = 2
+                #if kase == 1:
+                #    tmp = 1
+                if i % mod_data == 0:
+                    mod_data_arr.append(data_arr[i])
+            data_arr = mod_data_arr
+            print("mod: " + str(mod_data) + ", new_size = " + str(len(data_arr)), end = ", ")
 
 
         #print("sb=============")

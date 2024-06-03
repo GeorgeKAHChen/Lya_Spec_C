@@ -20,7 +20,10 @@ from tools import ave_power_spectrum
 from tools import high_mod_attr_plot
 from tools import bf_2_img
 from tools import heat_map_dist
-
+from tools import time_sequence
+from tools import k_means
+from tools import dbscan
+from tools import anime
 
 
 def main():
@@ -33,6 +36,7 @@ def main():
     print_le = False
     print_le_ob = False
     print_ob_time = False
+    
     print_multi_ps = False
     print_distribution = False
     print_all = False
@@ -44,6 +48,11 @@ def main():
     ave_plot_power_spectrum = False
     plot_bf_2_img = False
     plot_dist_hm = False
+    plot_time_sequence = False
+    calc_k_means =False
+    calc_dbscan = False
+    plot_anime = False
+
 
     """
     FLAG CHECKING
@@ -87,35 +96,46 @@ def main():
             plot_bf_2_img = True
         if sys.argv[i] == "-map-dist" or sys.argv[i] == "-dist-map":
             plot_dist_hm = True
+        if sys.argv[i] == "-tq":
+            plot_time_sequence = True
+        if sys.argv[i] == "-kmeans":
+            calc_k_means = True
+        if sys.argv[i] == "-dbscan":
+            calc_dbscan = True
+        if sys.argv[i] == "-anime":
+            plot_anime = True
 
     """
     DEFAULT SETTING READING
     """
-    default_folder      = default_data.default_folder
-    default_file_code   = default_data.default_file_code
-    default_para_use    = default_data.default_para_use
-    default_x_use       = default_data.default_x_use
-    default_x_range     = default_data.default_x_range
-    default_t_mod       = default_data.default_t_mod
-    default_ob_use      = default_data.default_ob_use
-    default_ob_interval = default_data.default_ob_interval
-    default_ps_use      = default_data.default_ps_use
-    default_ps_interval = default_data.default_ps_interval
-    name_code_length    = default_data.name_code_length
-    default_le_file     = default_data.default_le_file
-    default_dist_file   = default_data.default_dist_file
-    tikz_axis           = default_data.tikz_axis
-    bf_merge            = default_data.bf_merge
-    le_file_folder      = default_data.le_file_folder
-    le_file_code        = default_data.le_file_code
-    le_para_use         = default_data.le_para_use
-    le_start            = default_data.le_start
-    le_color_table      = default_data.le_color_table
-    heat_map_table      = default_data.heat_map_table
-    ax_will_plot        = default_data.ax_will_plot
-    power_spectrum_para = default_data.power_spectrum_para
-    pk_data_files       = default_data.pk_data_files
-    heat_map_dist_para  = default_data.heat_map_dist_para
+    default_folder       = default_data.default_folder
+    default_file_code    = default_data.default_file_code
+    default_para_use     = default_data.default_para_use
+    default_x_use        = default_data.default_x_use
+    default_x_range      = default_data.default_x_range
+    default_t_mod        = default_data.default_t_mod
+    default_ob_use       = default_data.default_ob_use
+    default_ob_interval  = default_data.default_ob_interval
+    default_ps_use       = default_data.default_ps_use
+    default_ps_interval  = default_data.default_ps_interval
+    name_code_length     = default_data.name_code_length
+    default_le_file      = default_data.default_le_file
+    default_dist_file    = default_data.default_dist_file
+    tikz_axis            = default_data.tikz_axis
+    bf_merge             = default_data.bf_merge
+    le_file_folder       = default_data.le_file_folder
+    le_file_code         = default_data.le_file_code
+    le_para_use          = default_data.le_para_use
+    le_start             = default_data.le_start
+    le_color_table       = default_data.le_color_table
+    heat_map_table       = default_data.heat_map_table
+    ax_will_plot         = default_data.ax_will_plot
+    power_spectrum_para  = default_data.power_spectrum_para
+    pk_data_files        = default_data.pk_data_files
+    heat_map_dist_para   = default_data.heat_map_dist_para
+    full_plot_parameters = default_data.full_plot_parameters
+    plot_ob_parameters   = default_data.plot_ob_parameters
+    delay_system         = default_data.delay_system
     """
     FILE LIST / LE FILE LIST INITIALIZATION
     """
@@ -162,7 +182,9 @@ def main():
             default_ob_interval, 
             "ob", 
             name_code_length,
-            tikz_axis)
+            tikz_axis,
+            plot_ob_parameters,
+            delay_system)
 
     if print_ps:
         attr_plot.attr_plot(file_list, 
@@ -171,7 +193,9 @@ def main():
             default_ps_interval, 
             "ps", 
             name_code_length,
-            tikz_axis)
+            tikz_axis,
+            plot_ob_parameters,
+            delay_system)
 
     if print_bf:
         bf.bf(file_list, 
@@ -208,6 +232,7 @@ def main():
             default_x_use, 
             default_x_range, 
             dist_to_data,
+            tikz_axis
             )
 
     if print_all:
@@ -220,6 +245,7 @@ def main():
             default_le_file, 
             default_dist_file, 
             tikz_axis,
+            full_plot_parameters,
             bf_merge,
             ax_will_plot)
 
@@ -279,7 +305,28 @@ def main():
             tikz_axis
             )
 
+    if plot_time_sequence:
+        time_sequence.time_sequence(file_list,
+            default_x_use, 
+            default_x_range
+            )
 
+    if calc_k_means:
+        k_means.k_means(file_list,
+            default_x_use
+            )
+    if calc_dbscan:
+        dbscan.dbscan(file_list,
+            default_x_use
+            )
+    if plot_anime:
+        anime.anime(file_list, 
+            default_ob_use, 
+            default_para_use, 
+            default_ob_interval, 
+            "ob", 
+            name_code_length,
+            tikz_axis)
     return 
 
 

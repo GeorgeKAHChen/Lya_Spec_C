@@ -1,31 +1,46 @@
-tikz_axis               = False
+tikz_axis               = True
 
 
 """
 [MAIN] parameter
 """
+delay_system = True
 
 #default_folder          = ["std_ob"]
 #default_file_code       = [[5, 5]]
 #default_folder          = ["w_wo_noise"]
 #default_file_code       = [[1, 4]]
 default_folder          = ["/Users/amakawa/LocalCode/___data/GHM_N_6_151_008_ob" for n in range(6)]
-#default_folder          = ["output"]
+#default_folder          = ["output", "output", "output", "output", "output", "output"]
 default_file_code       = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]
-#default_file_code       = [[1, 1]]
+#default_file_code       = [[1, 20], [21, 40], [41, 60], [61, 80], [81, 100], [101, 120]]
 #default_para_use        = ["r", 0]
 default_para_use        = ["r", 0]
 default_x_use           = 0 # From 0
 
 default_x_range         = [-2, 2, 400]
-#default_x_range         = [1.1, 1.45, 5001]
+#default_x_range         = [1.1, 1.45, 400]
 default_t_mod           = 4
-default_ob_use          = [1, 3]    # from 1
-default_ob_interval     = [["x1", -1.5, 1.5], ["x3", -1.5, 1.5]]
+default_ob_use          = [6, 1, 5]    # from 1
+default_ob_interval     = [["x6", -2, 2], ["x1", -2, 2], ["x5", -2, 2]]
+#default_ob_interval     = [["x6", -0.75, 1.75], ["x1", -0.75, 1.75], ["x5", -0.75, 1.75]]
 #default_ob_interval     = [["x", 1, 1.6], ["y", -0.6, 0.6]]
 default_ps_use          = [2, 3, 4]
 default_ps_interval     = [["x", -2, 2], ["y", -2, 2], ["z", -2, 2]]
 name_code_length        = 5 #include a.cde -> 5 
+
+"""
+[OB] plot ob parameters
+"""
+plot_ob_parameters      = [False, # Double layers
+                           [
+                                ["/Users/amakawa/LocalCode/___data/GHM_N_6_151_008_UPO_4_ob.dat", "orange"], 
+                                ["/Users/amakawa/LocalCode/___data/GHM_N_6_151_008_UPO_2_ob.dat", "r"]
+                           ], # double layers name and color
+                           [0, 1], # mod plot, mod start
+                           [30, 0] # 3d_plot_angle: elev, azim
+                        ]
+
 
 
 """
@@ -38,13 +53,16 @@ ax_will_plot            = [1,   #ax_le
                            0,   #ax_bf
                         ]
 #default_le_file         = "/Users/amakawa/LocalCode/___data/a_145_155_b_008_simga_000_1.dat"
-#default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_LE.dat"
-default_le_file         = "./tmp.dat"
+default_le_file         = "/Users/amakawa/LocalCode/___data/RGHM_N_6_a_151_b_008_new_LE.dat"
 #default_le_file         = "/Users/amakawa/LocalCode/Lya_Spec_C/tools_other/tmp.dat"
 default_dist_file       = "/Users/amakawa/LocalCode/___data/RGHM_a_151_b_008_new_dist.dat"
 bf_merge                = True
-
-
+full_plot_parameters    = [[0, 0.1], # x-range
+                           [-0.03, 0.06], #le_1 range
+                           [-2.75, -2.5], #le_2 range
+                           [4.4, 5.1], #d_ky y range
+                           [0.00, 0.2], #h_ks y range
+                        ]
 
 
 
@@ -69,7 +87,7 @@ le_para_use             = [[0, 1.2, 1.6, 0.002], [2, 0.00, 0.35, 0.001]] #from 0
 """
 
 ## [a-b]: fix sigma
-le_file_folder          = ["/Users/amakawa/LocalCode/___data/RGHM_sigma_002_LE"]
+le_file_folder          = ["/Users/amakawa/LocalCode/___data/RGHM_N_6_sigma_020"]
 le_file_code            = [[1, 1]]
 le_para_use             = [[0, 1.2, 1.8, 0.002], [1, 0.05, 0.11, 0.0002]] #from 0
 
@@ -77,9 +95,8 @@ le_para_use             = [[0, 1.2, 1.8, 0.002], [1, 0.05, 0.11, 0.0002]] #from 
 
 ## [others]
 le_start                = 3         # from 0
-le_color_table          = [["jet", 0.00], ["jet", 0.11], ["jet", 0.22], ["jet", 0.33], 
-                           ["jet", 0.44], ["jet", 0.55], ["jet", 0.66], ["jet", 0.77],
-                           ["jet", 0.88], ["jet", 1.00], ["rgba", (1.0, 1.0, 1.0, 1.0)]]
+le_color_table          = [["jet", 0.00], ["jet", 0.2], ["jet", 0.4], ["jet", 0.6], 
+                           ["jet", 0.8], ["jet", 1.0], ["rgba", (1.0, 1.0, 1.0, 1.0)]]
 heat_map_table          = "jet"
 
 """
