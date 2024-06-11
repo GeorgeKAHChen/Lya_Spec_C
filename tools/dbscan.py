@@ -6,7 +6,7 @@ from sklearn.cluster import DBSCAN
 
 FONT_SIZE = 6
 sys_dim = 6
-distance = [0.01, 0.2, 10]
+distance = [0.5, 1.0, 1]
 minimal_size = 100
 
 def dbscan(file_list, default_x_use):

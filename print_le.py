@@ -2,16 +2,79 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 """
+set terminal png size 800,300 enhanced font "Helvetica,10";
+set output 'N_4_151_008.png';
+plot [][-0.05: 0.1] \
+     "N_4_151_008.dat" using 2:3 with lines notitle, \
+     "N_4_151_008.dat" using 2:4 with lines notitle, \
+     "N_4_151_008.dat" using 2:5 with lines notitle, \
+     [0: 0.05] 0 with lines notitle black;
 
+replot;
+set terminal png size 800,300 enhanced font "Helvetica,10";
+set output 'N_5_151_008.png';
+plot [][-0.05: 0.1] \
+     "N_5_151_008.dat" using 2:3 with lines notitle, \
+     "N_5_151_008.dat" using 2:4 with lines notitle, \
+     "N_5_151_008.dat" using 2:5 with lines notitle, \
+     "N_5_151_008.dat" using 2:6 with lines notitle, \
+     [0: 0.05] 0 with lines notitle black;
 
-plot "tmp.dat" using 2:3 with lines, \
-     "tmp.dat" using 2:4 with lines, \
-     "tmp.dat" using 2:5 with lines, \
-     "tmp.dat" using 2:6 with lines, \
-     "tmp.dat" using 2:7 with lines, \
-     "tmp.dat" using 2:8 with lines, \
-     "tmp.dat" using 2:9 with lines, \
-     [0: 0.05] 0 with lines;
+replot;
+set terminal png size 800,300 enhanced font "Helvetica,10";
+set output 'N_6_151_008.png';
+plot [][-0.05: 0.1] \
+     "N_6_151_008.dat" using 2:3 with lines notitle, \
+     "N_6_151_008.dat" using 2:4 with lines notitle, \
+     "N_6_151_008.dat" using 2:5 with lines notitle, \
+     "N_6_151_008.dat" using 2:6 with lines notitle, \
+     "N_6_151_008.dat" using 2:7 with lines notitle, \
+     [0: 0.05] 0 with lines notitle black;
+
+replot;
+set terminal png size 800,300 enhanced font "Helvetica,10";
+set output 'N_7_151_008.png';
+plot [][-0.05: 0.1] \
+     "N_7_151_008.dat" using 2:3 with lines notitle, \
+     "N_7_151_008.dat" using 2:4 with lines notitle, \
+     "N_7_151_008.dat" using 2:5 with lines notitle, \
+     "N_7_151_008.dat" using 2:6 with lines notitle, \
+     "N_7_151_008.dat" using 2:7 with lines notitle, \
+     "N_7_151_008.dat" using 2:8 with lines notitle, \
+     [0: 0.05] 0 with lines notitle black;
+
+replot;
+set terminal png size 800,300 enhanced font "Helvetica,10";
+set output 'N_8_151_008.png';
+plot [][-0.05: 0.1] \
+     "N_8_151_008.dat" using 2:3 with lines notitle, \
+     "N_8_151_008.dat" using 2:4 with lines notitle, \
+     "N_8_151_008.dat" using 2:5 with lines notitle, \
+     "N_8_151_008.dat" using 2:6 with lines notitle, \
+     "N_8_151_008.dat" using 2:7 with lines notitle, \
+     "N_8_151_008.dat" using 2:8 with lines notitle, \
+     "N_8_151_008.dat" using 2:9 with lines notitle, \
+     [0: 0.05] 0 with lines notitle black;
+
+replot;
+set terminal png size 800,300 enhanced font "Helvetica,10";
+set output 'N_9_151_008.png';
+plot [][-0.05: 0.1] \
+     "N_9_151_008.dat" using 2:3 with lines notitle, \
+     "N_9_151_008.dat" using 2:4 with lines notitle, \
+     "N_9_151_008.dat" using 2:5 with lines notitle, \
+     "N_9_151_008.dat" using 2:6 with lines notitle, \
+     "N_9_151_008.dat" using 2:7 with lines notitle, \
+     "N_9_151_008.dat" using 2:8 with lines notitle, \
+     "N_9_151_008.dat" using 2:9 with lines notitle, \
+     "N_9_151_008.dat" using 2:10 with lines notitle, \
+     [0: 0.05] 0 with lines notitle black;
+
+     "tmp.dat" using 2:6 with lines notitle, \
+     "tmp.dat" using 2:7 with lines notitle, \
+     "tmp.dat" using 2:8 with lines notitle, \
+     "tmp.dat" using 2:9 with lines notitle, \
+
 
      "tmp.dat" using 2:10 with lines, \
      "tmp.dat" using 2:11 with lines, \

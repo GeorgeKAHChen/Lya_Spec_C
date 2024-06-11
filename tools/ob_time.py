@@ -7,12 +7,14 @@ GROUP_SIZE = 1000
 
 
 def ob_time(file_list, default_x_use, default_x_range):
+    os.system("rm -rf imgs")
+    os.system("mkdir imgs")
 
-    height = default_x_range[2]
-    delta_x = (default_x_range[1] - default_x_range[0]) / (default_x_range[2] - 1)
-    data_for_plot = [[] for n in range(height)]
     
     for i in range(0, len(file_list)):
+        height = default_x_range[2]
+        delta_x = (default_x_range[1] - default_x_range[0]) / (default_x_range[2] - 1)
+        data_for_plot = [[] for n in range(height)]
         read_file_name = file_list[i] + "_ob.dat"
         file = open(read_file_name, "r")
         print(read_file_name, end = ": ")
@@ -39,7 +41,7 @@ def ob_time(file_list, default_x_use, default_x_range):
 
         file.close()
     
-    Init.ImageIO(file_dir = "orbit_time.png", img = np.float32(data_for_plot), io = "o", mode = "grey", backend = "opencv")
+        Init.ImageIO(file_dir = "imgs/" + str(i) + ".png", img = np.float32(data_for_plot), io = "o", mode = "grey", backend = "opencv")
 
 
     return 

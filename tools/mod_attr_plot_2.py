@@ -35,7 +35,7 @@ def mod_attr_plot_2(file_list, default_x_use, default_x_range, default_t_mod):
 
             arr_t.append(cnt)
             cnt += 1
-            if cnt > 10000:
+            if cnt > 100000000:
                 break
 
         loc = 0
@@ -51,7 +51,8 @@ def mod_attr_plot_2(file_list, default_x_use, default_x_range, default_t_mod):
                     plot_arr_x.append(arr_x[j])
             if sub_mod == 0:
                 curr_color = color_map_main(i / (default_t_mod-1))
-                ax.scatter(plot_arr_t, plot_arr_x, color = "black", s = 5)
+                #ax.scatter(plot_arr_t, plot_arr_x, color = "black", s = 5)
+                ax.scatter(plot_arr_t, plot_arr_x, color = curr_color, s = 1, alpha=0.05)
                 #ax.plot(plot_arr_t, plot_arr_x, color = curr_color)#, s = 5)
             else:
                 sub_plot_arr_t = [[] for n in range(sub_mod)]
